@@ -1,0 +1,23 @@
+/* TEAM */
+
+Developer: Digital Universe Agency Team
+Site: https://digitaluniverse.agency
+Email: hello@digitaluniverse.agency
+Location: Worldwide
+
+/* THANKS */
+
+Search Engine: Google, Bing, and all search engines for indexing our site
+Frameworks: Next.js, React, Tailwind CSS
+Fonts: Google Fonts
+Icons: Lucide React
+
+/* SITE */
+
+Last update: 2026-01-24
+Standards: HTML5, CSS3, JavaScript ES6+, TypeScript
+Components: React, Next.js 13+
+Accessibility: WCAG 2.1 AA
+SEO: Schema.org structured data, Open Graph, Twitter Cards
+Performance: Lighthouse Score 95+
+Security: HTTPS, Security Headers, CSP
