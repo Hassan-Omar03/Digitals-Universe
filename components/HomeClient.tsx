@@ -1,7 +1,7 @@
 "use client"
 
-import type { RefObject } from "react"
-import { useRef, useState } from "react"
+import type { CSSProperties, RefObject } from "react"
+import { useEffect, useRef, useState } from "react"
 import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
@@ -82,6 +82,31 @@ const sparkleDots = [
   ["93%", "28%", "3s"],
 ] as const
 
+const heroDust = Array.from({ length: 88 }, (_, index) => {
+  const left = (index * 37 + 11) % 100
+  const top = (index * 53 + 7) % 100
+  const size = index % 11 === 0 ? 4 : index % 5 === 0 ? 3 : index % 3 === 0 ? 2 : 1
+
+  return {
+    left: `${left}%`,
+    top: `${top}%`,
+    size,
+    delay: `${(index % 12) * 0.28}s`,
+    tone: index % 7 === 0 ? "warm" : index % 5 === 0 ? "teal" : "blue",
+  }
+})
+
+const heroGlints = [
+  ["10%", "18%", "18px", "0s"],
+  ["22%", "66%", "12px", "1.1s"],
+  ["36%", "34%", "16px", "0.5s"],
+  ["49%", "14%", "10px", "1.8s"],
+  ["58%", "78%", "22px", "0.3s"],
+  ["69%", "42%", "14px", "1.4s"],
+  ["83%", "26%", "19px", "0.9s"],
+  ["91%", "62%", "13px", "2s"],
+] as const
+
 function SparkleField({ className = "" }: { className?: string }) {
   return (
     <div className={`du-sparkle-field ${className}`} aria-hidden="true">
@@ -97,12 +122,106 @@ function SparkleField({ className = "" }: { className?: string }) {
 }
 
 function HeroGlitterField() {
+  const fieldRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const field = fieldRef.current
+    if (!field || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    let frame = 0
+    let pointerX = 0
+    let pointerY = 0
+
+    const setCamera = (x: number, y: number) => {
+      field.style.setProperty("--du-far-x", `${(-x * 10).toFixed(2)}px`)
+      field.style.setProperty("--du-far-y", `${(-y * 7).toFixed(2)}px`)
+      field.style.setProperty("--du-mid-x", `${(x * 20).toFixed(2)}px`)
+      field.style.setProperty("--du-mid-y", `${(y * 14).toFixed(2)}px`)
+      field.style.setProperty("--du-near-x", `${(x * 38).toFixed(2)}px`)
+      field.style.setProperty("--du-near-y", `${(y * 25).toFixed(2)}px`)
+      field.style.setProperty("--du-tilt-x", `${(-y * 6).toFixed(2)}deg`)
+      field.style.setProperty("--du-tilt-y", `${(x * 8).toFixed(2)}deg`)
+    }
+
+    const updateCamera = () => {
+      frame = 0
+      const rect = field.getBoundingClientRect()
+      if (!rect.width || !rect.height) return
+
+      const x = Math.max(-1, Math.min(1, (pointerX - rect.left) / rect.width * 2 - 1))
+      const y = Math.max(-1, Math.min(1, (pointerY - rect.top) / rect.height * 2 - 1))
+      setCamera(x, y)
+    }
+
+    const onPointerMove = (event: PointerEvent) => {
+      pointerX = event.clientX
+      pointerY = event.clientY
+
+      if (!frame) {
+        frame = window.requestAnimationFrame(updateCamera)
+      }
+    }
+
+    const resetCamera = () => setCamera(0, 0)
+
+    window.addEventListener("pointermove", onPointerMove, { passive: true })
+    window.addEventListener("blur", resetCamera)
+
+    return () => {
+      window.removeEventListener("pointermove", onPointerMove)
+      window.removeEventListener("blur", resetCamera)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
+  }, [])
+
   return (
-    <div className="du-hero-glitter-field relative min-h-[300px] overflow-hidden lg:min-h-[430px]" aria-hidden="true">
-      <div className="pointer-events-none absolute left-[10%] top-[14%] h-32 w-32 rounded-full bg-[#5a9de0]/14 blur-3xl" />
-      <div className="pointer-events-none absolute right-[10%] top-[18%] h-44 w-44 rounded-full bg-[#37d0ae]/10 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-[10%] left-[24%] h-40 w-40 rounded-full bg-[#8bbef0]/12 blur-3xl" />
-      <SparkleField className="opacity-95" />
+    <div ref={fieldRef} className="du-hero-glitter-field pointer-events-none relative min-h-[380px] overflow-hidden lg:min-h-[560px]" aria-hidden="true">
+      <div className="du-hero-space-glow" />
+      <div className="du-hero-aurora du-hero-aurora-one" />
+      <div className="du-hero-aurora du-hero-aurora-two" />
+
+      <div className="du-hero-camera">
+        <div className="du-hero-layer du-hero-layer-far">
+          {heroDust.map((dot, index) => (
+            <span
+              key={`dust-${index}`}
+              className={`du-hero-dust du-hero-dust-${dot.tone}`}
+              style={{
+                left: dot.left,
+                top: dot.top,
+                width: `${dot.size}px`,
+                height: `${dot.size}px`,
+                animationDelay: dot.delay,
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="du-hero-layer du-hero-layer-mid">
+          <span className="du-hero-wireframe du-hero-wireframe-one" />
+          <span className="du-hero-wireframe du-hero-wireframe-two" />
+          <span className="du-hero-wireframe du-hero-wireframe-three" />
+          <span className="du-hero-ring du-hero-ring-one" />
+          <span className="du-hero-ring du-hero-ring-two" />
+          <span className="du-hero-ring du-hero-ring-three" />
+          <span className="du-hero-beam du-hero-beam-one" />
+          <span className="du-hero-beam du-hero-beam-two" />
+        </div>
+
+        <div className="du-hero-layer du-hero-layer-near">
+          {heroGlints.map(([left, top, size, delay], index) => (
+            <span
+              key={`glint-${index}`}
+              className="du-hero-glint"
+              style={{ left, top, width: size, height: size, animationDelay: delay } as CSSProperties}
+            />
+          ))}
+          <span className="du-hero-core" />
+          <span className="du-hero-orbit du-hero-orbit-one" />
+          <span className="du-hero-orbit du-hero-orbit-two" />
+          <span className="du-hero-orbit du-hero-orbit-three" />
+        </div>
+      </div>
     </div>
   )
 }
