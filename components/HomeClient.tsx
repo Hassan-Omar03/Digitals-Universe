@@ -455,18 +455,22 @@ const processSteps = [
   {
     title: "Audit",
     text: "We review the offer, audience, site, and channels.",
+    icon: Search,
   },
   {
     title: "Design",
     text: "We shape clean UI around fast decisions.",
+    icon: PenTool,
   },
   {
     title: "Build",
     text: "We build for speed, mobile, and easy updates.",
+    icon: Code,
   },
   {
     title: "Grow",
     text: "We launch, measure, and improve what converts.",
+    icon: Rocket,
   },
 ]
 
@@ -571,6 +575,27 @@ export default function HomeClient() {
   const activeServices =
     serviceCategories.find((category) => category.category === activeCategory)?.services ?? []
 
+  useEffect(() => {
+    const items = Array.from(document.querySelectorAll<HTMLElement>(".du-reveal"))
+    if (!items.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("du-reveal-visible")
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.16 },
+    )
+
+    items.forEach((item) => observer.observe(item))
+
+    return () => observer.disconnect()
+  }, [activeCategory])
+
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id)
     if (!el) return
@@ -644,7 +669,7 @@ export default function HomeClient() {
           <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[linear-gradient(180deg,rgba(90,157,224,0.16),transparent_78%)]" />
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(61,126,199,0.12),transparent_38%,rgba(55,208,174,0.07))]" />
 
-          <div className="relative z-10 mx-auto w-full max-w-5xl text-center">
+          <div className="du-reveal relative z-10 mx-auto w-full max-w-5xl text-center">
             <div className="mb-5 inline-flex items-center justify-center gap-2 rounded-md border border-[#3d7ec7]/40 bg-[#3d7ec7]/10 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#8bbef0]">
               <Cpu className="h-4 w-4" />
               Premium digital agency
@@ -659,7 +684,7 @@ export default function HomeClient() {
             <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
               <button
                 onClick={() => scrollToSection("services")}
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-[#3d7ec7] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#5a9de0]"
+                className="du-glow-button inline-flex items-center justify-center gap-2 rounded-md bg-[#3d7ec7] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#5a9de0]"
               >
                 Explore Services
                 <ArrowRight className="h-4 w-4" />
@@ -694,7 +719,7 @@ export default function HomeClient() {
               {stats.map((stat) => (
                 <article
                   key={stat.label}
-                  className="rounded-lg border border-white/10 bg-[#0c1526]/72 px-5 py-8 text-center shadow-[0_18px_60px_rgba(0,0,0,0.22)]"
+                  className="du-reveal du-premium-card rounded-lg border border-white/10 bg-[#0c1526]/72 px-5 py-8 text-center shadow-[0_18px_60px_rgba(0,0,0,0.22)]"
                 >
                   <div className="text-4xl font-black leading-none text-white md:text-5xl">{stat.value}</div>
                   <div className="mt-4 text-xs font-black uppercase tracking-[0.16em] text-[#8bbef0]">{stat.label}</div>
@@ -719,7 +744,7 @@ export default function HomeClient() {
             </div>
 
             <div className="mt-9 grid gap-5 lg:grid-cols-[1.05fr_0.72fr_1fr]">
-              <article className="relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-5 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
+              <article className="du-reveal du-premium-card relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-5 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
                 <div className="absolute left-1/2 top-0 min-w-[min(230px,86vw)] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-[#8bbef0]/50 bg-[#07111f] px-5 py-1.5 text-center text-base font-black text-white shadow-[0_0_22px_rgba(90,157,224,0.2)] md:text-lg">
                   Our Core Philosophy
                 </div>
@@ -735,23 +760,21 @@ export default function HomeClient() {
                 </div>
               </article>
 
-              <article className="relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-5 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
+              <article className="du-reveal du-premium-card relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-5 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
                 <div className="absolute left-1/2 top-0 min-w-[min(150px,86vw)] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-[#8bbef0]/50 bg-[#07111f] px-5 py-1.5 text-center text-base font-black text-white shadow-[0_0_22px_rgba(90,157,224,0.2)] md:text-lg">
                   Our Mission
                 </div>
                 <div className="space-y-3 pt-8">
-                  {missionPoints.map((item, index) => (
-                    <div key={item.label} className="flex items-center gap-4 rounded-md border border-white/10 bg-white/[0.04] px-4 py-2.5">
-                      <span className="text-xs font-black uppercase tracking-[0.18em] text-[#8bbef0]">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
+                  {missionPoints.map((item) => (
+                    <div key={item.label} className="du-mission-chip flex items-center gap-4 rounded-md border border-white/10 bg-white/[0.04] px-4 py-2.5">
+                      <span className="du-pulse-dot" />
                       <p className="text-left text-base font-black text-white">{item.label}</p>
                     </div>
                   ))}
                 </div>
               </article>
 
-              <article className="relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-5 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
+              <article className="du-reveal du-premium-card relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-5 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
                 <div className="absolute left-1/2 top-0 min-w-[min(360px,92vw)] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-[#8bbef0]/50 bg-[#07111f] px-5 py-1.5 text-center text-sm font-black text-white shadow-[0_0_22px_rgba(90,157,224,0.2)] md:text-lg">
                   Global Reach & Trusted Partnerships
                 </div>
@@ -767,7 +790,7 @@ export default function HomeClient() {
               </article>
             </div>
 
-            <div className="mx-auto mt-6 grid max-w-3xl grid-cols-[64px_1fr_64px] items-center gap-4 rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 px-5 py-3.5 text-center shadow-[0_18px_70px_rgba(0,0,0,0.24)]">
+            <div className="du-reveal du-premium-card mx-auto mt-6 grid max-w-3xl grid-cols-[64px_1fr_64px] items-center gap-4 rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 px-5 py-3.5 text-center shadow-[0_18px_70px_rgba(0,0,0,0.24)]">
               <div className="relative h-14 w-14 justify-self-center">
                 <Image src="/computer.png" alt="Technical excellence" fill className="object-contain" sizes="56px" />
               </div>
@@ -782,7 +805,7 @@ export default function HomeClient() {
           </div>
         </section>
 
-        <section id="services" className="relative flex min-h-[100svh] items-center border-y border-white/10 bg-black/20 px-4 py-12 md:py-14">
+        <section id="services" className="relative flex min-h-[100svh] items-center overflow-hidden border-y border-white/10 bg-black/20 px-4 py-12 md:py-14">
           <div className="mx-auto w-full max-w-6xl">
             <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
               <div>
@@ -815,7 +838,7 @@ export default function HomeClient() {
                 <button
                   key={category.category}
                   onClick={() => setActiveCategory(category.category)}
-                  className={`whitespace-nowrap rounded-md border px-4 py-2 text-sm font-bold transition-colors ${
+                  className={`du-category-pill whitespace-nowrap rounded-md border px-4 py-2 text-sm font-bold transition-colors ${
                     activeCategory === category.category
                       ? "border-[#3d7ec7] bg-[#3d7ec7] text-white"
                       : "border-white/10 bg-white/[0.04] text-neutral-400 hover:bg-white/10 hover:text-white"
@@ -830,9 +853,11 @@ export default function HomeClient() {
               {activeServices.map((service) => (
                 <article
                   key={service.name}
-                  className="min-w-[82vw] rounded-lg border border-white/10 bg-[#0c1526]/80 p-6 shadow-[0_18px_60px_rgba(0,0,0,0.22)] sm:min-w-[46%] lg:min-w-[31%]"
+                  className="du-reveal du-service-card min-w-[82vw] rounded-lg border border-white/10 bg-[#0c1526]/80 p-6 shadow-[0_18px_60px_rgba(0,0,0,0.22)] sm:min-w-[46%] lg:min-w-[31%]"
                 >
-                  <service.icon className="h-8 w-8 text-[#5a9de0]" />
+                  <div className="du-icon-orb">
+                    <service.icon className="h-8 w-8 text-[#bde7ff]" />
+                  </div>
                   <h3 className="mt-5 text-xl font-black text-white">{service.name}</h3>
                   <p className="mt-3 text-sm leading-7 text-neutral-400">{service.description}</p>
                 </article>
@@ -858,14 +883,14 @@ export default function HomeClient() {
 
             <div className="relative mt-12 grid gap-5 lg:grid-cols-4">
               <div className="pointer-events-none absolute left-0 right-0 top-[35px] hidden h-px bg-gradient-to-r from-transparent via-[#8bbef0]/35 to-transparent lg:block" />
-              {processSteps.map((step, index) => (
+              {processSteps.map((step) => (
                 <article
                   key={step.title}
-                  className="relative rounded-lg border border-[#8bbef0]/30 bg-[#07111f]/76 p-6 shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
+                  className="du-reveal du-premium-card relative rounded-lg border border-[#8bbef0]/30 bg-[#07111f]/76 p-6 shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
                 >
                   <div className="relative mb-7 flex justify-center">
-                    <div className="grid h-[70px] w-[70px] place-items-center rounded-lg border border-[#8bbef0]/40 bg-[#3d7ec7]/20 text-base font-black text-white shadow-[0_0_35px_rgba(90,157,224,0.2)]">
-                      {String(index + 1).padStart(2, "0")}
+                    <div className="du-icon-orb grid h-[70px] w-[70px] place-items-center rounded-lg border border-[#8bbef0]/40 bg-[#3d7ec7]/20 text-base font-black text-white shadow-[0_0_35px_rgba(90,157,224,0.2)]">
+                      <step.icon className="h-8 w-8 text-[#d7f4ff]" />
                     </div>
                   </div>
                   <h3 className="text-center text-xl font-black text-white">{step.title}</h3>
@@ -894,7 +919,7 @@ export default function HomeClient() {
           </div>
         </section>
 
-        <section id="portfolio" className="du-blur-band relative flex min-h-[100svh] items-center px-4 py-12 md:py-14">
+        <section id="portfolio" className="du-blur-band relative flex min-h-[100svh] items-center overflow-hidden px-4 py-12 md:py-14">
           <div className="mx-auto w-full max-w-6xl">
             <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
               <div className="max-w-3xl">
@@ -907,7 +932,7 @@ export default function HomeClient() {
             </div>
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {portfolio.map((project) => (
-                <article key={project.title} className="group overflow-hidden rounded-lg border border-white/10 bg-[#0c1526]/80 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
+                <article key={project.title} className="du-reveal du-premium-card group overflow-hidden rounded-lg border border-white/10 bg-[#0c1526]/80 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
                   <div className="relative aspect-[4/3] overflow-hidden bg-black">
                     <Image
                       src={project.image}
@@ -938,7 +963,7 @@ export default function HomeClient() {
           </div>
         </section>
 
-        <section id="testimonials" className="relative flex min-h-[100svh] items-center border-y border-white/10 bg-black/20 px-4 py-12 md:py-14">
+        <section id="testimonials" className="relative flex min-h-[100svh] items-center overflow-hidden border-y border-white/10 bg-black/20 px-4 py-12 md:py-14">
           <div className="mx-auto w-full max-w-6xl">
             <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
               <div className="max-w-3xl">
@@ -967,7 +992,7 @@ export default function HomeClient() {
             </div>
             <div ref={testimonialsScrollRef} className="mt-8 flex gap-5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {testimonials.map((testimonial) => (
-                <article key={testimonial.name} className="min-w-[82vw] rounded-lg border border-white/10 bg-[#0c1526]/80 p-6 sm:min-w-[46%] lg:min-w-[31%]">
+                <article key={testimonial.name} className="du-reveal du-premium-card min-w-[82vw] rounded-lg border border-white/10 bg-[#0c1526]/80 p-6 sm:min-w-[46%] lg:min-w-[31%]">
                   <div className="mb-5 flex items-center gap-3">
                     <div className="flex gap-1 text-[#5a9de0]" aria-label={`${testimonial.rating} out of 5 rating`}>
                       {[1, 2, 3, 4, 5].map((star) => {
@@ -998,8 +1023,8 @@ export default function HomeClient() {
           </div>
         </section>
 
-        <section id="contact" className="du-blur-band relative flex min-h-[100svh] items-center px-4 py-12 md:py-14">
-          <div className="mx-auto grid w-full max-w-6xl gap-8 rounded-lg border border-white/10 bg-[#0c1526]/80 p-6 md:grid-cols-[1.1fr_0.9fr] md:p-10">
+        <section id="contact" className="du-blur-band relative flex min-h-[100svh] items-center overflow-hidden px-4 py-12 md:py-14">
+          <div className="du-reveal du-premium-card mx-auto grid w-full max-w-6xl gap-8 rounded-lg border border-white/10 bg-[#0c1526]/80 p-6 md:grid-cols-[1.1fr_0.9fr] md:p-10">
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">
                 <MessageCircle className="h-4 w-4" />

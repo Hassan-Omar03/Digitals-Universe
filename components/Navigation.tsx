@@ -11,13 +11,13 @@ const greetingMessage =
 const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(greetingMessage)}`
 
 const navItems = [
-  { label: "Home", id: "hero", marker: "01" },
-  { label: "About", id: "about", marker: "02" },
-  { label: "Services", id: "services", marker: "03" },
-  { label: "Checkout", id: "payment", marker: "04" },
-  { label: "Portfolio", id: "portfolio", marker: "05" },
-  { label: "Reviews", id: "testimonials", marker: "06" },
-  { label: "Contact", id: "contact", marker: "07" },
+  { label: "Home", id: "hero" },
+  { label: "About", id: "about" },
+  { label: "Services", id: "services" },
+  { label: "Checkout", id: "payment" },
+  { label: "Portfolio", id: "portfolio" },
+  { label: "Reviews", id: "testimonials" },
+  { label: "Contact", id: "contact" },
 ]
 
 function scrollToSection(id: string, smooth = true) {
@@ -36,9 +36,11 @@ function scrollToSection(id: string, smooth = true) {
 export default function Navigation() {
   const [activeId, setActiveId] = useState(navItems[0].id)
   const [isOpen, setIsOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
     const detectActiveSection = () => {
+      setIsScrolled(window.scrollY > 18)
       const sections = navItems
         .map((item) => ({ id: item.id, element: document.getElementById(item.id) }))
         .filter((section): section is { id: string; element: HTMLElement } => Boolean(section.element))
@@ -97,7 +99,11 @@ export default function Navigation() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3 sm:px-4">
-      <div className="du-nav-shell mx-auto grid w-full max-w-6xl grid-cols-[1fr_auto] items-center gap-3 rounded-lg border border-[#8bbef0]/20 px-3 py-2.5 shadow-[0_16px_44px_rgba(0,0,0,0.3)] lg:grid-cols-[auto_1fr_auto]">
+      <div
+        className={`du-nav-shell mx-auto grid w-full max-w-6xl grid-cols-[1fr_auto] items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-300 lg:grid-cols-[auto_1fr_auto] ${
+          isScrolled ? "du-nav-shell-scrolled" : ""
+        }`}
+      >
         <button
           type="button"
           onClick={() => handleNavClick("hero")}
@@ -110,7 +116,7 @@ export default function Navigation() {
             width={52}
             height={52}
             priority
-            className="h-11 w-11 shrink-0 object-contain transition-transform duration-300 group-hover:scale-105"
+            className="du-nav-logo-mark h-11 w-11 shrink-0 object-contain transition-transform duration-300 group-hover:scale-105"
           />
           <span className="hidden leading-none sm:block">
             <span className="block text-base font-black uppercase tracking-[0.12em] text-white">Digital</span>
@@ -118,25 +124,19 @@ export default function Navigation() {
           </span>
         </button>
 
-        <nav className="hidden min-w-0 items-center justify-center gap-1 rounded-lg border border-white/10 bg-black/20 p-1 lg:flex" aria-label="Primary navigation">
+        <nav className="du-nav-menu hidden min-w-0 items-center justify-center gap-1 rounded-lg p-1 lg:flex" aria-label="Primary navigation">
           {navItems.map((item) => (
             <button
               key={item.id}
               type="button"
               onClick={() => handleNavClick(item.id)}
-              className={`group relative flex items-center gap-1.5 rounded-md px-2.5 py-2 text-[11px] font-black uppercase tracking-[0.1em] transition-colors ${
+              aria-current={activeId === item.id ? "page" : undefined}
+              className={`du-nav-link group relative rounded-md px-3 py-2 text-[11px] font-black uppercase tracking-[0.11em] transition-all duration-300 ${
                 activeId === item.id
-                  ? "bg-[#8bbef0]/15 text-white shadow-[inset_0_0_0_1px_rgba(139,190,240,0.35)]"
-                  : "text-neutral-400 hover:bg-white/[0.07] hover:text-white"
+                  ? "du-nav-link-active text-white"
+                  : "text-[#b8c8d8]/70 hover:text-white"
               }`}
             >
-              <span
-                className={`text-[9px] tracking-normal ${
-                  activeId === item.id ? "text-[#8bbef0]" : "text-neutral-600 group-hover:text-[#8bbef0]"
-                }`}
-              >
-                {item.marker}
-              </span>
               {item.label}
             </button>
           ))}
@@ -146,7 +146,7 @@ export default function Navigation() {
           href={whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden items-center justify-center gap-2 rounded-md border border-[#8bbef0]/25 bg-[#3d7ec7] px-4 py-2.5 text-xs font-black uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#5a9de0] sm:inline-flex"
+          className="du-nav-cta hidden items-center justify-center gap-2 rounded-md px-4 py-2.5 text-xs font-black uppercase tracking-[0.1em] text-white transition-all duration-300 sm:inline-flex"
         >
           <MessageCircle className="h-4 w-4" />
           Get Started
@@ -155,7 +155,7 @@ export default function Navigation() {
         <button
           type="button"
           onClick={() => setIsOpen((open) => !open)}
-          className="grid h-10 w-10 place-items-center rounded-md border border-white/10 bg-white/[0.05] text-white lg:hidden"
+          className="grid h-10 w-10 place-items-center rounded-md border border-[#8bbef0]/20 bg-white/[0.06] text-white shadow-[0_0_24px_rgba(0,174,255,0.12)] lg:hidden"
           aria-label="Toggle navigation"
           aria-expanded={isOpen}
         >
@@ -164,19 +164,19 @@ export default function Navigation() {
       </div>
 
       {isOpen ? (
-        <div className="du-nav-shell mx-auto mt-2 w-full max-w-6xl rounded-lg border border-[#8bbef0]/20 p-2 shadow-[0_18px_55px_rgba(0,0,0,0.35)] lg:hidden">
+        <div className="du-nav-mobile mx-auto mt-2 w-full max-w-6xl rounded-lg p-2 lg:hidden">
           {navItems.map((item) => (
             <button
               key={item.id}
               type="button"
               onClick={() => handleNavClick(item.id)}
-              className={`flex w-full items-center gap-3 rounded-md px-4 py-3 text-left text-sm font-black uppercase tracking-[0.12em] transition-colors ${
+              aria-current={activeId === item.id ? "page" : undefined}
+              className={`du-nav-mobile-link flex w-full items-center rounded-md px-4 py-3 text-left text-sm font-black uppercase tracking-[0.12em] transition-all duration-300 ${
                 activeId === item.id
-                  ? "bg-[#8bbef0]/15 text-white"
-                  : "text-neutral-400 hover:bg-white/10 hover:text-white"
+                  ? "du-nav-link-active text-white"
+                  : "text-[#b8c8d8]/70 hover:bg-white/10 hover:text-white"
               }`}
             >
-              <span className="text-[10px] text-[#8bbef0]">{item.marker}</span>
               {item.label}
             </button>
           ))}
