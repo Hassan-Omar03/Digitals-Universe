@@ -14,22 +14,9 @@ type CircuitTrace = {
   width: number
 }
 
-type Dust = Point & {
+type GlowDot = Point & {
   size: number
   phase: number
-}
-
-type BinaryGlyph = Point & {
-  size: number
-  phase: number
-  value: string
-}
-
-type EnergyRibbon = {
-  y: number
-  width: number
-  phase: number
-  speed: number
 }
 
 const BLUE = "0, 174, 255"
@@ -66,8 +53,6 @@ function createBrainDividerPath(cx: number, cy: number, scale: number) {
 }
 
 function drawPathLine(context: CanvasRenderingContext2D, points: Point[]) {
-  if (points.length < 2) return
-
   context.beginPath()
   context.moveTo(points[0].x, points[0].y)
   for (let index = 1; index < points.length; index += 1) {
@@ -100,441 +85,428 @@ function pointOnTrace(trace: CircuitTrace, progress: number) {
   return trace.points[trace.points.length - 1]
 }
 
+function makeTraces(cx: number, cy: number, scale: number, lightMode: boolean) {
+  const traces: CircuitTrace[] = []
+  const rows = lightMode ? 12 : 16
+  const columns = lightMode ? 8 : 11
+  const branches = lightMode ? 8 : 12
+
+  for (let row = 0; row < rows; row += 1) {
+    const y = cy - scale * 0.48 + row * scale * (0.9 / Math.max(rows - 1, 1))
+    const startX = cx - scale * (0.5 - seeded(row) * 0.12)
+    const endX = cx + scale * (0.46 + seeded(row + 14) * 0.15)
+    const midOne = startX + (endX - startX) * (0.28 + seeded(row + 2) * 0.14)
+    const midTwo = startX + (endX - startX) * (0.62 + seeded(row + 8) * 0.14)
+    const lift = (seeded(row + 22) - 0.5) * scale * 0.13
+
+    traces.push({
+      points: [
+        { x: startX, y },
+        { x: midOne, y },
+        { x: midOne, y: y + lift },
+        { x: midTwo, y: y + lift },
+        { x: midTwo, y: y + lift * 0.24 },
+        { x: endX, y: y + lift * 0.24 },
+      ],
+      phase: seeded(row + 41),
+      speed: 0.08 + seeded(row + 64) * 0.08,
+      width: row % 4 === 0 ? 1.65 : 1.05,
+    })
+  }
+
+  for (let column = 0; column < columns; column += 1) {
+    const x = cx - scale * 0.46 + column * scale * (0.92 / Math.max(columns - 1, 1))
+    const y1 = cy - scale * (0.4 - seeded(column + 91) * 0.12)
+    const y2 = cy + scale * (0.4 - seeded(column + 33) * 0.14)
+    const turnY = y1 + (y2 - y1) * (0.36 + seeded(column + 18) * 0.3)
+    const jog = (seeded(column + 9) - 0.5) * scale * 0.1
+
+    traces.push({
+      points: [
+        { x, y: y1 },
+        { x, y: turnY },
+        { x: x + jog, y: turnY },
+        { x: x + jog, y: y2 },
+      ],
+      phase: seeded(column + 75),
+      speed: 0.07 + seeded(column + 111) * 0.06,
+      width: 0.95,
+    })
+  }
+
+  for (let branch = 0; branch < branches; branch += 1) {
+    const left = branch % 2 === 0
+    const startX = cx + scale * (left ? -0.05 : 0.05)
+    const startY = cy - scale * 0.42 + seeded(branch + 301) * scale * 0.84
+    const endX = cx + scale * (left ? -0.5 : 0.52) * (0.74 + seeded(branch + 302) * 0.24)
+    const endY = startY + (seeded(branch + 303) - 0.5) * scale * 0.18
+    const kneeX = startX + (endX - startX) * (0.42 + seeded(branch + 304) * 0.22)
+
+    traces.push({
+      points: [
+        { x: startX, y: startY },
+        { x: kneeX, y: startY },
+        { x: kneeX, y: endY },
+        { x: endX, y: endY },
+      ],
+      phase: seeded(branch + 305),
+      speed: 0.1 + seeded(branch + 306) * 0.07,
+      width: branch % 3 === 0 ? 1.2 : 0.9,
+    })
+  }
+
+  return traces
+}
+
 export default function Background3D() {
+  const shellRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
+    const shell = shellRef.current
     const canvas = canvasRef.current
-    if (!canvas) return
+    if (!shell || !canvas) return
 
-    const context = canvas.getContext("2d")
+    const context = canvas.getContext("2d", { alpha: false })
     if (!context) return
 
+    const staticCanvas = document.createElement("canvas")
+    const staticContext = staticCanvas.getContext("2d", { alpha: false })
+    if (!staticContext) return
+
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches
     let width = 0
     let height = 0
+    let pixelRatio = 1
     let animationFrame = 0
+    let lastFrame = 0
     let traces: CircuitTrace[] = []
-    let dust: Dust[] = []
-    let binary: BinaryGlyph[] = []
-    let ribbons: EnergyRibbon[] = []
+    let dots: GlowDot[] = []
+    let cx = 0
+    let cy = 0
+    let scale = 0
+    let lightMode = false
+    let cameraX = 0
+    let cameraY = 0
+    let targetCameraX = 0
+    let targetCameraY = 0
 
-    const makeTraces = (cx: number, cy: number, scale: number) => {
-      const nextTraces: CircuitTrace[] = []
-      const rows = 21
-
-      for (let row = 0; row < rows; row += 1) {
-        const y = cy - scale * 0.48 + row * scale * 0.047
-        const startX = cx - scale * (0.55 - seeded(row) * 0.14)
-        const endX = cx + scale * (0.5 + seeded(row + 14) * 0.18)
-        const midOne = startX + (endX - startX) * (0.28 + seeded(row + 2) * 0.15)
-        const midTwo = startX + (endX - startX) * (0.62 + seeded(row + 8) * 0.16)
-        const lift = (seeded(row + 22) - 0.5) * scale * 0.16
-
-        nextTraces.push({
-          points: [
-            { x: startX, y },
-            { x: midOne, y },
-            { x: midOne, y: y + lift },
-            { x: midTwo, y: y + lift },
-            { x: midTwo, y: y + lift * 0.24 },
-            { x: endX, y: y + lift * 0.24 },
-          ],
-          phase: seeded(row + 41),
-          speed: 0.06 + seeded(row + 64) * 0.06,
-          width: row % 5 === 0 ? 1.8 : 1.16,
-        })
-      }
-
-      for (let column = 0; column < 17; column += 1) {
-        const x = cx - scale * 0.5 + column * scale * 0.062
-        const y1 = cy - scale * (0.42 - seeded(column + 91) * 0.12)
-        const y2 = cy + scale * (0.42 - seeded(column + 33) * 0.14)
-        const turnY = y1 + (y2 - y1) * (0.36 + seeded(column + 18) * 0.3)
-        const jog = (seeded(column + 9) - 0.5) * scale * 0.12
-
-        nextTraces.push({
-          points: [
-            { x, y: y1 },
-            { x, y: turnY },
-            { x: x + jog, y: turnY },
-            { x: x + jog, y: y2 },
-          ],
-          phase: seeded(column + 75),
-          speed: 0.05 + seeded(column + 111) * 0.05,
-          width: 1,
-        })
-      }
-
-      for (let branch = 0; branch < 18; branch += 1) {
-        const left = branch % 2 === 0
-        const startX = cx + scale * (left ? -0.06 : 0.06)
-        const startY = cy - scale * 0.45 + seeded(branch + 301) * scale * 0.9
-        const endX = cx + scale * (left ? -0.5 : 0.53) * (0.72 + seeded(branch + 302) * 0.28)
-        const endY = startY + (seeded(branch + 303) - 0.5) * scale * 0.2
-        const kneeX = startX + (endX - startX) * (0.42 + seeded(branch + 304) * 0.22)
-
-        nextTraces.push({
-          points: [
-            { x: startX, y: startY },
-            { x: kneeX, y: startY },
-            { x: kneeX, y: endY },
-            { x: endX, y: endY },
-          ],
-          phase: seeded(branch + 305),
-          speed: 0.08 + seeded(branch + 306) * 0.06,
-          width: branch % 3 === 0 ? 1.35 : 0.95,
-        })
-      }
-
-      return nextTraces
-    }
-
-    const resize = () => {
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.7)
+    const setupCanvas = () => {
+      pixelRatio = Math.min(window.devicePixelRatio || 1, isCoarsePointer ? 1 : 1.2)
       width = window.innerWidth
       height = window.innerHeight
+      lightMode = isCoarsePointer || width < 760 || height < 620
+      scale = Math.min(width * (lightMode ? 0.78 : 0.68), height * 0.86, lightMode ? 600 : 760)
+      cx = width < 900 ? width * 0.52 : width * 0.67
+      cy = height * 0.39
+
       canvas.width = Math.floor(width * pixelRatio)
       canvas.height = Math.floor(height * pixelRatio)
       canvas.style.width = `${width}px`
       canvas.style.height = `${height}px`
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
 
-      const scale = Math.min(width * 0.68, height * 0.9, 860)
-      const cx = width < 900 ? width * 0.5 : width * 0.67
-      const cy = height * 0.4
+      staticCanvas.width = canvas.width
+      staticCanvas.height = canvas.height
+      staticContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
 
-      traces = makeTraces(cx, cy, scale)
-      dust = Array.from({ length: 165 }, (_, index) => ({
+      traces = makeTraces(cx, cy, scale, lightMode)
+      dots = Array.from({ length: lightMode ? 46 : 72 }, (_, index) => ({
         x: seeded(index + 5) * width,
         y: seeded(index + 200) * height,
-        size: index % 11 === 0 ? 2.5 : index % 5 === 0 ? 1.7 : 1,
+        size: index % 9 === 0 ? 1.9 : 1,
         phase: seeded(index + 17) * Math.PI * 2,
       }))
-      binary = Array.from({ length: 88 }, (_, index) => ({
-        x: cx - scale * 0.76 + seeded(index + 61) * scale * 0.26,
-        y: cy - scale * 0.2 + seeded(index + 89) * scale * 0.84,
-        size: 9 + seeded(index + 144) * 7,
-        phase: seeded(index + 201) * Math.PI * 2,
-        value: seeded(index + 222) > 0.5 ? "1" : "0",
-      }))
-      ribbons = Array.from({ length: 7 }, (_, index) => ({
-        y: cy - scale * 0.36 + seeded(index + 410) * scale * 0.76,
-        width: scale * (0.55 + seeded(index + 411) * 0.36),
-        phase: seeded(index + 412) * Math.PI * 2,
-        speed: 0.28 + seeded(index + 413) * 0.42,
-      }))
     }
 
-    const drawBackground = () => {
-      const gradient = context.createRadialGradient(width * 0.68, height * 0.38, 20, width * 0.5, height * 0.52, Math.max(width, height) * 0.9)
+    const drawBackground = (target: CanvasRenderingContext2D) => {
+      const gradient = target.createRadialGradient(width * 0.68, height * 0.38, 20, width * 0.5, height * 0.52, Math.max(width, height) * 0.9)
       gradient.addColorStop(0, "#062a68")
-      gradient.addColorStop(0.27, "#03142e")
-      gradient.addColorStop(0.58, "#01050d")
+      gradient.addColorStop(0.28, "#03142e")
+      gradient.addColorStop(0.62, "#01050d")
       gradient.addColorStop(1, "#000000")
-      context.fillStyle = gradient
-      context.fillRect(0, 0, width, height)
+      target.fillStyle = gradient
+      target.fillRect(0, 0, width, height)
 
-      const halo = context.createRadialGradient(width * 0.67, height * 0.4, 0, width * 0.67, height * 0.4, Math.min(width, height) * 0.58)
-      halo.addColorStop(0, "rgba(0, 174, 255, 0.18)")
-      halo.addColorStop(0.36, "rgba(0, 92, 255, 0.06)")
+      const halo = target.createRadialGradient(cx, cy, 0, cx, cy, Math.min(width, height) * 0.55)
+      halo.addColorStop(0, "rgba(0, 174, 255, 0.2)")
+      halo.addColorStop(0.38, "rgba(0, 92, 255, 0.06)")
       halo.addColorStop(1, "rgba(0, 0, 0, 0)")
-      context.fillStyle = halo
-      context.fillRect(0, 0, width, height)
+      target.fillStyle = halo
+      target.fillRect(0, 0, width, height)
     }
 
-    const drawCircuitFrame = (time: number) => {
-      const scale = Math.min(width * 0.68, height * 0.9, 860)
-      const cx = width < 900 ? width * 0.5 : width * 0.67
-      const cy = height * 0.4
+    const drawStaticCircuitFrame = (target: CanvasRenderingContext2D) => {
+      target.save()
+      target.globalCompositeOperation = "lighter"
+      target.lineCap = "round"
+      target.lineJoin = "round"
+      target.strokeStyle = `rgba(${BLUE}, ${lightMode ? 0.08 : 0.12})`
+      target.lineWidth = 1
 
-      context.save()
-      context.globalCompositeOperation = "lighter"
-      context.lineCap = "round"
-      context.lineJoin = "round"
+      const lineCount = lightMode ? 4 : 7
+      for (let index = 0; index < lineCount; index += 1) {
+        const x = cx - scale * 0.85 + index * scale * 0.27
+        const top = cy - scale * 0.62
+        const bottom = cy + scale * 0.6
+        target.beginPath()
+        target.moveTo(x, top)
+        target.lineTo(x, top + scale * (0.09 + seeded(index + 500) * 0.16))
+        target.lineTo(x + scale * (seeded(index + 501) - 0.5) * 0.1, top + scale * 0.22)
+        target.stroke()
 
-      ribbons.forEach((ribbon, index) => {
-        const drift = ((time * 0.00005 * ribbon.speed + ribbon.phase) % 1) * ribbon.width
-        const startX = cx - scale * 0.92 + drift
-        const endX = startX + ribbon.width
-        const y = ribbon.y + Math.sin(time * 0.0008 + ribbon.phase) * scale * 0.018
-        const gradient = context.createLinearGradient(startX, y, endX, y)
-        gradient.addColorStop(0, "rgba(0, 174, 255, 0)")
-        gradient.addColorStop(0.22, `rgba(${BLUE}, 0.2)`)
-        gradient.addColorStop(0.5, `rgba(${ICE}, 0.34)`)
-        gradient.addColorStop(1, "rgba(0, 174, 255, 0)")
-
-        context.strokeStyle = gradient
-        context.lineWidth = index % 2 === 0 ? 1.6 : 1
-        context.shadowColor = `rgba(${BLUE}, 0.44)`
-        context.shadowBlur = 18
-        context.beginPath()
-        context.moveTo(startX, y)
-        context.bezierCurveTo(
-          startX + ribbon.width * 0.26,
-          y - scale * 0.08,
-          startX + ribbon.width * 0.58,
-          y + scale * 0.08,
-          endX,
-          y,
-        )
-        context.stroke()
-      })
-
-      context.strokeStyle = `rgba(${BLUE}, 0.1)`
-      context.shadowColor = `rgba(${BLUE}, 0.28)`
-      context.shadowBlur = 10
-      context.lineWidth = 1
-
-      for (let index = 0; index < 8; index += 1) {
-        const x = cx - scale * 0.9 + index * scale * 0.24
-        const top = cy - scale * 0.64
-        const bottom = cy + scale * 0.62
-        context.beginPath()
-        context.moveTo(x, top)
-        context.lineTo(x, top + scale * (0.08 + seeded(index + 500) * 0.18))
-        context.lineTo(x + scale * (seeded(index + 501) - 0.5) * 0.12, top + scale * 0.24)
-        context.stroke()
-
-        context.beginPath()
-        context.moveTo(x + scale * 0.04, bottom)
-        context.lineTo(x + scale * 0.04, bottom - scale * (0.08 + seeded(index + 502) * 0.18))
-        context.lineTo(x + scale * (seeded(index + 503) - 0.5) * 0.14, bottom - scale * 0.25)
-        context.stroke()
+        target.beginPath()
+        target.moveTo(x + scale * 0.04, bottom)
+        target.lineTo(x + scale * 0.04, bottom - scale * (0.09 + seeded(index + 502) * 0.16))
+        target.lineTo(x + scale * (seeded(index + 503) - 0.5) * 0.12, bottom - scale * 0.22)
+        target.stroke()
       }
 
-      context.restore()
+      target.restore()
     }
 
-    const drawDust = (time: number) => {
-      dust.forEach((dot) => {
-        const alpha = 0.18 + Math.sin(time * 0.0014 + dot.phase) * 0.12
-        context.fillStyle = `rgba(${dot.size > 2 ? ICE : BLUE}, ${alpha})`
-        context.beginPath()
-        context.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2)
-        context.fill()
-      })
+    const drawBinary = (target: CanvasRenderingContext2D) => {
+      target.save()
+      target.textAlign = "center"
+      const count = lightMode ? 26 : 54
+      for (let index = 0; index < count; index += 1) {
+        const size = 9 + seeded(index + 144) * 6
+        const x = cx - scale * 0.76 + seeded(index + 61) * scale * 0.24
+        const y = cy - scale * 0.18 + seeded(index + 89) * scale * 0.8
+        target.fillStyle = `rgba(0, 174, 255, ${0.1 + seeded(index + 201) * 0.1})`
+        target.font = `${size}px Consolas, monospace`
+        target.fillText(seeded(index + 222) > 0.5 ? "1" : "0", x, y)
+      }
+      target.restore()
     }
 
-    const drawBinary = (time: number) => {
-      context.save()
-      context.font = "13px Consolas, monospace"
-      context.textAlign = "center"
-      binary.forEach((bit, index) => {
-        const alpha = 0.16 + Math.sin(time * 0.001 + bit.phase) * 0.1
-        context.fillStyle = `rgba(0, 174, 255, ${alpha})`
-        context.font = `${bit.size}px Consolas, monospace`
-        context.fillText(bit.value, bit.x, bit.y + Math.sin(time * 0.0008 + index) * 6)
-      })
-      context.restore()
-    }
-
-    const drawBrainTexture = (cx: number, cy: number, scale: number, time: number) => {
-      const groovePaths = [
-        [
-          { x: -0.48, y: -0.2 },
-          { x: -0.36, y: -0.36 },
-          { x: -0.16, y: -0.32 },
-          { x: -0.08, y: -0.46 },
-        ],
-        [
-          { x: -0.52, y: 0.03 },
-          { x: -0.34, y: -0.04 },
-          { x: -0.2, y: 0.08 },
-          { x: -0.04, y: -0.02 },
-        ],
-        [
-          { x: -0.4, y: 0.27 },
-          { x: -0.23, y: 0.18 },
-          { x: -0.06, y: 0.28 },
-          { x: 0.05, y: 0.18 },
-        ],
-        [
-          { x: 0.08, y: -0.34 },
-          { x: 0.24, y: -0.47 },
-          { x: 0.44, y: -0.34 },
-          { x: 0.54, y: -0.16 },
-        ],
-        [
-          { x: 0.07, y: -0.08 },
-          { x: 0.28, y: -0.18 },
-          { x: 0.5, y: -0.02 },
-          { x: 0.62, y: 0.1 },
-        ],
-        [
-          { x: 0.05, y: 0.25 },
-          { x: 0.24, y: 0.36 },
-          { x: 0.48, y: 0.28 },
-          { x: 0.58, y: 0.12 },
-        ],
+    const drawBrainTexture = (target: CanvasRenderingContext2D) => {
+      const grooves = [
+        [[-0.48, -0.2], [-0.36, -0.36], [-0.16, -0.32], [-0.08, -0.46]],
+        [[-0.52, 0.03], [-0.34, -0.04], [-0.2, 0.08], [-0.04, -0.02]],
+        [[-0.4, 0.27], [-0.23, 0.18], [-0.06, 0.28], [0.05, 0.18]],
+        [[0.08, -0.34], [0.24, -0.47], [0.44, -0.34], [0.54, -0.16]],
+        [[0.07, -0.08], [0.28, -0.18], [0.5, -0.02], [0.62, 0.1]],
+        [[0.05, 0.25], [0.24, 0.36], [0.48, 0.28], [0.58, 0.12]],
       ]
 
+      target.save()
+      target.globalCompositeOperation = "lighter"
+      target.strokeStyle = `rgba(${ELECTRIC}, 0.16)`
+      target.lineWidth = 1.1
+      if (!lightMode) {
+        target.shadowColor = `rgba(${BLUE}, 0.28)`
+        target.shadowBlur = 8
+      }
+
+      grooves.forEach((groove) => {
+        target.beginPath()
+        target.moveTo(cx + groove[0][0] * scale, cy + groove[0][1] * scale)
+        target.bezierCurveTo(
+          cx + groove[1][0] * scale,
+          cy + groove[1][1] * scale,
+          cx + groove[2][0] * scale,
+          cy + groove[2][1] * scale,
+          cx + groove[3][0] * scale,
+          cy + groove[3][1] * scale,
+        )
+        target.stroke()
+      })
+
+      target.restore()
+    }
+
+    const drawStaticBrain = (target: CanvasRenderingContext2D) => {
+      const brainPath = createBrainPath(cx, cy, scale)
+
+      target.save()
+      target.shadowColor = `rgba(${BLUE}, 0.8)`
+      target.shadowBlur = lightMode ? 20 : 38
+      target.fillStyle = "rgba(0, 92, 190, 0.16)"
+      target.fill(brainPath)
+      target.lineWidth = lightMode ? 2.6 : 3.6
+      target.strokeStyle = `rgba(${ELECTRIC}, 0.28)`
+      target.stroke(brainPath)
+      target.shadowBlur = lightMode ? 8 : 16
+      target.lineWidth = 1.3
+      target.strokeStyle = `rgba(${ICE}, 0.68)`
+      target.stroke(brainPath)
+      target.restore()
+
+      target.save()
+      target.clip(brainPath)
+      target.globalCompositeOperation = "lighter"
+      drawBrainTexture(target)
+
+      traces.forEach((trace) => {
+        target.lineCap = "round"
+        target.lineJoin = "round"
+        target.lineWidth = trace.width
+        target.strokeStyle = `rgba(${ICE}, ${lightMode ? 0.48 : 0.66})`
+        if (!lightMode) {
+          target.shadowColor = `rgba(${BLUE}, 0.5)`
+          target.shadowBlur = 8
+        }
+        drawPathLine(target, trace.points)
+        target.shadowBlur = 0
+        target.fillStyle = `rgba(${ICE}, 0.78)`
+        trace.points.forEach((point, index) => {
+          if (index % 2 === 0 || index === trace.points.length - 1) {
+            target.beginPath()
+            target.arc(point.x, point.y, 2.1 + trace.width, 0, Math.PI * 2)
+            target.fill()
+          }
+        })
+      })
+
+      target.restore()
+
+      target.save()
+      target.globalCompositeOperation = "lighter"
+      target.strokeStyle = `rgba(${ICE}, 0.35)`
+      target.lineWidth = 1.4
+      target.stroke(createBrainDividerPath(cx, cy, scale))
+
+      if (!lightMode) {
+        target.strokeStyle = `rgba(${BLUE}, 0.14)`
+        target.lineWidth = 1
+        for (let index = 0; index < 3; index += 1) {
+          target.beginPath()
+          target.ellipse(cx, cy + scale * 0.02, scale * (0.54 + index * 0.1), scale * (0.3 + index * 0.05), -0.18, 0, Math.PI * 2)
+          target.stroke()
+        }
+      }
+
+      target.strokeStyle = `rgba(${BLUE}, 0.72)`
+      target.fillStyle = `rgba(${ICE}, 0.78)`
+      target.lineWidth = 1.8
+      const stemX = cx - scale * 0.16
+      const stemTop = cy + scale * 0.42
+      target.beginPath()
+      target.moveTo(stemX, stemTop)
+      target.lineTo(stemX, stemTop + scale * 0.22)
+      target.lineTo(stemX - scale * 0.18, stemTop + scale * 0.22)
+      target.stroke()
+
+      for (let index = 0; index < 4; index += 1) {
+        target.beginPath()
+        target.arc(stemX - index * scale * 0.045, stemTop + scale * 0.22, 2.4, 0, Math.PI * 2)
+        target.fill()
+      }
+
+      target.restore()
+    }
+
+    const renderStaticLayer = () => {
+      drawBackground(staticContext)
+      drawStaticCircuitFrame(staticContext)
+      drawBinary(staticContext)
+      dots.forEach((dot) => {
+        staticContext.fillStyle = `rgba(${dot.size > 1.5 ? ICE : BLUE}, 0.16)`
+        staticContext.beginPath()
+        staticContext.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2)
+        staticContext.fill()
+      })
+      drawStaticBrain(staticContext)
+    }
+
+    const drawDynamicSignals = (time: number) => {
+      const activeTraces = lightMode ? traces.slice(0, 9) : traces.slice(0, 18)
       context.save()
       context.globalCompositeOperation = "lighter"
-      context.strokeStyle = `rgba(${ELECTRIC}, ${0.18 + Math.sin(time * 0.001) * 0.05})`
-      context.lineWidth = 1.2
-      context.shadowColor = `rgba(${BLUE}, 0.42)`
-      context.shadowBlur = 12
 
-      groovePaths.forEach((groove) => {
+      activeTraces.forEach((trace) => {
+        const pulse = (time * 0.00018 * trace.speed + trace.phase) % 1
+        const point = pointOnTrace(trace, pulse)
+        context.shadowColor = `rgba(${BLUE}, 0.82)`
+        context.shadowBlur = lightMode ? 10 : 18
+        context.fillStyle = `rgba(${ICE}, 0.95)`
         context.beginPath()
-        context.moveTo(cx + groove[0].x * scale, cy + groove[0].y * scale)
-        context.bezierCurveTo(
-          cx + groove[1].x * scale,
-          cy + groove[1].y * scale,
-          cx + groove[2].x * scale,
-          cy + groove[2].y * scale,
-          cx + groove[3].x * scale,
-          cy + groove[3].y * scale,
-        )
-        context.stroke()
+        context.arc(point.x, point.y, lightMode ? 3.1 : 4, 0, Math.PI * 2)
+        context.fill()
       })
+
+      const ribbonCount = lightMode ? 2 : 4
+      for (let index = 0; index < ribbonCount; index += 1) {
+        const y = cy - scale * 0.28 + index * scale * 0.18 + Math.sin(time * 0.0007 + index) * scale * 0.012
+        const startX = cx - scale * 0.86 + ((time * 0.035 + index * scale * 0.22) % (scale * 0.6))
+        const endX = startX + scale * 0.45
+        const gradient = context.createLinearGradient(startX, y, endX, y)
+        gradient.addColorStop(0, "rgba(0, 174, 255, 0)")
+        gradient.addColorStop(0.5, `rgba(${ICE}, ${lightMode ? 0.16 : 0.28})`)
+        gradient.addColorStop(1, "rgba(0, 174, 255, 0)")
+        context.strokeStyle = gradient
+        context.lineWidth = 1.2
+        context.shadowColor = `rgba(${BLUE}, 0.34)`
+        context.shadowBlur = lightMode ? 6 : 12
+        context.beginPath()
+        context.moveTo(startX, y)
+        context.bezierCurveTo(startX + scale * 0.12, y - scale * 0.05, startX + scale * 0.28, y + scale * 0.05, endX, y)
+        context.stroke()
+      }
 
       context.restore()
     }
 
-    const drawBrain = (time: number) => {
-      const scale = Math.min(width * 0.68, height * 0.9, 860)
-      const cx = width < 900 ? width * 0.5 : width * 0.67
-      const cy = height * 0.4
-      const brainPath = createBrainPath(cx, cy, scale)
-      const glow = 0.72 + Math.sin(time * 0.0012) * 0.18
-
-      context.save()
-      context.shadowColor = `rgba(${BLUE}, 0.95)`
-      context.shadowBlur = 72
-      context.fillStyle = `rgba(0, 92, 190, ${0.18 * glow})`
-      context.fill(brainPath)
-      context.lineWidth = 4.4
-      context.strokeStyle = `rgba(${ELECTRIC}, ${0.22 * glow})`
-      context.stroke(brainPath)
-      context.shadowBlur = 28
-      context.lineWidth = 1.4
-      context.strokeStyle = `rgba(${ICE}, ${0.74 * glow})`
-      context.stroke(brainPath)
-      context.restore()
-
-      context.save()
-      context.globalCompositeOperation = "lighter"
-      context.strokeStyle = `rgba(${BLUE}, ${0.2 + Math.sin(time * 0.001) * 0.04})`
-      context.lineWidth = 1
-      context.shadowColor = `rgba(${BLUE}, 0.42)`
-      context.shadowBlur = 20
-      for (let index = 0; index < 4; index += 1) {
-        context.beginPath()
-        context.ellipse(
-          cx,
-          cy + scale * 0.02,
-          scale * (0.52 + index * 0.09),
-          scale * (0.28 + index * 0.05),
-          -0.18,
-          0,
-          Math.PI * 2,
-        )
-        context.stroke()
-      }
-      context.restore()
-
-      context.save()
-      context.clip(brainPath)
-      context.globalCompositeOperation = "lighter"
-      drawBrainTexture(cx, cy, scale, time)
-
-      traces.forEach((trace) => {
-        context.shadowColor = `rgba(${BLUE}, 0.95)`
-        context.shadowBlur = 18
-        context.lineCap = "round"
-        context.lineJoin = "round"
-        context.lineWidth = trace.width
-        context.strokeStyle = `rgba(${ICE}, 0.72)`
-        drawPathLine(context, trace.points)
-
-        context.shadowBlur = 14
-        context.fillStyle = `rgba(${ICE}, 0.96)`
-        trace.points.forEach((point, index) => {
-          if (index % 2 === 0 || index === trace.points.length - 1) {
-            context.beginPath()
-            context.arc(point.x, point.y, 2.4 + trace.width, 0, Math.PI * 2)
-            context.fill()
-            if (index === trace.points.length - 1) {
-              context.strokeStyle = `rgba(${ELECTRIC}, 0.6)`
-              context.lineWidth = 1
-              context.strokeRect(point.x - 5, point.y - 5, 10, 10)
-            }
-          }
-        })
-
-        const pulse = (time * 0.0012 * trace.speed + trace.phase) % 1
-        const point = pointOnTrace(trace, pulse)
-        context.shadowBlur = 34
-        context.fillStyle = `rgba(${ICE}, 1)`
-        context.beginPath()
-        context.arc(point.x, point.y, 4.8, 0, Math.PI * 2)
-        context.fill()
-      })
-
-      context.restore()
-
-      context.save()
-      context.globalCompositeOperation = "lighter"
-      context.strokeStyle = `rgba(${ICE}, 0.38)`
-      context.shadowColor = `rgba(${BLUE}, 0.64)`
-      context.shadowBlur = 24
-      context.lineWidth = 1.6
-      context.stroke(createBrainDividerPath(cx, cy, scale))
-      context.restore()
-
-      context.save()
-      context.globalCompositeOperation = "lighter"
-      context.strokeStyle = `rgba(${BLUE}, 0.82)`
-      context.fillStyle = `rgba(${ICE}, 0.86)`
-      context.shadowColor = `rgba(${BLUE}, 0.88)`
-      context.shadowBlur = 22
-      context.lineWidth = 2
-
-      const stemX = cx - scale * 0.16
-      const stemTop = cy + scale * 0.42
-      context.beginPath()
-      context.moveTo(stemX, stemTop)
-      context.lineTo(stemX, stemTop + scale * 0.22)
-      context.lineTo(stemX - scale * 0.18, stemTop + scale * 0.22)
-      context.stroke()
-
-      for (let index = 0; index < 4; index += 1) {
-        context.beginPath()
-        context.arc(stemX - index * scale * 0.045, stemTop + scale * 0.22, 2.8, 0, Math.PI * 2)
-        context.fill()
-      }
-
-      context.restore()
+    const resize = () => {
+      setupCanvas()
+      renderStaticLayer()
     }
 
     const render = (time = 0) => {
-      drawBackground()
-      drawCircuitFrame(time)
-      drawDust(time)
-      drawBinary(time)
-      drawBrain(time)
+      const frameInterval = lightMode ? 1000 / 18 : 1000 / 24
+      if (time - lastFrame < frameInterval) {
+        animationFrame = window.requestAnimationFrame(render)
+        return
+      }
+      lastFrame = time
 
+      cameraX += (targetCameraX - cameraX) * 0.08
+      cameraY += (targetCameraY - cameraY) * 0.08
+      canvas.style.transform = `translate3d(${cameraX.toFixed(2)}px, ${cameraY.toFixed(2)}px, 0) scale(1.035)`
+
+      context.drawImage(staticCanvas, 0, 0, width, height)
       if (!prefersReducedMotion) {
+        drawDynamicSignals(time)
         animationFrame = window.requestAnimationFrame(render)
       }
+    }
+
+    const handlePointerMove = (event: PointerEvent) => {
+      if (lightMode || prefersReducedMotion) return
+
+      const x = event.clientX / Math.max(width, 1) - 0.5
+      const y = event.clientY / Math.max(height, 1) - 0.5
+      targetCameraX = x * -24
+      targetCameraY = y * -18
+    }
+
+    const resetCamera = () => {
+      targetCameraX = 0
+      targetCameraY = 0
     }
 
     resize()
     render()
     window.addEventListener("resize", resize)
+    window.addEventListener("pointermove", handlePointerMove, { passive: true })
+    window.addEventListener("pointerleave", resetCamera)
+    window.addEventListener("blur", resetCamera)
 
     return () => {
       window.removeEventListener("resize", resize)
+      window.removeEventListener("pointermove", handlePointerMove)
+      window.removeEventListener("pointerleave", resetCamera)
+      window.removeEventListener("blur", resetCamera)
       if (animationFrame) window.cancelAnimationFrame(animationFrame)
     }
   }, [])
 
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-black">
-      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden="true" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_67%_39%,rgba(0,170,255,0.14),transparent_34%),linear-gradient(90deg,rgba(0,0,0,0.44),transparent_42%,rgba(0,0,0,0.14)),linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.58))]" />
+    <div ref={shellRef} className="du-canvas-shell fixed inset-0 z-0 pointer-events-none overflow-hidden bg-black">
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full will-change-transform" aria-hidden="true" />
+      <div className="du-canvas-polish absolute inset-0" />
     </div>
   )
 }

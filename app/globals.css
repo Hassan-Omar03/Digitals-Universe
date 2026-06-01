@@ -6,6 +6,10 @@
   --blue: #3d7ec7;
   --blue-light: #5a9de0;
   --blue-lighter: #8bbef0;
+  --button-start: #2563eb;
+  --button-end: #0891b2;
+  --button-start-hover: #1d4ed8;
+  --button-end-hover: #0284c7;
   --navy: #070e1a;
   --navy-2: #0c1526;
   --navy-3: #111e34;
@@ -106,27 +110,33 @@ section {
 
 .du-nav-shell {
   position: relative;
-  border: 1px solid rgba(139, 190, 240, 0.18);
+  min-height: 5.1rem;
+  border: 1px solid rgba(139, 190, 240, 0.22);
   background:
-    linear-gradient(135deg, rgba(7, 17, 31, 0.78), rgba(3, 9, 21, 0.62)),
-    radial-gradient(circle at 12% 10%, rgba(0, 174, 255, 0.14), transparent 34%);
+    linear-gradient(180deg, rgba(16, 30, 52, 0.78), rgba(6, 14, 28, 0.9)),
+    radial-gradient(circle at 12% 8%, rgba(61, 126, 199, 0.14), transparent 34%),
+    rgba(2, 8, 18, 0.76);
   box-shadow:
-    0 18px 56px rgba(0, 0, 0, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  -webkit-backdrop-filter: blur(28px) saturate(150%);
-  backdrop-filter: blur(28px) saturate(150%);
+    0 22px 60px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
+  backdrop-filter: blur(24px) saturate(135%);
 }
 
 .du-nav-shell::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 1px;
   z-index: 0;
   border-radius: inherit;
   background:
-    linear-gradient(90deg, transparent, rgba(139, 190, 240, 0.11), transparent),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 58%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent 48%),
+    radial-gradient(circle at 86% 50%, rgba(90, 157, 224, 0.08), transparent 28%);
   pointer-events: none;
+}
+
+.du-nav-shell::after {
+  display: none;
 }
 
 .du-nav-shell > * {
@@ -135,55 +145,60 @@ section {
 }
 
 .du-nav-shell-scrolled {
-  border-color: rgba(139, 190, 240, 0.28);
+  border-color: rgba(139, 190, 240, 0.26);
   background:
-    linear-gradient(135deg, rgba(5, 14, 28, 0.9), rgba(2, 7, 18, 0.78)),
-    radial-gradient(circle at 12% 10%, rgba(0, 174, 255, 0.16), transparent 34%);
+    linear-gradient(180deg, rgba(13, 25, 45, 0.84), rgba(4, 11, 24, 0.94)),
+    radial-gradient(circle at 12% 8%, rgba(61, 126, 199, 0.12), transparent 34%);
   box-shadow:
-    0 20px 64px rgba(0, 0, 0, 0.42),
-    0 0 34px rgba(0, 174, 255, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    0 24px 66px rgba(0, 0, 0, 0.44),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .du-nav-logo-mark {
-  filter: drop-shadow(0 0 16px rgba(0, 174, 255, 0.28));
+  border-radius: 0;
+  filter: drop-shadow(0 0 14px rgba(90, 157, 224, 0.28));
+}
+
+.du-brand-word {
+  text-shadow: 0 0 22px rgba(0, 174, 255, 0.18);
+}
+
+.du-brand-word-accent {
+  background: linear-gradient(90deg, #8bbef0, #27d5ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
 }
 
 .du-nav-menu {
-  border: 1px solid rgba(139, 190, 240, 0.11);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025)),
-    rgba(0, 0, 0, 0.18);
+  border: 0;
+  background: transparent;
 }
 
 .du-nav-link {
   isolation: isolate;
+  min-width: auto;
+  text-align: center;
 }
 
 .du-nav-link::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background: linear-gradient(135deg, rgba(0, 174, 255, 0.16), rgba(139, 190, 240, 0.06));
-  opacity: 0;
-  transition: opacity 240ms ease;
+  display: none;
 }
 
 .du-nav-link::after {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: 0.35rem;
-  width: 18px;
+  bottom: 0.15rem;
+  width: 20px;
   height: 2px;
   border-radius: 999px;
-  background: #8bbef0;
-  box-shadow: 0 0 14px rgba(0, 174, 255, 0.7);
+  background: #5a9de0;
+  box-shadow: 0 0 14px rgba(90, 157, 224, 0.6);
   opacity: 0;
   transform: translateX(-50%) scaleX(0.4);
-  transition: opacity 240ms ease, transform 240ms ease;
+  transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .du-nav-link:hover::before,
@@ -198,27 +213,24 @@ section {
 }
 
 .du-nav-link-active {
-  box-shadow:
-    inset 0 0 0 1px rgba(139, 190, 240, 0.24),
-    0 0 24px rgba(0, 174, 255, 0.12);
+  box-shadow: none;
 }
 
 .du-nav-cta {
   border: 1px solid rgba(139, 190, 240, 0.3);
-  background: linear-gradient(135deg, #1667d8, #13a6ff);
+  background: linear-gradient(135deg, var(--button-start), var(--button-end));
   box-shadow:
-    0 14px 32px rgba(0, 89, 255, 0.28),
-    0 0 30px rgba(0, 174, 255, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    0 14px 34px rgba(37, 99, 235, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .du-nav-cta:hover {
-  transform: translateY(-1px);
-  filter: saturate(1.14);
+  border-color: rgba(139, 190, 240, 0.46);
+  background: linear-gradient(135deg, var(--button-start-hover), var(--button-end-hover));
   box-shadow:
-    0 16px 38px rgba(0, 89, 255, 0.34),
-    0 0 38px rgba(0, 174, 255, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.26);
+    0 16px 38px rgba(37, 99, 235, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 .du-nav-mobile {
@@ -338,8 +350,7 @@ section {
   z-index: 1;
 }
 
-.du-premium-card:hover,
-.du-service-card:hover {
+.du-premium-card:hover {
   border-color: rgba(139, 190, 240, 0.56);
   box-shadow:
     0 22px 80px rgba(0, 0, 0, 0.34),
@@ -348,15 +359,153 @@ section {
   transform: translateY(-4px);
 }
 
-.du-premium-card:hover::before,
-.du-service-card:hover::before {
+.du-premium-card:hover::before {
   opacity: 0.9;
   transform: translate3d(0, -6px, 0);
 }
 
-.du-premium-card:hover::after,
-.du-service-card:hover::after {
+.du-premium-card:hover::after {
   opacity: 0.35;
+}
+
+.du-service-card {
+  transition: border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.du-service-card:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transform: none;
+}
+
+.du-service-card:hover::before {
+  opacity: 0.58;
+  transform: none;
+}
+
+.du-service-card:hover::after {
+  opacity: 0;
+}
+
+.du-services-section::before,
+.du-flow-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(0, 174, 255, 0.12), transparent 34%),
+    radial-gradient(circle at 82% 72%, rgba(139, 190, 240, 0.08), transparent 34%);
+  pointer-events: none;
+}
+
+.du-service-card .du-icon-orb,
+.du-flow-card .du-icon-orb {
+  background:
+    radial-gradient(circle at 36% 24%, rgba(215, 244, 255, 0.32), transparent 34%),
+    linear-gradient(145deg, rgba(59, 130, 246, 0.48), rgba(6, 182, 212, 0.18));
+}
+
+.du-label-blur {
+  border: 1px solid rgba(139, 190, 240, 0.28);
+  background:
+    linear-gradient(135deg, rgba(8, 22, 42, 0.78), rgba(3, 10, 24, 0.58)),
+    rgba(255, 255, 255, 0.035);
+  box-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+
+.du-about-card {
+  min-height: 300px;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(10, 28, 52, 0.78), rgba(3, 10, 22, 0.72)),
+    radial-gradient(circle at 50% 0%, rgba(0, 174, 255, 0.12), transparent 42%);
+}
+
+#about .du-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+#about .du-about-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.du-about-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.du-about-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(120deg, rgba(139, 190, 240, 0.08), transparent 42%),
+    radial-gradient(circle at 82% 82%, rgba(0, 174, 255, 0.1), transparent 34%);
+  pointer-events: none;
+}
+
+.du-about-card-title {
+  width: 100%;
+  border: 1px solid rgba(139, 190, 240, 0.38);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(4, 13, 30, 0.86), rgba(7, 21, 42, 0.72)),
+    rgba(255, 255, 255, 0.035);
+  padding: 0.7rem 1rem;
+  text-align: center;
+  font-weight: 900;
+  color: #fff;
+  box-shadow:
+    0 0 24px rgba(0, 174, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+  backdrop-filter: blur(16px) saturate(135%);
+}
+
+.du-about-icon {
+  display: grid;
+  width: 4.25rem;
+  height: 4.25rem;
+  place-items: center;
+  border: 1px solid rgba(139, 190, 240, 0.34);
+  border-radius: 0.75rem;
+  background:
+    radial-gradient(circle at 35% 22%, rgba(215, 244, 255, 0.28), transparent 34%),
+    linear-gradient(145deg, rgba(59, 130, 246, 0.34), rgba(6, 182, 212, 0.12));
+  box-shadow:
+    0 0 28px rgba(0, 174, 255, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.du-action-primary,
+.du-action-secondary,
+.du-icon-action {
+  border: 1px solid rgba(139, 190, 240, 0.3);
+  background: linear-gradient(135deg, var(--button-start), var(--button-end));
+  box-shadow:
+    0 14px 34px rgba(37, 99, 235, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.du-action-primary:hover,
+.du-action-secondary:hover,
+.du-icon-action:hover {
+  border-color: rgba(139, 190, 240, 0.46);
+  background: linear-gradient(135deg, var(--button-start-hover), var(--button-end-hover));
+  box-shadow:
+    0 16px 38px rgba(37, 99, 235, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 .du-glow-button {
@@ -367,7 +516,53 @@ section {
 }
 
 .du-category-pill {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-height: 2.8rem;
+  text-align: center;
+  border-color: rgba(139, 190, 240, 0.2) !important;
+  background:
+    linear-gradient(135deg, rgba(8, 22, 42, 0.72), rgba(3, 10, 24, 0.54)),
+    rgba(255, 255, 255, 0.035) !important;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  -webkit-backdrop-filter: blur(16px) saturate(138%);
+  backdrop-filter: blur(16px) saturate(138%);
+}
+
+.du-category-pill:hover {
+  border-color: rgba(139, 190, 240, 0.34) !important;
+  background:
+    linear-gradient(135deg, rgba(16, 45, 82, 0.74), rgba(4, 15, 34, 0.6)),
+    rgba(255, 255, 255, 0.05) !important;
+}
+
+.du-category-pill.border-\[\#3d7ec7\] {
+  border-color: rgba(139, 190, 240, 0.48) !important;
+  background: linear-gradient(135deg, var(--button-start), var(--button-end)) !important;
+  box-shadow:
+    0 14px 34px rgba(37, 99, 235, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.du-canvas-shell {
+  perspective: 1200px;
+}
+
+.du-canvas-shell canvas {
+  transform-origin: center;
+}
+
+.du-canvas-polish {
+  background:
+    radial-gradient(circle at 67% 39%, rgba(0, 170, 255, 0.12), transparent 34%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.44), transparent 42%, rgba(0, 0, 0, 0.14)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.58)),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 4px);
+  mix-blend-mode: normal;
 }
 
 .du-icon-orb {
@@ -486,7 +681,7 @@ section {
 .du-sparkle-field.du-site-sprinkles {
   position: fixed;
   z-index: 1;
-  opacity: 0.72;
+  display: none;
 }
 
 .du-sparkle {
@@ -494,8 +689,9 @@ section {
   width: 10px;
   height: 10px;
   color: rgba(139, 190, 240, 0.9);
-  animation: du-sprinkle 4.8s ease-in-out infinite;
+  animation: none;
   filter: drop-shadow(0 0 10px rgba(90, 157, 224, 0.65));
+  opacity: 0.22;
 }
 
 .du-sparkle::before,
@@ -1364,3 +1560,189 @@ section {
 .delay-300 { animation-delay: 0.3s; }
 .delay-400 { animation-delay: 0.4s; }
 .delay-500 { animation-delay: 0.5s; }
+
+/* Responsive polish */
+@media (max-width: 1279px) {
+  .du-nav-link {
+    padding-inline: 0.62rem;
+    letter-spacing: 0.08em;
+  }
+
+  .du-nav-shell {
+    max-width: calc(100vw - 1.5rem);
+  }
+}
+
+@media (max-width: 1023px) {
+  html {
+    scroll-padding-top: 5.75rem;
+  }
+
+  .du-sections > section {
+    min-height: auto;
+    padding-block: clamp(3.5rem, 8vw, 5rem);
+  }
+
+  .du-sections > section:first-child {
+    min-height: 100svh;
+    padding-top: 7rem;
+    padding-bottom: 4rem;
+  }
+
+  .du-nav-shell {
+    border-radius: 0.65rem;
+    padding: 0.55rem 0.65rem;
+  }
+
+  .du-nav-mobile {
+    max-height: calc(100svh - 5.5rem);
+    overflow-y: auto;
+  }
+
+  .du-about-card {
+    min-height: auto;
+  }
+
+  .du-about-strip {
+    max-width: min(100%, 42rem);
+  }
+
+  .du-premium-card:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .du-sections > section {
+    padding-inline: 1rem;
+  }
+
+  .du-sections h1 {
+    font-size: clamp(2.35rem, 12vw, 3.45rem);
+    line-height: 1.05;
+  }
+
+  .du-sections h2 {
+    font-size: clamp(1.85rem, 8vw, 2.35rem);
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+
+  .du-sections p {
+    max-width: 100%;
+  }
+
+  .du-label-blur,
+  .du-category-pill {
+    flex-basis: 10.75rem;
+    min-height: 2.65rem;
+    max-width: 100%;
+    white-space: normal;
+    text-align: left;
+    line-height: 1.35;
+  }
+
+  .du-about-card {
+    padding: 1rem;
+  }
+
+  .du-about-card-title {
+    border-radius: 0.6rem;
+    padding: 0.68rem 0.85rem;
+    font-size: 0.98rem;
+    line-height: 1.25;
+    white-space: normal;
+  }
+
+  .du-about-strip {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .du-about-strip .relative {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .du-service-card,
+  #testimonials .du-premium-card {
+    min-width: min(88vw, 22rem) !important;
+    padding: 1.15rem;
+  }
+
+  .du-icon-orb {
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+
+  .du-icon-orb svg {
+    width: 1.65rem;
+    height: 1.65rem;
+  }
+
+  .du-premium-card,
+  .du-service-card {
+    box-shadow:
+      0 14px 42px rgba(0, 0, 0, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+}
+
+@media (max-width: 479px) {
+  .du-nav-shell {
+    max-width: calc(100vw - 1rem);
+  }
+
+  .du-nav-logo-mark {
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+
+  .du-nav-cta {
+    display: none;
+  }
+
+  .du-sections > section {
+    padding-inline: 0.85rem;
+    padding-block: 3.25rem;
+  }
+
+  .du-sections > section:first-child {
+    padding-top: 6.5rem;
+  }
+
+  .du-label-blur {
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
+  }
+
+  .du-category-pill {
+    padding: 0.52rem 0.72rem;
+    font-size: 0.78rem;
+  }
+
+  .du-about-card-title {
+    font-size: 0.92rem;
+  }
+
+  .du-about-icon {
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+
+  .du-mission-chip {
+    gap: 0.75rem;
+    padding-inline: 0.85rem;
+  }
+
+  .du-pulse-dot {
+    width: 0.58rem;
+    height: 0.58rem;
+  }
+
+  .du-service-card,
+  #testimonials .du-premium-card {
+    min-width: min(90vw, 20rem) !important;
+  }
+}

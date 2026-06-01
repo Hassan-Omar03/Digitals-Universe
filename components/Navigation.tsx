@@ -11,11 +11,10 @@ const greetingMessage =
 const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(greetingMessage)}`
 
 const navItems = [
-  { label: "Home", id: "hero" },
   { label: "About", id: "about" },
   { label: "Services", id: "services" },
-  { label: "Checkout", id: "payment" },
-  { label: "Portfolio", id: "portfolio" },
+  { label: "Projects", id: "portfolio" },
+  { label: "Payment", id: "payment" },
   { label: "Reviews", id: "testimonials" },
   { label: "Contact", id: "contact" },
 ]
@@ -98,16 +97,16 @@ export default function Navigation() {
   }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3 sm:px-4">
+    <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3 sm:px-6 lg:pt-4">
       <div
-        className={`du-nav-shell mx-auto grid w-full max-w-6xl grid-cols-[1fr_auto] items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-300 lg:grid-cols-[auto_1fr_auto] ${
+        className={`du-nav-shell mx-auto grid w-full max-w-7xl grid-cols-[1fr_auto] items-center gap-4 rounded-[2rem] px-5 py-3 transition-all duration-300 lg:grid-cols-[auto_1fr_auto] lg:px-8 lg:py-4 ${
           isScrolled ? "du-nav-shell-scrolled" : ""
         }`}
       >
         <button
           type="button"
           onClick={() => handleNavClick("hero")}
-          className="group flex min-w-0 items-center gap-2.5 text-left"
+          className="group flex min-w-0 items-center gap-3 text-left"
           aria-label="Go to Digital Universe home"
         >
           <Image
@@ -116,25 +115,25 @@ export default function Navigation() {
             width={52}
             height={52}
             priority
-            className="du-nav-logo-mark h-11 w-11 shrink-0 object-contain transition-transform duration-300 group-hover:scale-105"
+            className="du-nav-logo-mark h-12 w-12 shrink-0 object-contain transition-transform duration-300 group-hover:scale-105 lg:h-14 lg:w-14"
           />
-          <span className="hidden leading-none sm:block">
-            <span className="block text-base font-black uppercase tracking-[0.12em] text-white">Digital</span>
-            <span className="block text-base font-black uppercase tracking-[0.12em] text-[#8bbef0]">Universe</span>
+          <span className="hidden leading-none sm:block lg:hidden xl:block">
+            <span className="du-brand-word block text-base font-black uppercase tracking-[0.12em] text-white">Digital</span>
+            <span className="du-brand-word-accent block text-base font-black uppercase tracking-[0.12em]">Universe</span>
           </span>
         </button>
 
-        <nav className="du-nav-menu hidden min-w-0 items-center justify-center gap-1 rounded-lg p-1 lg:flex" aria-label="Primary navigation">
+        <nav className="du-nav-menu hidden min-w-0 items-center justify-center gap-7 xl:gap-10 lg:flex" aria-label="Primary navigation">
           {navItems.map((item) => (
             <button
               key={item.id}
               type="button"
               onClick={() => handleNavClick(item.id)}
               aria-current={activeId === item.id ? "page" : undefined}
-              className={`du-nav-link group relative rounded-md px-3 py-2 text-[11px] font-black uppercase tracking-[0.11em] transition-all duration-300 ${
+              className={`du-nav-link group relative rounded-md px-0 py-2 text-sm font-black uppercase tracking-[0.06em] transition-colors duration-200 xl:text-[15px] ${
                 activeId === item.id
                   ? "du-nav-link-active text-white"
-                  : "text-[#b8c8d8]/70 hover:text-white"
+                  : "text-[#b8c8d8]/72 hover:text-white"
               }`}
             >
               {item.label}
@@ -146,7 +145,7 @@ export default function Navigation() {
           href={whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="du-nav-cta hidden items-center justify-center gap-2 rounded-md px-4 py-2.5 text-xs font-black uppercase tracking-[0.1em] text-white transition-all duration-300 sm:inline-flex"
+          className="du-nav-cta hidden items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-black uppercase tracking-[0.08em] text-white sm:inline-flex lg:px-6"
         >
           <MessageCircle className="h-4 w-4" />
           Get Started
@@ -155,7 +154,7 @@ export default function Navigation() {
         <button
           type="button"
           onClick={() => setIsOpen((open) => !open)}
-          className="grid h-10 w-10 place-items-center rounded-md border border-[#8bbef0]/20 bg-white/[0.06] text-white shadow-[0_0_24px_rgba(0,174,255,0.12)] lg:hidden"
+          className="du-icon-action grid h-11 w-11 place-items-center rounded-full text-white lg:hidden"
           aria-label="Toggle navigation"
           aria-expanded={isOpen}
         >
@@ -184,7 +183,7 @@ export default function Navigation() {
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 flex items-center justify-center gap-2 rounded-md bg-[#3d7ec7] px-5 py-3 text-sm font-black uppercase tracking-[0.1em] text-white"
+            className="du-action-primary mt-2 flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-black uppercase tracking-[0.1em] text-white"
           >
             <MessageCircle className="h-5 w-5" />
             Get Started
