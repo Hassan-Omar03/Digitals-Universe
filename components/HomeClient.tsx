@@ -198,6 +198,19 @@ function HeroGlitterField() {
         </div>
 
         <div className="du-hero-layer du-hero-layer-mid">
+          <span className="du-hero-network du-hero-network-one">
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+          </span>
+          <span className="du-hero-network du-hero-network-two">
+            <span />
+            <span />
+            <span />
+            <span />
+          </span>
           <span className="du-hero-wireframe du-hero-wireframe-one" />
           <span className="du-hero-wireframe du-hero-wireframe-two" />
           <span className="du-hero-wireframe du-hero-wireframe-three" />
@@ -216,6 +229,16 @@ function HeroGlitterField() {
               style={{ left, top, width: size, height: size, animationDelay: delay } as CSSProperties}
             />
           ))}
+          <span className="du-hero-planet">
+            <span className="du-hero-planet-grid" />
+            <span className="du-hero-planet-shine" />
+            <span className="du-hero-planet-dot du-hero-planet-dot-one" />
+            <span className="du-hero-planet-dot du-hero-planet-dot-two" />
+            <span className="du-hero-planet-dot du-hero-planet-dot-three" />
+          </span>
+          <span className="du-hero-data-stream du-hero-data-stream-one" />
+          <span className="du-hero-data-stream du-hero-data-stream-two" />
+          <span className="du-hero-data-stream du-hero-data-stream-three" />
           <span className="du-hero-core" />
           <span className="du-hero-orbit du-hero-orbit-one" />
           <span className="du-hero-orbit du-hero-orbit-two" />
@@ -616,94 +639,109 @@ export default function HomeClient() {
       {hasOpenedChat ? <Chatbot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} /> : null}
 
       <div className="du-sections relative z-10 flex w-full flex-col">
-        <section id="hero" className="relative flex min-h-[88vh] items-center overflow-hidden border-b border-white/10 bg-[#07111f]/85 px-4 pt-28 pb-12 md:pt-32 md:pb-16">
+        <section id="hero" className="du-blur-band relative flex min-h-[100svh] items-center justify-center overflow-hidden px-4 py-24 md:py-28">
           <SparkleField />
           <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[linear-gradient(180deg,rgba(90,157,224,0.16),transparent_78%)]" />
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(61,126,199,0.12),transparent_38%,rgba(55,208,174,0.07))]" />
-          <div className="mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[0.94fr_1.06fr] lg:items-center">
-            <div className="mx-auto max-w-2xl text-center lg:mx-0 lg:text-left">
-              <div className="mb-5 inline-flex items-center justify-center gap-2 rounded-md border border-[#3d7ec7]/40 bg-[#3d7ec7]/10 px-3 py-2 text-xs font-bold uppercase tracking-[0.16em] text-[#8bbef0]">
-                <Cpu className="h-4 w-4" />
-                Premium digital agency
-              </div>
-              <h1 className="mx-auto max-w-3xl text-3xl font-black leading-[1.08] text-white sm:text-4xl md:text-5xl lg:mx-0">
-                Fast websites, clean brands, and digital growth that feels premium.
-              </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-[#b8c8d8] lg:mx-0">
-                Digital Universe builds websites, UI/UX, SEO, ads, and brand assets that load quickly and convert clearly.
-              </p>
 
-              <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
-                <button
-                  onClick={() => scrollToSection("services")}
-                  className="inline-flex items-center justify-center gap-2 rounded-md bg-[#3d7ec7] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#5a9de0]"
-                >
-                  Explore Services
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-                <a
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.06] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10"
-                >
-                  Get Started Now
-                  <MessageCircle className="h-4 w-4" />
-                </a>
-              </div>
-
-              <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {stats.map((stat) => (
-                  <div key={stat.label} className="rounded-lg border border-white/10 bg-[#0c1526]/75 px-3 py-4 shadow-[0_14px_40px_rgba(0,0,0,0.18)]">
-                    <div className="text-xl font-black text-white">{stat.value}</div>
-                    <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-neutral-500">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
+          <div className="relative z-10 mx-auto w-full max-w-5xl text-center">
+            <div className="mb-5 inline-flex items-center justify-center gap-2 rounded-md border border-[#3d7ec7]/40 bg-[#3d7ec7]/10 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#8bbef0]">
+              <Cpu className="h-4 w-4" />
+              Premium digital agency
             </div>
+            <h1 className="mx-auto max-w-4xl text-4xl font-black leading-[1.08] text-white sm:text-5xl md:text-[3.4rem] lg:text-[3.8rem]">
+              Fast websites, clean brands, and digital growth that feels premium.
+            </h1>
+            <p className="mx-auto mt-5 max-w-2xl text-base font-semibold leading-8 text-[#d7e6f4] md:text-lg">
+              Digital Universe builds websites, UI/UX, SEO, ads, and brand assets that load quickly and convert clearly.
+            </p>
 
-            <HeroGlitterField />
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+              <button
+                onClick={() => scrollToSection("services")}
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-[#3d7ec7] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#5a9de0]"
+              >
+                Explore Services
+                <ArrowRight className="h-4 w-4" />
+              </button>
+              <a
+                href={whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 bg-white/[0.06] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10"
+              >
+                Get Started Now
+                <MessageCircle className="h-4 w-4" />
+              </a>
+            </div>
           </div>
         </section>
 
-        <section id="about" className="du-blur-band relative scroll-mt-36 overflow-hidden px-4 py-14 md:py-16">
+        <section className="relative flex min-h-[100svh] items-center overflow-hidden border-b border-white/10 bg-black/20 px-4 py-12 md:py-14">
+          <SparkleField className="opacity-50" />
+          <div className="mx-auto w-full max-w-6xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <div className="mb-5 inline-flex items-center justify-center gap-2 rounded-md border border-[#8bbef0]/40 bg-white/[0.04] px-3 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#8bbef0]">
+                <BarChart3 className="h-4 w-4" />
+                Our impact in numbers
+              </div>
+              <h2 className="text-3xl font-black leading-tight text-white md:text-[2.45rem]">
+                Real results. Real digital growth.
+              </h2>
+            </div>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {stats.map((stat) => (
+                <article
+                  key={stat.label}
+                  className="rounded-lg border border-white/10 bg-[#0c1526]/72 px-5 py-8 text-center shadow-[0_18px_60px_rgba(0,0,0,0.22)]"
+                >
+                  <div className="text-4xl font-black leading-none text-white md:text-5xl">{stat.value}</div>
+                  <div className="mt-4 text-xs font-black uppercase tracking-[0.16em] text-[#8bbef0]">{stat.label}</div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="about" className="du-blur-band relative flex min-h-[100svh] scroll-mt-36 items-center overflow-hidden px-4 py-12 md:py-14">
           <SparkleField className="opacity-60" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(90,157,224,0.14),transparent_46%)]" />
           <div className="mx-auto w-full max-w-6xl">
             <div className="text-center">
-              <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#8bbef0]/40 bg-white/[0.04] px-5 py-2.5 text-sm font-bold text-white/90 shadow-[0_0_30px_rgba(90,157,224,0.16)]">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#8bbef0]/40 bg-white/[0.04] px-5 py-2 text-sm font-bold text-white/90 shadow-[0_0_30px_rgba(90,157,224,0.16)]">
                 <Sparkles className="h-4 w-4 text-[#8bbef0]" />
                 About Our Company
               </div>
-              <h2 className="text-3xl font-black tracking-tight text-white md:text-4xl">
+              <h2 className="text-3xl font-black tracking-tight text-white md:text-[2.45rem]">
                 Welcome to <span className="text-[#5a9de0]">Digital Universe</span>
               </h2>
             </div>
 
-            <div className="mt-11 grid gap-5 lg:grid-cols-[1.05fr_0.72fr_1fr]">
-              <article className="relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-6 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
+            <div className="mt-9 grid gap-5 lg:grid-cols-[1.05fr_0.72fr_1fr]">
+              <article className="relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-5 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
                 <div className="absolute left-1/2 top-0 min-w-[min(230px,86vw)] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-[#8bbef0]/50 bg-[#07111f] px-5 py-1.5 text-center text-base font-black text-white shadow-[0_0_22px_rgba(90,157,224,0.2)] md:text-lg">
                   Our Core Philosophy
                 </div>
-                <div className="grid grid-cols-3 gap-5 pt-8">
+                <div className="grid grid-cols-3 gap-4 pt-7">
                   {philosophyCards.map((item) => (
                     <div key={item.title} className="flex flex-col items-center text-center">
-                      <div className="relative mb-4 h-20 w-20 sm:h-24 sm:w-24">
+                      <div className="relative mb-3 h-16 w-16 sm:h-20 sm:w-20">
                         <Image src={item.image} alt={item.title} fill className="object-contain" sizes="96px" />
                       </div>
-                      <h3 className="text-lg font-black leading-tight text-white">{item.title}</h3>
+                      <h3 className="text-base font-black leading-tight text-white">{item.title}</h3>
                     </div>
                   ))}
                 </div>
               </article>
 
-              <article className="relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-6 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
+              <article className="relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-5 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
                 <div className="absolute left-1/2 top-0 min-w-[min(150px,86vw)] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-[#8bbef0]/50 bg-[#07111f] px-5 py-1.5 text-center text-base font-black text-white shadow-[0_0_22px_rgba(90,157,224,0.2)] md:text-lg">
                   Our Mission
                 </div>
-                <div className="space-y-4 pt-9">
+                <div className="space-y-3 pt-8">
                   {missionPoints.map((item, index) => (
-                    <div key={item.label} className="flex items-center gap-4 rounded-md border border-white/10 bg-white/[0.04] px-4 py-3">
+                    <div key={item.label} className="flex items-center gap-4 rounded-md border border-white/10 bg-white/[0.04] px-4 py-2.5">
                       <span className="text-xs font-black uppercase tracking-[0.18em] text-[#8bbef0]">
                         {String(index + 1).padStart(2, "0")}
                       </span>
@@ -713,27 +751,27 @@ export default function HomeClient() {
                 </div>
               </article>
 
-              <article className="relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-6 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
+              <article className="relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-5 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
                 <div className="absolute left-1/2 top-0 min-w-[min(360px,92vw)] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-[#8bbef0]/50 bg-[#07111f] px-5 py-1.5 text-center text-sm font-black text-white shadow-[0_0_22px_rgba(90,157,224,0.2)] md:text-lg">
                   Global Reach & Trusted Partnerships
                 </div>
-                <div className="relative mt-8 h-48 overflow-hidden rounded-md">
+                <div className="relative mt-7 h-40 overflow-hidden rounded-md">
                   <Image src="/map.png" alt="Global reach map" fill className="object-contain" sizes="(max-width: 1024px) 100vw, 33vw" />
                   <span className="absolute bottom-12 left-[56%] rounded-md bg-[#07111f]/80 px-2 py-1 text-sm font-bold text-white">UAE</span>
                   <span className="absolute right-3 top-20 rounded-md bg-[#07111f]/80 px-2 py-1 text-sm font-bold text-white">Bangladesh</span>
                 </div>
-                <div className="mt-4 grid grid-cols-2 gap-3 text-center">
-                  <div className="rounded-md bg-white/[0.04] px-3 py-3 text-sm font-black text-white">From Startups to Enterprises</div>
-                  <div className="rounded-md bg-white/[0.04] px-3 py-3 text-sm font-black text-white">Trusted Partner Globally</div>
+                <div className="mt-3 grid grid-cols-2 gap-3 text-center">
+                  <div className="rounded-md bg-white/[0.04] px-3 py-2.5 text-sm font-black text-white">From Startups to Enterprises</div>
+                  <div className="rounded-md bg-white/[0.04] px-3 py-2.5 text-sm font-black text-white">Trusted Partner Globally</div>
                 </div>
               </article>
             </div>
 
-            <div className="mx-auto mt-7 grid max-w-3xl grid-cols-[80px_1fr_80px] items-center gap-5 rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 px-5 py-4 text-center shadow-[0_18px_70px_rgba(0,0,0,0.24)]">
+            <div className="mx-auto mt-6 grid max-w-3xl grid-cols-[64px_1fr_64px] items-center gap-4 rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 px-5 py-3.5 text-center shadow-[0_18px_70px_rgba(0,0,0,0.24)]">
               <div className="relative h-14 w-14 justify-self-center">
                 <Image src="/computer.png" alt="Technical excellence" fill className="object-contain" sizes="56px" />
               </div>
-              <p className="text-xl font-black leading-tight text-white md:text-2xl">
+              <p className="text-lg font-black leading-tight text-white md:text-xl">
                 Combining Technical Excellence <br className="hidden sm:block" />
                 with Creative Innovation
               </p>
@@ -744,7 +782,7 @@ export default function HomeClient() {
           </div>
         </section>
 
-        <section id="services" className="relative border-y border-white/10 bg-black/20 px-4 py-14 md:py-20">
+        <section id="services" className="relative flex min-h-[100svh] items-center border-y border-white/10 bg-black/20 px-4 py-12 md:py-14">
           <div className="mx-auto w-full max-w-6xl">
             <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
               <div>
@@ -752,7 +790,7 @@ export default function HomeClient() {
                   <Code className="h-4 w-4" />
                   What We Build
                 </div>
-                <h2 className="text-2xl font-black text-white md:text-4xl">Services built to work together.</h2>
+                <h2 className="text-2xl font-black text-white md:text-[2.45rem]">Services built to work together.</h2>
               </div>
               <div className="flex gap-2">
                 <button
@@ -803,40 +841,49 @@ export default function HomeClient() {
           </div>
         </section>
 
-        <section className="du-blur-band relative px-4 py-14 md:py-16">
-          <div className="mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-            <div>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">
+        <section className="du-blur-band relative flex min-h-[100svh] items-center overflow-hidden px-4 py-12 md:py-14">
+          <SparkleField className="opacity-45" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_48%,rgba(90,157,224,0.18),transparent_42%),radial-gradient(circle_at_78%_32%,rgba(55,208,174,0.1),transparent_38%)]" />
+          <div className="mx-auto w-full max-w-6xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <div className="mb-5 inline-flex items-center justify-center gap-2 rounded-md border border-[#8bbef0]/40 bg-white/[0.04] px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">
                 <Rocket className="h-4 w-4" />
                 Delivery Flow
               </div>
-              <h2 className="text-2xl font-black text-white md:text-4xl">Clear steps from idea to launch.</h2>
-              <p className="mt-5 text-base leading-8 text-[#b8c8d8]">
+              <h2 className="text-2xl font-black text-white md:text-[2.45rem]">Clear steps from idea to launch.</h2>
+              <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-[#b8c8d8]">
                 Design, build, and marketing stay connected from the first call.
               </p>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
+
+            <div className="relative mt-12 grid gap-5 lg:grid-cols-4">
+              <div className="pointer-events-none absolute left-0 right-0 top-[35px] hidden h-px bg-gradient-to-r from-transparent via-[#8bbef0]/35 to-transparent lg:block" />
               {processSteps.map((step, index) => (
-                <article key={step.title} className="rounded-lg border border-white/10 bg-white/[0.035] p-6">
-                  <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-md bg-[#3d7ec7] text-sm font-black text-white">
-                    {index + 1}
+                <article
+                  key={step.title}
+                  className="relative rounded-lg border border-[#8bbef0]/30 bg-[#07111f]/76 p-6 shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
+                >
+                  <div className="relative mb-7 flex justify-center">
+                    <div className="grid h-[70px] w-[70px] place-items-center rounded-lg border border-[#8bbef0]/40 bg-[#3d7ec7]/20 text-base font-black text-white shadow-[0_0_35px_rgba(90,157,224,0.2)]">
+                      {String(index + 1).padStart(2, "0")}
+                    </div>
                   </div>
-                  <h3 className="text-xl font-black text-white">{step.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-neutral-400">{step.text}</p>
+                  <h3 className="text-center text-xl font-black text-white">{step.title}</h3>
+                  <p className="mx-auto mt-3 max-w-[15rem] text-center text-sm leading-7 text-[#b8c8d8]">{step.text}</p>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="payment" className="relative border-y border-white/10 bg-black/20 px-4 py-14 md:py-20">
+        <section id="payment" className="relative flex min-h-[100svh] items-center border-y border-white/10 bg-black/20 px-4 py-12 md:py-14">
           <div className="mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-[#3d7ec7]/40 bg-[#3d7ec7]/10 px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">
                 <CreditCard className="h-4 w-4" />
                 Secure Checkout
               </div>
-              <h2 className="text-2xl font-black text-white md:text-4xl">Simple payment for approved work.</h2>
+              <h2 className="text-2xl font-black text-white md:text-[2.45rem]">Simple payment for approved work.</h2>
               <p className="mt-5 text-base leading-8 text-[#b8c8d8]">
                 Pay after your scope and amount are confirmed by the team.
               </p>
@@ -847,7 +894,7 @@ export default function HomeClient() {
           </div>
         </section>
 
-        <section id="portfolio" className="du-blur-band relative px-4 py-14 md:py-16">
+        <section id="portfolio" className="du-blur-band relative flex min-h-[100svh] items-center px-4 py-12 md:py-14">
           <div className="mx-auto w-full max-w-6xl">
             <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
               <div className="max-w-3xl">
@@ -855,7 +902,7 @@ export default function HomeClient() {
                   <Layers className="h-4 w-4" />
                   Featured Work
                 </div>
-                <h2 className="text-2xl font-black text-white md:text-4xl">Real projects, shown all at once.</h2>
+                <h2 className="text-2xl font-black text-white md:text-[2.45rem]">Real projects, shown all at once.</h2>
               </div>
             </div>
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -891,7 +938,7 @@ export default function HomeClient() {
           </div>
         </section>
 
-        <section id="testimonials" className="relative border-y border-white/10 bg-black/20 px-4 py-14 md:py-20">
+        <section id="testimonials" className="relative flex min-h-[100svh] items-center border-y border-white/10 bg-black/20 px-4 py-12 md:py-14">
           <div className="mx-auto w-full max-w-6xl">
             <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
               <div className="max-w-3xl">
@@ -899,7 +946,7 @@ export default function HomeClient() {
                   <Star className="h-4 w-4" />
                   Client Reviews
                 </div>
-                <h2 className="text-2xl font-black text-white md:text-4xl">Trusted by clients who need clear delivery.</h2>
+                <h2 className="text-2xl font-black text-white md:text-[2.45rem]">Trusted by clients who need clear delivery.</h2>
               </div>
               <div className="flex gap-2">
                 <button
@@ -951,14 +998,14 @@ export default function HomeClient() {
           </div>
         </section>
 
-        <section id="contact" className="du-blur-band relative px-4 py-14 md:py-16">
+        <section id="contact" className="du-blur-band relative flex min-h-[100svh] items-center px-4 py-12 md:py-14">
           <div className="mx-auto grid w-full max-w-6xl gap-8 rounded-lg border border-white/10 bg-[#0c1526]/80 p-6 md:grid-cols-[1.1fr_0.9fr] md:p-10">
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">
                 <MessageCircle className="h-4 w-4" />
                 Start Your Project
               </div>
-              <h2 className="text-2xl font-black text-white md:text-4xl">Ready for a faster digital presence?</h2>
+              <h2 className="text-2xl font-black text-white md:text-[2.45rem]">Ready for a faster digital presence?</h2>
               <p className="mt-5 max-w-2xl text-base leading-8 text-[#b8c8d8]">
                 Tell us what you need. We will shape the right scope for website, branding, marketing, or automation.
               </p>
