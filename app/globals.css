@@ -99,28 +99,14 @@ section {
   z-index: 1;
 }
 
-.backdrop-blur-sm,
-.backdrop-blur-md,
-.backdrop-blur-lg,
-.backdrop-blur-xl,
-.backdrop-blur-2xl {
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
-}
-
 .du-nav-shell {
   position: relative;
-  min-height: 5.1rem;
-  border: 1px solid rgba(139, 190, 240, 0.22);
-  background:
-    linear-gradient(180deg, rgba(16, 30, 52, 0.78), rgba(6, 14, 28, 0.9)),
-    radial-gradient(circle at 12% 8%, rgba(61, 126, 199, 0.14), transparent 34%),
-    rgba(2, 8, 18, 0.76);
-  box-shadow:
-    0 22px 60px rgba(0, 0, 0, 0.36),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  -webkit-backdrop-filter: blur(24px) saturate(135%);
-  backdrop-filter: blur(24px) saturate(135%);
+  min-height: 4.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(26px) saturate(145%);
+  backdrop-filter: blur(26px) saturate(145%);
 }
 
 .du-nav-shell::before {
@@ -129,9 +115,7 @@ section {
   inset: 1px;
   z-index: 0;
   border-radius: inherit;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent 48%),
-    radial-gradient(circle at 86% 50%, rgba(90, 157, 224, 0.08), transparent 28%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.015));
   pointer-events: none;
 }
 
@@ -145,13 +129,9 @@ section {
 }
 
 .du-nav-shell-scrolled {
-  border-color: rgba(139, 190, 240, 0.26);
-  background:
-    linear-gradient(180deg, rgba(13, 25, 45, 0.84), rgba(4, 11, 24, 0.94)),
-    radial-gradient(circle at 12% 8%, rgba(61, 126, 199, 0.12), transparent 34%);
-  box-shadow:
-    0 24px 66px rgba(0, 0, 0, 0.44),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.095);
+  box-shadow: none;
 }
 
 .du-nav-logo-mark {
@@ -217,30 +197,24 @@ section {
 }
 
 .du-nav-cta {
-  border: 1px solid rgba(139, 190, 240, 0.3);
-  background: linear-gradient(135deg, var(--button-start), var(--button-end));
-  box-shadow:
-    0 14px 34px rgba(37, 99, 235, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.10);
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(145%);
   transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .du-nav-cta:hover {
-  border-color: rgba(139, 190, 240, 0.46);
-  background: linear-gradient(135deg, var(--button-start-hover), var(--button-end-hover));
-  box-shadow:
-    0 16px 38px rgba(37, 99, 235, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  border-color: rgba(139, 190, 240, 0.42);
+  background: rgba(139, 190, 240, 0.16);
+  box-shadow: none;
 }
 
 .du-nav-mobile {
-  border: 1px solid rgba(139, 190, 240, 0.2);
-  background:
-    linear-gradient(135deg, rgba(7, 17, 31, 0.94), rgba(3, 9, 21, 0.86)),
-    radial-gradient(circle at 12% 0%, rgba(0, 174, 255, 0.12), transparent 42%);
-  box-shadow:
-    0 18px 55px rgba(0, 0, 0, 0.38),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
   -webkit-backdrop-filter: blur(28px) saturate(150%);
   backdrop-filter: blur(28px) saturate(150%);
 }
@@ -250,20 +224,13 @@ section {
 }
 
 .du-footer-blur {
-  background: rgba(7, 17, 31, 0.58);
-  -webkit-backdrop-filter: blur(26px) saturate(136%);
-  backdrop-filter: blur(26px) saturate(136%);
+  background: rgba(255, 255, 255, 0.055);
+  -webkit-backdrop-filter: blur(26px) saturate(145%);
+  backdrop-filter: blur(26px) saturate(145%);
 }
 
 .du-footer-blur::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background:
-    linear-gradient(180deg, rgba(139, 190, 240, 0.08), transparent 46%),
-    linear-gradient(120deg, rgba(61, 126, 199, 0.1), transparent 50%, rgba(55, 208, 174, 0.06));
-  pointer-events: none;
+  display: none;
 }
 
 .du-footer-blur > * {
@@ -272,9 +239,9 @@ section {
 }
 
 .du-blur-band {
-  background: rgba(8, 18, 33, 0.56);
-  -webkit-backdrop-filter: blur(24px) saturate(126%);
-  backdrop-filter: blur(24px) saturate(126%);
+  background: rgba(255, 255, 255, 0.038);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
+  backdrop-filter: blur(24px) saturate(135%);
 }
 
 .du-blur-band::before {
@@ -282,10 +249,8 @@ section {
   position: absolute;
   inset: 0;
   z-index: 0;
-  border-block: 1px solid rgba(255, 255, 255, 0.08);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 38%),
-    linear-gradient(120deg, rgba(61, 126, 199, 0.12), transparent 48%, rgba(55, 208, 174, 0.07));
+  border-block: 1px solid rgba(255, 255, 255, 0.10);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 48%);
   pointer-events: none;
 }
 
@@ -308,12 +273,10 @@ section {
 .du-service-card {
   position: relative;
   overflow: hidden;
-  background:
-    linear-gradient(145deg, rgba(12, 28, 52, 0.88), rgba(4, 10, 22, 0.78)),
-    radial-gradient(circle at 18% 12%, rgba(56, 189, 248, 0.14), transparent 36%);
-  box-shadow:
-    0 18px 70px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.065) !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+  backdrop-filter: blur(24px) saturate(145%);
 }
 
 .du-premium-card::before,
@@ -322,26 +285,15 @@ section {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background:
-    linear-gradient(115deg, transparent 0 18%, rgba(139, 190, 240, 0.13) 38%, transparent 58%),
-    radial-gradient(circle at 82% 18%, rgba(55, 208, 174, 0.12), transparent 32%),
-    radial-gradient(circle at 20% 100%, rgba(59, 130, 246, 0.15), transparent 34%);
-  opacity: 0.58;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.01));
+  opacity: 0.72;
   transition: opacity 260ms ease, transform 420ms ease;
   pointer-events: none;
 }
 
 .du-premium-card::after,
 .du-service-card::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  z-index: 0;
-  border-radius: inherit;
-  background: linear-gradient(120deg, rgba(139, 190, 240, 0.36), transparent 36%, rgba(55, 208, 174, 0.2) 70%, transparent);
-  opacity: 0;
-  transition: opacity 260ms ease;
-  pointer-events: none;
+  display: none;
 }
 
 .du-premium-card > *,
@@ -352,10 +304,7 @@ section {
 
 .du-premium-card:hover {
   border-color: rgba(139, 190, 240, 0.56);
-  box-shadow:
-    0 22px 80px rgba(0, 0, 0, 0.34),
-    0 0 42px rgba(56, 189, 248, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: none !important;
   transform: translateY(-4px);
 }
 
@@ -365,7 +314,7 @@ section {
 }
 
 .du-premium-card:hover::after {
-  opacity: 0.35;
+  opacity: 0;
 }
 
 .du-service-card {
@@ -374,9 +323,7 @@ section {
 
 .du-service-card:hover {
   border-color: rgba(255, 255, 255, 0.1);
-  box-shadow:
-    0 18px 60px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow: none !important;
   transform: none;
 }
 
@@ -395,37 +342,39 @@ section {
   position: absolute;
   inset: 0;
   z-index: 0;
+  border-block: 1px solid rgba(139, 190, 240, 0.18);
   background:
-    radial-gradient(circle at 18% 18%, rgba(0, 174, 255, 0.12), transparent 34%),
-    radial-gradient(circle at 82% 72%, rgba(139, 190, 240, 0.08), transparent 34%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent 30%, rgba(139, 190, 240, 0.035)),
+    radial-gradient(circle at 18% 18%, rgba(139, 190, 240, 0.14), transparent 36%),
+    radial-gradient(circle at 82% 72%, rgba(55, 208, 174, 0.08), transparent 34%);
   pointer-events: none;
 }
 
 .du-service-card .du-icon-orb,
 .du-flow-card .du-icon-orb {
-  background:
-    radial-gradient(circle at 36% 24%, rgba(215, 244, 255, 0.32), transparent 34%),
-    linear-gradient(145deg, rgba(59, 130, 246, 0.48), rgba(6, 182, 212, 0.18));
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: none;
+  filter: none;
+  animation: none;
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+  backdrop-filter: blur(16px) saturate(135%);
 }
 
 .du-label-blur {
-  border: 1px solid rgba(139, 190, 240, 0.28);
-  background:
-    linear-gradient(135deg, rgba(8, 22, 42, 0.78), rgba(3, 10, 24, 0.58)),
-    rgba(255, 255, 255, 0.035);
-  box-shadow:
-    0 14px 38px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  background: rgba(255, 255, 255, 0.065);
+  box-shadow: none;
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   backdrop-filter: blur(18px) saturate(140%);
 }
 
 .du-about-card {
-  min-height: 300px;
+  min-height: 180px;
   overflow: hidden;
-  background:
-    linear-gradient(145deg, rgba(10, 28, 52, 0.78), rgba(3, 10, 22, 0.72)),
-    radial-gradient(circle at 50% 0%, rgba(0, 174, 255, 0.12), transparent 42%);
+  background: rgba(255, 255, 255, 0.065) !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+  backdrop-filter: blur(24px) saturate(145%);
 }
 
 #about .du-reveal {
@@ -444,30 +393,19 @@ section {
 }
 
 .du-about-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background:
-    linear-gradient(120deg, rgba(139, 190, 240, 0.08), transparent 42%),
-    radial-gradient(circle at 82% 82%, rgba(0, 174, 255, 0.1), transparent 34%);
-  pointer-events: none;
+  display: none;
 }
 
 .du-about-card-title {
   width: 100%;
-  border: 1px solid rgba(139, 190, 240, 0.38);
-  border-radius: 999px;
-  background:
-    linear-gradient(135deg, rgba(4, 13, 30, 0.86), rgba(7, 21, 42, 0.72)),
-    rgba(255, 255, 255, 0.035);
-  padding: 0.7rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 0.52rem 0.75rem;
   text-align: center;
-  font-weight: 900;
+  font-weight: 800;
   color: #fff;
-  box-shadow:
-    0 0 24px rgba(0, 174, 255, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: none;
   -webkit-backdrop-filter: blur(16px) saturate(135%);
   backdrop-filter: blur(16px) saturate(135%);
 }
@@ -482,19 +420,17 @@ section {
   background:
     radial-gradient(circle at 35% 22%, rgba(215, 244, 255, 0.28), transparent 34%),
     linear-gradient(145deg, rgba(59, 130, 246, 0.34), rgba(6, 182, 212, 0.12));
-  box-shadow:
-    0 0 28px rgba(0, 174, 255, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: none;
 }
 
 .du-action-primary,
 .du-action-secondary,
 .du-icon-action {
-  border: 1px solid rgba(139, 190, 240, 0.3);
-  background: linear-gradient(135deg, var(--button-start), var(--button-end));
-  box-shadow:
-    0 14px 34px rgba(37, 99, 235, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(145%);
   transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
@@ -502,10 +438,8 @@ section {
 .du-action-secondary:hover,
 .du-icon-action:hover {
   border-color: rgba(139, 190, 240, 0.46);
-  background: linear-gradient(135deg, var(--button-start-hover), var(--button-end-hover));
-  box-shadow:
-    0 16px 38px rgba(37, 99, 235, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  background: rgba(139, 190, 240, 0.16);
+  box-shadow: none;
 }
 
 .du-glow-button {
@@ -522,30 +456,22 @@ section {
   flex: 0 0 auto;
   min-height: 2.8rem;
   text-align: center;
-  border-color: rgba(139, 190, 240, 0.2) !important;
-  background:
-    linear-gradient(135deg, rgba(8, 22, 42, 0.72), rgba(3, 10, 24, 0.54)),
-    rgba(255, 255, 255, 0.035) !important;
-  box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  background: rgba(255, 255, 255, 0.065) !important;
+  box-shadow: none;
   -webkit-backdrop-filter: blur(16px) saturate(138%);
   backdrop-filter: blur(16px) saturate(138%);
 }
 
 .du-category-pill:hover {
   border-color: rgba(139, 190, 240, 0.34) !important;
-  background:
-    linear-gradient(135deg, rgba(16, 45, 82, 0.74), rgba(4, 15, 34, 0.6)),
-    rgba(255, 255, 255, 0.05) !important;
+  background: rgba(139, 190, 240, 0.13) !important;
 }
 
 .du-category-pill.border-\[\#3d7ec7\] {
   border-color: rgba(139, 190, 240, 0.48) !important;
-  background: linear-gradient(135deg, var(--button-start), var(--button-end)) !important;
-  box-shadow:
-    0 14px 34px rgba(37, 99, 235, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  background: rgba(139, 190, 240, 0.16) !important;
+  box-shadow: none;
 }
 
 .du-canvas-shell {
@@ -571,13 +497,11 @@ section {
   width: 4.4rem;
   height: 4.4rem;
   border-radius: 0.5rem;
-  background:
-    radial-gradient(circle at 36% 24%, rgba(215, 244, 255, 0.26), transparent 34%),
-    linear-gradient(145deg, rgba(59, 130, 246, 0.42), rgba(6, 182, 212, 0.14));
-  box-shadow:
-    0 0 28px rgba(56, 189, 248, 0.22),
-    inset 0 0 20px rgba(139, 190, 240, 0.1);
-  animation: du-orb-breathe 4.8s ease-in-out infinite;
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: none;
+  animation: none;
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+  backdrop-filter: blur(16px) saturate(135%);
 }
 
 .du-pulse-dot {
@@ -1665,8 +1589,7 @@ section {
     height: 3.5rem;
   }
 
-  .du-service-card,
-  #testimonials .du-premium-card {
+  .du-service-card {
     min-width: min(88vw, 22rem) !important;
     padding: 1.15rem;
   }
@@ -1741,8 +1664,7 @@ section {
     height: 0.58rem;
   }
 
-  .du-service-card,
-  #testimonials .du-premium-card {
+  .du-service-card {
     min-width: min(90vw, 20rem) !important;
   }
 }

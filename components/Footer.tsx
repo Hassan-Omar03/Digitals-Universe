@@ -49,7 +49,7 @@ export default function Footer() {
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-md bg-[#3d7ec7] px-5 py-3 text-sm font-black text-white transition-colors hover:bg-[#5a9de0]"
+            className="du-action-primary inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-black text-white"
           >
             <MessageCircle className="h-5 w-5" />
             Start Your Project

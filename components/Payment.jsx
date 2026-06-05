@@ -103,17 +103,17 @@ const Payment = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="w-full flex flex-col justify-center p-8 rounded-2xl"
+            className="w-full flex flex-col justify-center p-5 md:p-7 rounded-[22px]"
         >
-            <h2 className="text-2xl font-semibold text-white mb-8 text-center">
+            <h2 className="text-2xl font-black text-white mb-7 text-center">
                 Payment Details
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Left */}
-                <div className="space-y-5">
+                <div className="space-y-4">
                     <div>
-                        <label className="block text-sm text-white/80 mb-2">
+                        <label className="block text-xs font-bold uppercase tracking-[0.14em] text-[#8bbef0] mb-2">
                             Full Name
                         </label>
                         <input
@@ -121,13 +121,13 @@ const Payment = () => {
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white"
+                            className="w-full px-4 py-3 rounded-[14px] bg-white/[0.07] border border-white/15 text-white outline-none transition-colors placeholder:text-white/35 focus:border-[#8bbef0]/60 focus:bg-white/[0.10]"
                             required
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm text-white/80 mb-2">
+                        <label className="block text-xs font-bold uppercase tracking-[0.14em] text-[#8bbef0] mb-2">
                             Email Address
                         </label>
                         <input
@@ -135,16 +135,16 @@ const Payment = () => {
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white"
+                            className="w-full px-4 py-3 rounded-[14px] bg-white/[0.07] border border-white/15 text-white outline-none transition-colors placeholder:text-white/35 focus:border-[#8bbef0]/60 focus:bg-white/[0.10]"
                             required
                         />
                     </div>
                 </div>
 
                 {/* Right */}
-                <div className="space-y-5">
+                <div className="space-y-4">
                     <div>
-                        <label className="block text-sm text-white/80 mb-2">
+                        <label className="block text-xs font-bold uppercase tracking-[0.14em] text-[#8bbef0] mb-2">
                             Phone Number ({country})
                         </label>
                         <input
@@ -153,13 +153,13 @@ const Payment = () => {
                             value={formData.phone}
                             onChange={handleChange}
                             placeholder="+971 50 123 4567"
-                            className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white"
+                            className="w-full px-4 py-3 rounded-[14px] bg-white/[0.07] border border-white/15 text-white outline-none transition-colors placeholder:text-white/35 focus:border-[#8bbef0]/60 focus:bg-white/[0.10]"
                             required
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm text-white/80 mb-2">
+                        <label className="block text-xs font-bold uppercase tracking-[0.14em] text-[#8bbef0] mb-2">
                             Amount ({currency})
                         </label>
                         <div className="relative">
@@ -173,7 +173,7 @@ const Payment = () => {
                                 onChange={handleChange}
                                 min="0"
                                 step="0.01"
-                                className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white"
+                                className="w-full pl-10 pr-4 py-3 rounded-[14px] bg-white/[0.07] border border-white/15 text-white outline-none transition-colors placeholder:text-white/35 focus:border-[#8bbef0]/60 focus:bg-white/[0.10]"
                                 required
                             />
                         </div>
@@ -185,7 +185,7 @@ const Payment = () => {
             <div className="flex justify-center">
                 <button
                     type="submit"
-                    className="mt-8 py-4 px-10 bg-white text-slate-800 font-semibold rounded-lg"
+                    className="du-action-primary mt-8 py-4 px-10 font-bold rounded-[16px] text-white"
                 >
                     Pay Now
                 </button>

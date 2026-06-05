@@ -1,6 +1,5 @@
 "use client"
 
-import type { CSSProperties, RefObject } from "react"
 import { useEffect, useRef, useState } from "react"
 import dynamic from "next/dynamic"
 import Image from "next/image"
@@ -13,7 +12,6 @@ import {
   Briefcase,
   Calendar,
   Camera,
-  ChevronRight,
   Code,
   Cpu,
   CreditCard,
@@ -23,6 +21,7 @@ import {
   Image as ImageIcon,
   Layers,
   Linkedin,
+  Lock,
   Mail,
   MapPin,
   Megaphone,
@@ -43,6 +42,7 @@ import {
   Target,
   Video,
   X,
+  CheckCircle2,
 } from "lucide-react"
 
 const Chatbot = dynamic(() => import("./Chatbot"), { ssr: false })
@@ -59,9 +59,15 @@ const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(gre
 
 function StaticBackground() {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none bg-[#070e1a]">
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,14,26,0.86),rgba(7,14,26,1)),linear-gradient(115deg,rgba(61,126,199,0.16),transparent_42%,rgba(139,190,240,0.08))]" />
-    </div>
+    <div
+      className="fixed inset-0 z-0 pointer-events-none bg-[#000308]"
+      style={{
+        backgroundImage: "url('/digital-universe-living-bg.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center center",
+        backgroundRepeat: "no-repeat",
+      }}
+    />
   )
 }
 
@@ -82,31 +88,6 @@ const sparkleDots = [
   ["93%", "28%", "3s"],
 ] as const
 
-const heroDust = Array.from({ length: 88 }, (_, index) => {
-  const left = (index * 37 + 11) % 100
-  const top = (index * 53 + 7) % 100
-  const size = index % 11 === 0 ? 4 : index % 5 === 0 ? 3 : index % 3 === 0 ? 2 : 1
-
-  return {
-    left: `${left}%`,
-    top: `${top}%`,
-    size,
-    delay: `${(index % 12) * 0.28}s`,
-    tone: index % 7 === 0 ? "warm" : index % 5 === 0 ? "teal" : "blue",
-  }
-})
-
-const heroGlints = [
-  ["10%", "18%", "18px", "0s"],
-  ["22%", "66%", "12px", "1.1s"],
-  ["36%", "34%", "16px", "0.5s"],
-  ["49%", "14%", "10px", "1.8s"],
-  ["58%", "78%", "22px", "0.3s"],
-  ["69%", "42%", "14px", "1.4s"],
-  ["83%", "26%", "19px", "0.9s"],
-  ["91%", "62%", "13px", "2s"],
-] as const
-
 function SparkleField({ className = "" }: { className?: string }) {
   return (
     <div className={`du-sparkle-field ${className}`} aria-hidden="true">
@@ -121,134 +102,6 @@ function SparkleField({ className = "" }: { className?: string }) {
   )
 }
 
-function HeroGlitterField() {
-  const fieldRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const field = fieldRef.current
-    if (!field || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-
-    let frame = 0
-    let pointerX = 0
-    let pointerY = 0
-
-    const setCamera = (x: number, y: number) => {
-      field.style.setProperty("--du-far-x", `${(-x * 10).toFixed(2)}px`)
-      field.style.setProperty("--du-far-y", `${(-y * 7).toFixed(2)}px`)
-      field.style.setProperty("--du-mid-x", `${(x * 20).toFixed(2)}px`)
-      field.style.setProperty("--du-mid-y", `${(y * 14).toFixed(2)}px`)
-      field.style.setProperty("--du-near-x", `${(x * 38).toFixed(2)}px`)
-      field.style.setProperty("--du-near-y", `${(y * 25).toFixed(2)}px`)
-      field.style.setProperty("--du-tilt-x", `${(-y * 6).toFixed(2)}deg`)
-      field.style.setProperty("--du-tilt-y", `${(x * 8).toFixed(2)}deg`)
-    }
-
-    const updateCamera = () => {
-      frame = 0
-      const rect = field.getBoundingClientRect()
-      if (!rect.width || !rect.height) return
-
-      const x = Math.max(-1, Math.min(1, (pointerX - rect.left) / rect.width * 2 - 1))
-      const y = Math.max(-1, Math.min(1, (pointerY - rect.top) / rect.height * 2 - 1))
-      setCamera(x, y)
-    }
-
-    const onPointerMove = (event: PointerEvent) => {
-      pointerX = event.clientX
-      pointerY = event.clientY
-
-      if (!frame) {
-        frame = window.requestAnimationFrame(updateCamera)
-      }
-    }
-
-    const resetCamera = () => setCamera(0, 0)
-
-    window.addEventListener("pointermove", onPointerMove, { passive: true })
-    window.addEventListener("blur", resetCamera)
-
-    return () => {
-      window.removeEventListener("pointermove", onPointerMove)
-      window.removeEventListener("blur", resetCamera)
-      if (frame) window.cancelAnimationFrame(frame)
-    }
-  }, [])
-
-  return (
-    <div ref={fieldRef} className="du-hero-glitter-field pointer-events-none relative min-h-[380px] overflow-hidden lg:min-h-[560px]" aria-hidden="true">
-      <div className="du-hero-space-glow" />
-      <div className="du-hero-aurora du-hero-aurora-one" />
-      <div className="du-hero-aurora du-hero-aurora-two" />
-
-      <div className="du-hero-camera">
-        <div className="du-hero-layer du-hero-layer-far">
-          {heroDust.map((dot, index) => (
-            <span
-              key={`dust-${index}`}
-              className={`du-hero-dust du-hero-dust-${dot.tone}`}
-              style={{
-                left: dot.left,
-                top: dot.top,
-                width: `${dot.size}px`,
-                height: `${dot.size}px`,
-                animationDelay: dot.delay,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="du-hero-layer du-hero-layer-mid">
-          <span className="du-hero-network du-hero-network-one">
-            <span />
-            <span />
-            <span />
-            <span />
-            <span />
-          </span>
-          <span className="du-hero-network du-hero-network-two">
-            <span />
-            <span />
-            <span />
-            <span />
-          </span>
-          <span className="du-hero-wireframe du-hero-wireframe-one" />
-          <span className="du-hero-wireframe du-hero-wireframe-two" />
-          <span className="du-hero-wireframe du-hero-wireframe-three" />
-          <span className="du-hero-ring du-hero-ring-one" />
-          <span className="du-hero-ring du-hero-ring-two" />
-          <span className="du-hero-ring du-hero-ring-three" />
-          <span className="du-hero-beam du-hero-beam-one" />
-          <span className="du-hero-beam du-hero-beam-two" />
-        </div>
-
-        <div className="du-hero-layer du-hero-layer-near">
-          {heroGlints.map(([left, top, size, delay], index) => (
-            <span
-              key={`glint-${index}`}
-              className="du-hero-glint"
-              style={{ left, top, width: size, height: size, animationDelay: delay } as CSSProperties}
-            />
-          ))}
-          <span className="du-hero-planet">
-            <span className="du-hero-planet-grid" />
-            <span className="du-hero-planet-shine" />
-            <span className="du-hero-planet-dot du-hero-planet-dot-one" />
-            <span className="du-hero-planet-dot du-hero-planet-dot-two" />
-            <span className="du-hero-planet-dot du-hero-planet-dot-three" />
-          </span>
-          <span className="du-hero-data-stream du-hero-data-stream-one" />
-          <span className="du-hero-data-stream du-hero-data-stream-two" />
-          <span className="du-hero-data-stream du-hero-data-stream-three" />
-          <span className="du-hero-core" />
-          <span className="du-hero-orbit du-hero-orbit-one" />
-          <span className="du-hero-orbit du-hero-orbit-two" />
-          <span className="du-hero-orbit du-hero-orbit-three" />
-        </div>
-      </div>
-    </div>
-  )
-}
-
 const stats = [
   { value: "20+", label: "Projects Completed" },
   { value: "100+", label: "Happy Clients" },
@@ -257,15 +110,15 @@ const stats = [
 ]
 
 const philosophyCards = [
-  { icon: MessageCircle, title: "Meaningful Connections" },
-  { icon: Bot, title: "Collective Expertise" },
-  { icon: Briefcase, title: "Long-term Partnerships" },
+  { image: "/hands2.png", title: "Meaningful Connections" },
+  { image: "/mind.png", title: "Collective Expertise" },
+  { image: "/partnership.png", title: "Long-term Partnerships" },
 ]
 
 const missionPoints = [
-  { label: "Empower Businesses" },
-  { label: "Enhance Brand Visibility" },
-  { label: "Create Lasting Impact" },
+  { image: "/arrow.png", label: "Empower Businesses" },
+  { image: "/eye.png", label: "Enhance Brand Visibility" },
+  { image: "/drop.png", label: "Create Lasting Impact" },
 ]
 
 const serviceCategories = [
@@ -569,7 +422,6 @@ export default function HomeClient() {
   const [isFabOpen, setIsFabOpen] = useState(false)
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [hasOpenedChat, setHasOpenedChat] = useState(false)
-  const testimonialsScrollRef = useRef<HTMLDivElement>(null)
 
   const activeServices =
     serviceCategories.find((category) => category.category === activeCategory)?.services ?? []
@@ -603,20 +455,9 @@ export default function HomeClient() {
     window.scrollTo({ top: Math.max(y, 0), behavior: "auto" })
   }
 
-  const scrollRail = (ref: RefObject<HTMLDivElement>, direction: "left" | "right") => {
-    const el = ref.current
-    if (!el) return
-
-    el.scrollBy({
-      left: direction === "left" ? -el.clientWidth : el.clientWidth,
-      behavior: "auto",
-    })
-  }
-
   return (
     <div className="relative w-full bg-[#070e1a] text-neutral-200 selection:bg-[#3d7ec7]/30 selection:text-white">
       <Background3D />
-      <SparkleField className="du-site-sprinkles" />
 
       <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
         {isFabOpen ? (
@@ -663,27 +504,25 @@ export default function HomeClient() {
       {hasOpenedChat ? <Chatbot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} /> : null}
 
       <div className="du-sections relative z-10 flex w-full flex-col">
-        <section id="hero" className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-4 py-24 md:py-28">
-          <SparkleField />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[linear-gradient(180deg,rgba(90,157,224,0.16),transparent_78%)]" />
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(61,126,199,0.12),transparent_38%,rgba(55,208,174,0.07))]" />
-
-          <div className="du-reveal relative z-10 mx-auto w-full max-w-5xl text-center">
-            <div className="du-label-blur mb-5 inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#8bbef0]">
+        <section id="hero" className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-4 pb-28 pt-20 md:pb-32 md:pt-24">
+          <div className="du-reveal relative z-10 mx-auto w-full max-w-[1100px] -translate-y-6 text-center md:-translate-y-8 lg:-translate-y-10">
+            <div className="du-label-blur mb-8 inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#8bbef0]">
               <Cpu className="h-4 w-4" />
               Premium digital agency
             </div>
-            <h1 className="mx-auto max-w-4xl text-4xl font-black leading-[1.08] text-white sm:text-5xl md:text-[3.4rem] lg:text-[3.8rem]">
-              Fast websites, clean brands, and digital growth that feels premium.
+            <h1 className="mx-auto max-w-[1100px] text-[clamp(36px,11vw,42px)] font-extrabold leading-[0.98] tracking-[-1.5px] text-white md:text-[clamp(48px,7vw,56px)] md:tracking-[-2px] lg:text-[clamp(60px,5vw,68px)] 2xl:text-[clamp(64px,5vw,88px)]">
+              WE TRANSFORM YOUR
+              <br />
+              BUSINESS DIGITAL
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-base font-semibold leading-8 text-[#d7e6f4] md:text-lg">
-              Digital Universe builds websites, UI/UX, SEO, ads, and brand assets that load quickly and convert clearly.
+            <p className="mx-auto mt-8 max-w-[850px] text-[19px] font-normal leading-[1.5] text-[#d7e6f4] md:text-[22px] xl:text-2xl">
+              We help businesses grow, automate, and thrive in the digital world through powerful technology, smart strategies, and creative solutions that deliver real results.
             </p>
 
-            <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
               <button
                 onClick={() => scrollToSection("services")}
-                className="du-action-primary inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 text-sm font-bold text-white"
+                className="du-action-primary inline-flex h-[60px] items-center justify-center gap-2 rounded-[14px] px-10 text-xl font-bold text-white"
               >
                 Explore Services
                 <ArrowRight className="h-4 w-4" />
@@ -692,7 +531,7 @@ export default function HomeClient() {
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="du-action-secondary inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 text-sm font-bold text-white"
+                className="du-action-secondary inline-flex h-[60px] items-center justify-center gap-2 rounded-[14px] px-10 text-xl font-bold text-white"
               >
                 Get Started Now
                 <MessageCircle className="h-4 w-4" />
@@ -702,8 +541,7 @@ export default function HomeClient() {
         </section>
 
         <section className="du-blur-band relative flex min-h-[100svh] items-center overflow-hidden border-b border-white/10 px-4 py-12 md:py-14">
-          <SparkleField className="opacity-50" />
-          <div className="mx-auto w-full max-w-6xl">
+          <div className="mx-auto w-full max-w-5xl">
             <div className="mx-auto max-w-3xl text-center">
               <div className="mb-5 inline-flex items-center justify-center gap-2 rounded-md border border-[#8bbef0]/40 bg-white/[0.04] px-3 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#8bbef0]">
                 <BarChart3 className="h-4 w-4" />
@@ -718,7 +556,7 @@ export default function HomeClient() {
               {stats.map((stat) => (
                 <article
                   key={stat.label}
-                  className="du-reveal du-premium-card rounded-lg border border-white/10 bg-[#0c1526]/72 px-5 py-8 text-center shadow-[0_18px_60px_rgba(0,0,0,0.22)]"
+                  className="du-reveal du-premium-card rounded-lg border border-white/10 px-5 py-8 text-center"
                 >
                   <div className="text-4xl font-black leading-none text-white md:text-5xl">{stat.value}</div>
                   <div className="mt-4 text-xs font-black uppercase tracking-[0.16em] text-[#8bbef0]">{stat.label}</div>
@@ -729,7 +567,6 @@ export default function HomeClient() {
         </section>
 
         <section id="about" className="relative flex min-h-[100svh] scroll-mt-36 items-center overflow-hidden px-4 py-12 md:py-14">
-          <SparkleField className="opacity-60" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(90,157,224,0.14),transparent_46%)]" />
           <div className="mx-auto w-full max-w-6xl">
             <div className="text-center">
@@ -742,54 +579,56 @@ export default function HomeClient() {
               </h2>
             </div>
 
-            <div className="mt-9 grid gap-5 lg:grid-cols-[1.05fr_0.72fr_1fr]">
-              <article className="du-reveal du-about-card relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-5 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
+            <div className="mx-auto mt-7 grid max-w-5xl gap-3 lg:grid-cols-[0.95fr_0.78fr_0.95fr]">
+              <article className="du-reveal du-about-card relative rounded-[22px] border border-[#8bbef0]/40 p-3.5">
                 <div className="du-about-card-title">
                   Our Core Philosophy
                 </div>
-                <div className="grid grid-cols-1 gap-5 pt-6 md:grid-cols-3">
+                <div className="grid grid-cols-1 gap-2.5 pt-3 md:grid-cols-3">
                   {philosophyCards.map((item) => (
-                    <div key={item.title} className="flex flex-col items-center text-center">
-                      <div className="du-about-icon mb-3">
-                        <item.icon className="h-8 w-8 text-[#d7f4ff]" />
+                    <div key={item.title} className="flex flex-col items-center rounded-[16px] border border-white/10 bg-white/[0.04] px-2.5 py-2.5 text-center">
+                      <div className="relative mb-1.5 h-10 w-10">
+                        <Image src={item.image} alt="" fill className="object-contain" sizes="40px" />
                       </div>
-                      <h3 className="text-base font-black leading-tight text-white">{item.title}</h3>
+                      <h3 className="text-xs font-bold leading-tight text-white">{item.title}</h3>
                     </div>
                   ))}
                 </div>
               </article>
 
-              <article className="du-reveal du-about-card relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-5 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
+              <article className="du-reveal du-about-card relative rounded-[22px] border border-[#8bbef0]/40 p-3.5">
                 <div className="du-about-card-title">
                   Our Mission
                 </div>
-                <div className="space-y-3 pt-6">
+                <div className="space-y-2 pt-3">
                   {missionPoints.map((item) => (
-                    <div key={item.label} className="du-mission-chip flex items-center gap-4 rounded-md border border-white/10 bg-white/[0.04] px-4 py-2.5">
-                      <span className="du-pulse-dot" />
-                      <p className="text-left text-base font-black text-white">{item.label}</p>
+                    <div key={item.label} className="du-mission-chip flex items-center gap-2.5 rounded-[16px] border border-white/10 bg-white/[0.04] px-2.5 py-2">
+                      <span className="relative h-8 w-8 shrink-0">
+                        <Image src={item.image} alt="" fill className="object-contain" sizes="32px" />
+                      </span>
+                      <p className="text-left text-xs font-bold text-white">{item.label}</p>
                     </div>
                   ))}
                 </div>
               </article>
 
-              <article className="du-reveal du-about-card relative rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 p-5 shadow-[0_18px_70px_rgba(0,0,0,0.3)]">
-                <div className="du-about-card-title text-sm md:text-base">
+              <article className="du-reveal du-about-card relative rounded-[22px] border border-[#8bbef0]/40 p-3.5">
+                <div className="du-about-card-title text-xs md:text-sm">
                   Global Reach & Trusted Partnerships
                 </div>
-                <div className="relative mt-7 h-40 overflow-hidden rounded-md">
+                <div className="relative mt-3.5 h-24 overflow-hidden rounded-[16px]">
                   <Image src="/map.png" alt="Global reach map" fill className="object-contain" sizes="(max-width: 1024px) 100vw, 33vw" />
-                  <span className="absolute bottom-12 left-[56%] rounded-md bg-[#07111f]/80 px-2 py-1 text-sm font-bold text-white">UAE</span>
-                  <span className="absolute right-3 top-20 rounded-md bg-[#07111f]/80 px-2 py-1 text-sm font-bold text-white">Bangladesh</span>
+                  <span className="du-label-blur absolute bottom-6 left-[56%] rounded-md px-1.5 py-0.5 text-[10px] font-bold text-white">UAE</span>
+                  <span className="du-label-blur absolute right-3 top-12 rounded-md px-1.5 py-0.5 text-[10px] font-bold text-white">Bangladesh</span>
                 </div>
-                <div className="mt-3 grid grid-cols-2 gap-3 text-center">
-                  <div className="rounded-md bg-white/[0.04] px-3 py-2.5 text-sm font-black text-white">From Startups to Enterprises</div>
-                  <div className="rounded-md bg-white/[0.04] px-3 py-2.5 text-sm font-black text-white">Trusted Partner Globally</div>
+                <div className="mt-2.5 grid grid-cols-2 gap-2 text-center">
+                  <div className="rounded-[14px] bg-white/[0.04] px-2 py-1.5 text-[11px] font-bold leading-tight text-white">From Startups to Enterprises</div>
+                  <div className="rounded-[14px] bg-white/[0.04] px-2 py-1.5 text-[11px] font-bold leading-tight text-white">Trusted Partner Globally</div>
                 </div>
               </article>
             </div>
 
-            <div className="du-reveal du-premium-card du-about-strip mx-auto mt-6 grid max-w-3xl grid-cols-[64px_1fr_64px] items-center gap-4 rounded-lg border border-[#8bbef0]/40 bg-[#07111f]/75 px-5 py-3.5 text-center shadow-[0_18px_70px_rgba(0,0,0,0.24)]">
+            <div className="du-reveal du-premium-card du-about-strip mx-auto mt-6 grid max-w-3xl grid-cols-[64px_1fr_64px] items-center gap-4 rounded-lg border border-[#8bbef0]/40 px-5 py-3.5 text-center">
               <div className="relative h-14 w-14 justify-self-center">
                 <Image src="/computer.png" alt="Technical excellence" fill className="object-contain" sizes="56px" />
               </div>
@@ -812,7 +651,10 @@ export default function HomeClient() {
                   <Code className="h-4 w-4" />
                   What We Build
                 </div>
-                <h2 className="text-2xl font-black text-white md:text-[2.45rem]">Services built to work together.</h2>
+                <h2 className="max-w-3xl text-2xl font-black leading-tight text-white md:text-[2.55rem]">Services built to work together.</h2>
+                <p className="mt-4 max-w-2xl text-base leading-8 text-[#b8c8d8]">
+                  Choose a focused service track, or combine them into one connected digital growth system.
+                </p>
               </div>
             </div>
 
@@ -821,7 +663,7 @@ export default function HomeClient() {
                 <button
                   key={category.category}
                   onClick={() => setActiveCategory(category.category)}
-                  className={`du-category-pill w-full rounded-md border px-4 py-2 text-sm font-bold transition-colors ${
+                  className={`du-category-pill w-full rounded-[14px] border px-4 py-2.5 text-sm font-bold transition-colors ${
                     activeCategory === category.category
                       ? "border-[#3d7ec7] bg-[#3d7ec7] text-white"
                       : "border-white/10 bg-white/[0.04] text-neutral-400 hover:bg-white/10 hover:text-white"
@@ -836,10 +678,10 @@ export default function HomeClient() {
               {activeServices.map((service) => (
                 <article
                   key={service.name}
-                  className="du-service-card rounded-lg border border-white/10 bg-[#0c1526]/80 p-6 shadow-[0_18px_60px_rgba(0,0,0,0.22)]"
+                  className="du-service-card rounded-[22px] border border-white/10 p-6"
                 >
-                  <div className="du-icon-orb">
-                    <service.icon className="h-8 w-8 text-[#bde7ff]" />
+                  <div className="du-icon-orb rounded-[18px] border border-white/15">
+                    <service.icon className="h-8 w-8 text-[#d7f4ff]" />
                   </div>
                   <h3 className="mt-5 text-xl font-black text-white">{service.name}</h3>
                   <p className="mt-3 text-sm leading-7 text-neutral-400">{service.description}</p>
@@ -850,7 +692,6 @@ export default function HomeClient() {
         </section>
 
         <section className="du-flow-section relative flex min-h-[100svh] items-center overflow-hidden px-4 py-12 md:py-14">
-          <SparkleField className="opacity-45" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_48%,rgba(90,157,224,0.18),transparent_42%),radial-gradient(circle_at_78%_32%,rgba(55,208,174,0.1),transparent_38%)]" />
           <div className="mx-auto w-full max-w-6xl">
             <div className="mx-auto max-w-3xl text-center">
@@ -869,11 +710,11 @@ export default function HomeClient() {
               {processSteps.map((step) => (
                 <article
                   key={step.title}
-                  className="du-reveal du-flow-card du-premium-card relative rounded-lg border border-[#8bbef0]/30 bg-[#07111f]/76 p-6 shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
+                  className="du-reveal du-flow-card du-premium-card relative rounded-[22px] border border-[#8bbef0]/30 p-6"
                 >
                   <div className="relative mb-7 flex justify-center">
-                    <div className="du-icon-orb grid h-[70px] w-[70px] place-items-center rounded-lg border border-[#8bbef0]/40 bg-[#3d7ec7]/20 text-base font-black text-white shadow-[0_0_35px_rgba(90,157,224,0.2)]">
-                      <step.icon className="h-8 w-8 text-[#d7f4ff]" />
+                    <div className="du-flow-icon du-icon-orb relative grid h-[76px] w-[76px] place-items-center rounded-[22px] border border-[#8bbef0]/50 bg-white/[0.08] text-base font-black text-white">
+                      <step.icon className="h-9 w-9 text-[#8bbef0]" />
                     </div>
                   </div>
                   <h3 className="text-center text-xl font-black text-white">{step.title}</h3>
@@ -885,18 +726,32 @@ export default function HomeClient() {
         </section>
 
         <section id="payment" className="du-blur-band relative flex min-h-[100svh] items-center border-y border-white/10 px-4 py-12 md:py-14">
-          <div className="mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
-            <div>
+          <div className="mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-stretch">
+            <div className="du-premium-card flex flex-col justify-between rounded-[24px] border border-white/10 p-6 md:p-8">
+              <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">
                 <CreditCard className="h-4 w-4" />
                 Secure Checkout
               </div>
-              <h2 className="text-2xl font-black text-white md:text-[2.45rem]">Simple payment for approved work.</h2>
+              <h2 className="text-2xl font-black leading-tight text-white md:text-[2.45rem]">Simple payment for approved work.</h2>
               <p className="mt-5 text-base leading-8 text-[#b8c8d8]">
                 Pay after your scope and amount are confirmed by the team.
               </p>
+              </div>
+              <div className="mt-8 grid gap-3">
+                {[
+                  { icon: Lock, label: "Encrypted checkout" },
+                  { icon: CheckCircle2, label: "Manual scope confirmation" },
+                  { icon: CreditCard, label: "Stripe powered payment" },
+                ].map((item) => (
+                  <div key={item.label} className="flex items-center gap-3 rounded-[16px] border border-white/10 bg-white/[0.04] px-4 py-3">
+                    <item.icon className="h-5 w-5 text-[#8bbef0]" />
+                    <span className="text-sm font-bold text-white">{item.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="rounded-lg border border-white/10 bg-[#0c1526]/80 p-2 md:p-4">
+            <div className="du-premium-card rounded-[24px] border border-white/10 p-2 md:p-4">
               <Payment />
             </div>
           </div>
@@ -915,7 +770,7 @@ export default function HomeClient() {
             </div>
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {portfolio.map((project) => (
-                <article key={project.title} className="du-premium-card overflow-hidden rounded-lg border border-white/10 bg-[#0c1526]/80 shadow-[0_18px_60px_rgba(0,0,0,0.2)]">
+                <article key={project.title} className="du-premium-card overflow-hidden rounded-lg border border-white/10">
                   <div className="relative aspect-[4/3] overflow-hidden bg-black">
                     <Image
                       src={project.image}
@@ -956,26 +811,10 @@ export default function HomeClient() {
                 </div>
                 <h2 className="text-2xl font-black text-white md:text-[2.45rem]">Trusted by clients who need clear delivery.</h2>
               </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => scrollRail(testimonialsScrollRef, "left")}
-                  className="du-icon-action grid h-10 w-10 place-items-center rounded-md text-white"
-                  aria-label="Scroll reviews left"
-                >
-                  <ChevronRight className="h-5 w-5 rotate-180" />
-                </button>
-                <button
-                  onClick={() => scrollRail(testimonialsScrollRef, "right")}
-                  className="du-icon-action grid h-10 w-10 place-items-center rounded-md text-white"
-                  aria-label="Scroll reviews right"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              </div>
             </div>
-            <div ref={testimonialsScrollRef} className="mt-8 flex gap-5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {testimonials.map((testimonial) => (
-                <article key={testimonial.name} className="du-reveal du-premium-card min-w-[82vw] rounded-lg border border-white/10 bg-[#0c1526]/80 p-6 sm:min-w-[46%] lg:min-w-[31%]">
+                <article key={testimonial.name} className="du-reveal du-premium-card rounded-[22px] border border-white/10 p-6">
                   <div className="mb-5 flex items-center gap-3">
                     <div className="flex gap-1 text-[#5a9de0]" aria-label={`${testimonial.rating} out of 5 rating`}>
                       {[1, 2, 3, 4, 5].map((star) => {
@@ -1007,8 +846,8 @@ export default function HomeClient() {
         </section>
 
         <section id="contact" className="relative flex min-h-[100svh] items-center overflow-hidden px-4 py-12 md:py-14">
-          <div className="du-reveal du-premium-card mx-auto grid w-full max-w-6xl gap-8 rounded-lg border border-white/10 bg-[#0c1526]/80 p-6 md:grid-cols-[1.1fr_0.9fr] md:p-10">
-            <div>
+          <div className="mx-auto grid w-full max-w-6xl gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="du-reveal du-premium-card rounded-[26px] border border-white/10 p-6 md:p-10">
               <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">
                 <MessageCircle className="h-4 w-4" />
                 Start Your Project
@@ -1036,16 +875,22 @@ export default function HomeClient() {
                 </a>
               </div>
             </div>
-            <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-1">
+            <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
               {[
                 { icon: PhoneCall, label: "Phone", value: "+971 52 274 0909" },
                 { icon: Mail, label: "Email", value: "hello@digitaluniverse.agency" },
                 { icon: MapPin, label: "Location", value: "Dubai, UAE" },
               ].map((item) => (
-                <div key={item.label} className="rounded-lg border border-white/10 bg-white/[0.035] p-5">
-                  <item.icon className="h-5 w-5 text-[#5a9de0]" />
-                  <div className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-neutral-500">{item.label}</div>
-                  <div className="mt-2 text-sm font-bold text-white">{item.value}</div>
+                <div key={item.label} className="du-premium-card rounded-[22px] border border-white/10 p-5">
+                  <div className="flex items-center gap-4">
+                    <span className="grid h-12 w-12 place-items-center rounded-[16px] border border-white/10 bg-white/[0.05]">
+                      <item.icon className="h-5 w-5 text-[#8bbef0]" />
+                    </span>
+                    <span>
+                      <span className="block text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">{item.label}</span>
+                      <span className="mt-1 block text-sm font-bold text-white">{item.value}</span>
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
