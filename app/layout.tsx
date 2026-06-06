@@ -14,7 +14,7 @@ const SITE_DESC =
   "Digital Universe Agency builds fast websites, UI/UX, branding, SEO, paid ads, and digital growth systems for startups, local businesses, and enterprises worldwide."
 
 const OG_IMAGE = "/og-image.jpg"
-const LOGO_URL = `${SITE_URL}/digitals-universe-logo-v4-mark.png`
+const LOGO_URL = `${SITE_URL}/logo.png`
 const BRAND_EMAIL = "hello@digitaluniverse.agency"
 const BRAND_PHONE = "+971522740909"
 
@@ -170,9 +170,9 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: [{ url: "/digitals-universe-logo-v4-mark.png", type: "image/png" }],
-    shortcut: ["/digitals-universe-logo-v4-mark.png"],
-    apple: [{ url: "/digitals-universe-logo-v4-mark.png", sizes: "512x512", type: "image/png" }],
+    icon: [{ url: "/logo.png", type: "image/png" }],
+    shortcut: ["/logo.png"],
+    apple: [{ url: "/logo.png", sizes: "666x375", type: "image/png" }],
   },
 
   manifest: "/site.webmanifest",

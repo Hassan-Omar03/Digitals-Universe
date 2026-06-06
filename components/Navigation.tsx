@@ -117,17 +117,13 @@ export default function Navigation() {
           aria-label="Go to Digital Universe home"
         >
           <Image
-            src="/digitals-universe-logo-v4-mark.png"
+            src="/logo-cropped.png"
             alt="Digital Universe"
-            width={52}
-            height={52}
+            width={499}
+            height={139}
             priority
-            className="du-nav-logo-mark h-12 w-12 shrink-0 object-contain transition-transform duration-300 group-hover:scale-105 lg:h-[52px] lg:w-[52px]"
+            className="du-nav-logo-mark h-12 w-auto max-w-[13rem] shrink-0 object-contain transition-transform duration-300 group-hover:scale-105 lg:h-[54px] lg:max-w-[14rem]"
           />
-          <span className="hidden leading-none sm:block lg:hidden">
-            <span className="du-brand-word block text-base font-black uppercase tracking-[0.12em] text-white">Digital</span>
-            <span className="du-brand-word-accent block text-base font-black uppercase tracking-[0.12em]">Universe</span>
-          </span>
         </button>
 
         <nav className="du-nav-menu hidden min-w-0 items-center justify-center gap-5 xl:gap-7 lg:flex" aria-label="Primary navigation">

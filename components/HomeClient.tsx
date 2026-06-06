@@ -60,12 +60,14 @@ const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(gre
 function StaticBackground() {
   return (
     <div
-      className="fixed inset-0 z-0 pointer-events-none bg-[#000308]"
+      className="du-static-background fixed inset-0 z-0 pointer-events-none bg-[#000308]"
       style={{
-        backgroundImage: "url('/digital-universe-living-bg.png')",
+        backgroundImage:
+          "radial-gradient(circle at 66% 32%, rgba(6, 80, 215, 0.22), transparent 34%), linear-gradient(rgba(0, 3, 8, 0.48), rgba(0, 3, 8, 0.64)), url('/digital-universe-living-bg.png')",
         backgroundSize: "cover",
         backgroundPosition: "center center",
         backgroundRepeat: "no-repeat",
+        filter: "brightness(0.72) saturate(1.05) contrast(1.08)",
       }}
     />
   )
@@ -479,10 +481,10 @@ export default function HomeClient() {
               <Cpu className="h-4 w-4" />
               Premium digital agency
             </div>
-            <h1 className="mx-auto max-w-[1100px] text-[clamp(34px,10.5vw,44px)] font-extrabold leading-[0.95] tracking-[-1px] text-white md:text-[clamp(48px,7vw,56px)] md:leading-[0.98] md:tracking-[-2px] lg:text-[clamp(60px,5vw,68px)] 2xl:text-[clamp(64px,5vw,88px)]">
-              WE TRANSFORM YOUR
+            <h1 className="du-split-heading mx-auto max-w-[1100px] text-[clamp(29px,8.25vw,38px)] font-extrabold leading-[0.95] tracking-[-1px] text-white md:text-[clamp(48px,7vw,56px)] md:leading-[0.98] md:tracking-[-2px] lg:text-[clamp(60px,5vw,68px)] 2xl:text-[clamp(64px,5vw,88px)]">
+              <span className="whitespace-nowrap">WE TRANSFORM YOUR</span>
               <br />
-              BUSINESS DIGITAL
+              <span className="whitespace-nowrap">BUSINESS DIGITAL</span>
             </h1>
             <p className="mx-auto mt-5 w-full max-w-[min(850px,calc(100vw-2rem))] text-[17px] font-normal leading-[1.45] text-[#d7e6f4] md:mt-8 md:text-[22px] md:leading-[1.5] xl:text-2xl">
               We help businesses grow, automate, and thrive in the digital world through powerful technology, smart strategies, and creative solutions that deliver real results.
@@ -516,7 +518,7 @@ export default function HomeClient() {
                 <BarChart3 className="h-4 w-4" />
                 Our impact in numbers
               </div>
-              <h2 className="text-3xl font-black leading-tight text-white md:text-[2.45rem]">
+              <h2 className="du-split-heading text-3xl font-black leading-tight text-white md:text-[2.45rem]">
                 Real results. Real digital growth.
               </h2>
             </div>
@@ -543,8 +545,8 @@ export default function HomeClient() {
                 <Sparkles className="h-4 w-4 text-[#8bbef0]" />
                 About Our Company
               </div>
-              <h2 className="text-3xl font-black tracking-tight text-white md:text-[2.45rem]">
-                Welcome to <span className="text-[#5a9de0]">Digital Universe</span>
+              <h2 className="du-split-heading text-3xl font-black tracking-tight text-white md:text-[2.45rem]">
+                Welcome to Digital Universe
               </h2>
             </div>
 
@@ -624,7 +626,7 @@ export default function HomeClient() {
                   <Code className="h-4 w-4" />
                   What We Build
                 </div>
-                <h2 className="max-w-3xl text-2xl font-black leading-tight text-white md:text-[2.55rem]">Services built to work together.</h2>
+                <h2 className="du-split-heading max-w-3xl text-2xl font-black leading-tight text-white md:text-[2.55rem]">Services built to work together.</h2>
                 <p className="mt-4 max-w-2xl text-base leading-8 text-[#b8c8d8]">
                   Choose a focused service track, or combine them into one connected digital growth system.
                 </p>
@@ -674,7 +676,7 @@ export default function HomeClient() {
                 <Rocket className="h-4 w-4" />
                 Delivery Flow
               </div>
-              <h2 className="text-2xl font-black text-white md:text-[2.45rem]">Clear steps from idea to launch.</h2>
+              <h2 className="du-split-heading text-2xl font-black text-white md:text-[2.45rem]">Clear steps from idea to launch.</h2>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-[#b8c8d8]">
                 Design, build, and marketing stay connected from the first call.
               </p>
@@ -711,7 +713,7 @@ export default function HomeClient() {
                 <CreditCard className="h-4 w-4" />
                 Secure Checkout
               </div>
-              <h2 className="text-2xl font-black leading-tight text-white md:text-[2.45rem]">Simple payment for approved work.</h2>
+              <h2 className="du-split-heading text-2xl font-black leading-tight text-white md:text-[2.45rem]">Simple payment for approved work.</h2>
               <p className="mt-5 text-base leading-8 text-[#b8c8d8]">
                 Pay after your scope and amount are confirmed by the team.
               </p>
@@ -744,7 +746,7 @@ export default function HomeClient() {
                   <Layers className="h-4 w-4" />
                   Featured Work
                 </div>
-                <h2 className="text-2xl font-black text-white md:text-[2.45rem]">Real projects, shown all at once.</h2>
+                <h2 className="du-split-heading text-2xl font-black text-white md:text-[2.45rem]">Real projects, shown all at once.</h2>
               </div>
             </div>
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -788,7 +790,7 @@ export default function HomeClient() {
                   <Star className="h-4 w-4" />
                   Client Reviews
                 </div>
-                <h2 className="text-2xl font-black text-white md:text-[2.45rem]">Trusted by clients who need clear delivery.</h2>
+                <h2 className="du-split-heading text-2xl font-black text-white md:text-[2.45rem]">Trusted by clients who need clear delivery.</h2>
               </div>
             </div>
             <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -832,7 +834,7 @@ export default function HomeClient() {
                 <MessageCircle className="h-4 w-4" />
                 Start Your Project
               </div>
-              <h2 className="text-2xl font-black text-white md:text-[2.45rem]">Ready for a faster digital presence?</h2>
+              <h2 className="du-split-heading text-2xl font-black text-white md:text-[2.45rem]">Ready for a faster digital presence?</h2>
               <p className="mt-5 max-w-2xl text-base leading-8 text-[#b8c8d8]">
                 Tell us what you need. We will shape the right scope for website, branding, marketing, or automation.
               </p>

@@ -105,7 +105,7 @@ const Payment = () => {
             onSubmit={handleSubmit}
             className="w-full flex flex-col justify-center p-5 md:p-7 rounded-[22px]"
         >
-            <h2 className="text-2xl font-black text-white mb-7 text-center">
+            <h2 className="du-split-heading text-2xl font-black text-white mb-7 text-center">
                 Payment Details
             </h2>
 

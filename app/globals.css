@@ -6,6 +6,7 @@
   --blue: #3d7ec7;
   --blue-light: #5a9de0;
   --blue-lighter: #8bbef0;
+  --brand-electric-blue: #0650D7;
   --button-start: #2563eb;
   --button-end: #0891b2;
   --button-start-hover: #1d4ed8;
@@ -99,10 +100,18 @@ section {
   z-index: 1;
 }
 
+.du-split-heading {
+  background: linear-gradient(92deg, #ffffff 0 46%, #dbe9ff 57%, var(--brand-electric-blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  text-shadow: none;
+}
+
 .du-nav-shell {
   position: relative;
   min-height: 4.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 0 !important;
   background: rgba(255, 255, 255, 0.075);
   box-shadow: none;
   -webkit-backdrop-filter: blur(26px) saturate(145%);
@@ -129,7 +138,7 @@ section {
 }
 
 .du-nav-shell-scrolled {
-  border-color: rgba(255, 255, 255, 0.24);
+  border-color: transparent !important;
   background: rgba(255, 255, 255, 0.095);
   box-shadow: none;
 }
@@ -197,18 +206,26 @@ section {
 }
 
 .du-nav-cta {
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  background: rgba(255, 255, 255, 0.10);
-  box-shadow: none;
+  border: 1px solid rgba(6, 80, 215, 0.64);
+  background:
+    linear-gradient(135deg, rgba(6, 80, 215, 0.88), rgba(6, 80, 215, 0.66)),
+    rgba(6, 80, 215, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 14px 32px rgba(6, 80, 215, 0.2);
   -webkit-backdrop-filter: blur(18px) saturate(145%);
   backdrop-filter: blur(18px) saturate(145%);
   transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .du-nav-cta:hover {
-  border-color: rgba(139, 190, 240, 0.42);
-  background: rgba(139, 190, 240, 0.16);
-  box-shadow: none;
+  border-color: rgba(6, 80, 215, 0.78);
+  background:
+    linear-gradient(135deg, rgba(36, 107, 235, 0.92), rgba(6, 80, 215, 0.78)),
+    rgba(6, 80, 215, 0.78);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 16px 36px rgba(6, 80, 215, 0.24);
 }
 
 .du-nav-mobile {
@@ -236,6 +253,56 @@ section {
 .du-footer-blur > * {
   position: relative;
   z-index: 1;
+}
+
+.du-footer-blur,
+.du-sections .border,
+.du-sections [class*="border-"],
+.du-premium-card,
+.du-service-card,
+.du-flow-card,
+.du-top-line-card,
+.du-about-card,
+.du-label-blur,
+.du-category-pill,
+.du-icon-orb,
+.du-flow-icon,
+.du-mission-chip,
+.du-about-strip {
+  border-color: rgba(6, 80, 215, 0.58) !important;
+}
+
+header .du-icon-action {
+  border-color: rgba(6, 80, 215, 0.64) !important;
+  background:
+    linear-gradient(135deg, rgba(6, 80, 215, 0.88), rgba(6, 80, 215, 0.66)),
+    rgba(6, 80, 215, 0.72) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 14px 32px rgba(6, 80, 215, 0.2) !important;
+}
+
+.du-nav-mobile {
+  border-color: transparent !important;
+}
+
+@media (max-width: 767px) {
+  .du-static-background {
+    background-position: 72% center !important;
+    background-size: cover !important;
+  }
+}
+
+.du-sections .border-t,
+.du-sections .border-b,
+.du-sections .border-y,
+.du-sections .border-white\/10,
+.du-sections .border-white\/15,
+.du-sections .border-white\/20,
+.du-sections .border-\[\#8bbef0\]\/30,
+.du-sections .border-\[\#8bbef0\]\/40,
+.du-sections .border-\[\#8bbef0\]\/50 {
+  border-color: rgba(6, 80, 215, 0.58) !important;
 }
 
 .du-blur-band {
@@ -273,10 +340,30 @@ section {
 .du-service-card {
   position: relative;
   overflow: hidden;
+  border-color: rgba(6, 80, 215, 0.56) !important;
   background: rgba(255, 255, 255, 0.065) !important;
   box-shadow: none !important;
   -webkit-backdrop-filter: blur(24px) saturate(145%);
   backdrop-filter: blur(24px) saturate(145%);
+}
+
+.du-about-card,
+.du-label-blur,
+.du-category-pill,
+.du-icon-orb,
+.du-flow-icon,
+.du-mission-chip,
+.du-about-strip,
+.du-footer-blur {
+  border-color: rgba(6, 80, 215, 0.56) !important;
+}
+
+.du-premium-card .border,
+.du-about-card .border,
+.du-service-card .border,
+.du-flow-card .border,
+.du-top-line-card .border {
+  border-color: rgba(6, 80, 215, 0.46) !important;
 }
 
 .du-premium-card::before,
@@ -303,7 +390,7 @@ section {
 }
 
 .du-premium-card:hover {
-  border-color: rgba(139, 190, 240, 0.56);
+  border-color: rgba(6, 80, 215, 0.72) !important;
   box-shadow: none !important;
   transform: translateY(-4px);
 }
@@ -329,7 +416,7 @@ section {
 }
 
 .du-service-card:hover {
-  border-color: rgba(77, 163, 255, 0.42) !important;
+  border-color: rgba(6, 80, 215, 0.72) !important;
   box-shadow:
     0 0 0 1px rgba(77, 163, 255, 0.18),
     0 18px 46px rgba(0, 0, 0, 0.36),
@@ -388,7 +475,7 @@ section {
 }
 
 .du-flow-card:hover {
-  border-color: rgba(77, 163, 255, 0.46) !important;
+  border-color: rgba(6, 80, 215, 0.72) !important;
   box-shadow:
     0 0 0 1px rgba(77, 163, 255, 0.2),
     0 18px 50px rgba(0, 0, 0, 0.36),
@@ -447,7 +534,7 @@ section {
 }
 
 .du-top-line-card:hover {
-  border-color: rgba(77, 163, 255, 0.42) !important;
+  border-color: rgba(6, 80, 215, 0.72) !important;
   box-shadow:
     0 0 0 1px rgba(77, 163, 255, 0.14),
     0 16px 44px rgba(0, 0, 0, 0.34),
@@ -689,7 +776,7 @@ section {
 
 .du-service-card:hover .du-icon-orb,
 .du-flow-card:hover .du-icon-orb {
-  border-color: rgba(77, 163, 255, 0.62);
+  border-color: rgba(6, 80, 215, 0.72);
   background: rgba(77, 163, 255, 0.1);
   box-shadow:
     0 0 0 1px rgba(77, 163, 255, 0.18),
@@ -794,12 +881,32 @@ section {
   transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
+.du-action-primary {
+  border-color: rgba(6, 80, 215, 0.5);
+  background:
+    linear-gradient(135deg, rgba(6, 80, 215, 0.88), rgba(6, 80, 215, 0.66)),
+    rgba(6, 80, 215, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 16px 34px rgba(6, 80, 215, 0.2);
+}
+
 .du-action-primary:hover,
 .du-action-secondary:hover,
 .du-icon-action:hover {
   border-color: rgba(139, 190, 240, 0.46);
   background: rgba(139, 190, 240, 0.16);
   box-shadow: none;
+}
+
+.du-action-primary:hover {
+  border-color: rgba(6, 80, 215, 0.64);
+  background:
+    linear-gradient(135deg, rgba(36, 107, 235, 0.92), rgba(6, 80, 215, 0.78)),
+    rgba(6, 80, 215, 0.78);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 18px 40px rgba(6, 80, 215, 0.24);
 }
 
 .du-glow-button {
@@ -2005,8 +2112,7 @@ section {
   }
 
   .du-sections h1 {
-    font-size: clamp(2.35rem, 12vw, 3.45rem);
-    line-height: 1.05;
+    line-height: 0.95;
   }
 
   .du-sections h2 {
@@ -2081,8 +2187,9 @@ section {
   }
 
   .du-nav-logo-mark {
-    width: 2.35rem;
-    height: 2.35rem;
+    width: auto;
+    max-width: 12rem;
+    height: 2.65rem;
   }
 
   .du-nav-cta {
