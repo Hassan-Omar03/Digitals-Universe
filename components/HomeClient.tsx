@@ -71,37 +71,6 @@ function StaticBackground() {
   )
 }
 
-const sparkleDots = [
-  ["8%", "18%", "0s"],
-  ["13%", "46%", "2.7s"],
-  ["18%", "78%", "1.2s"],
-  ["27%", "35%", "2.1s"],
-  ["31%", "88%", "3.4s"],
-  ["39%", "12%", "0.7s"],
-  ["48%", "68%", "1.8s"],
-  ["53%", "42%", "3.2s"],
-  ["58%", "24%", "2.8s"],
-  ["68%", "82%", "0.4s"],
-  ["72%", "44%", "3.7s"],
-  ["77%", "16%", "2.4s"],
-  ["88%", "52%", "1.4s"],
-  ["93%", "28%", "3s"],
-] as const
-
-function SparkleField({ className = "" }: { className?: string }) {
-  return (
-    <div className={`du-sparkle-field ${className}`} aria-hidden="true">
-      {sparkleDots.map(([left, top, delay]) => (
-        <span
-          key={`${left}-${top}`}
-          className="du-sparkle"
-          style={{ left, top, animationDelay: delay }}
-        />
-      ))}
-    </div>
-  )
-}
-
 const stats = [
   { value: "20+", label: "Projects Completed" },
   { value: "100+", label: "Happy Clients" },
@@ -504,25 +473,25 @@ export default function HomeClient() {
       {hasOpenedChat ? <Chatbot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} /> : null}
 
       <div className="du-sections relative z-10 flex w-full flex-col">
-        <section id="hero" className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-4 pb-28 pt-20 md:pb-32 md:pt-24">
-          <div className="du-reveal relative z-10 mx-auto w-full max-w-[1100px] -translate-y-6 text-center md:-translate-y-8 lg:-translate-y-10">
-            <div className="du-label-blur mb-8 inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#8bbef0]">
+        <section id="hero" className="du-mobile-hero relative flex min-h-screen items-center justify-center overflow-hidden px-4 pb-14 pt-10 md:min-h-[100svh] md:pb-32 md:pt-24">
+          <div className="du-reveal relative z-10 mx-auto w-full max-w-[1100px] text-center md:-translate-y-8 lg:-translate-y-10">
+            <div className="du-label-blur mb-4 inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#8bbef0] md:mb-8 md:text-[11px] md:tracking-[0.16em]">
               <Cpu className="h-4 w-4" />
               Premium digital agency
             </div>
-            <h1 className="mx-auto max-w-[1100px] text-[clamp(36px,11vw,42px)] font-extrabold leading-[0.98] tracking-[-1.5px] text-white md:text-[clamp(48px,7vw,56px)] md:tracking-[-2px] lg:text-[clamp(60px,5vw,68px)] 2xl:text-[clamp(64px,5vw,88px)]">
+            <h1 className="mx-auto max-w-[1100px] text-[clamp(34px,10.5vw,44px)] font-extrabold leading-[0.95] tracking-[-1px] text-white md:text-[clamp(48px,7vw,56px)] md:leading-[0.98] md:tracking-[-2px] lg:text-[clamp(60px,5vw,68px)] 2xl:text-[clamp(64px,5vw,88px)]">
               WE TRANSFORM YOUR
               <br />
               BUSINESS DIGITAL
             </h1>
-            <p className="mx-auto mt-8 max-w-[850px] text-[19px] font-normal leading-[1.5] text-[#d7e6f4] md:text-[22px] xl:text-2xl">
+            <p className="mx-auto mt-5 w-full max-w-[min(850px,calc(100vw-2rem))] text-[17px] font-normal leading-[1.45] text-[#d7e6f4] md:mt-8 md:text-[22px] md:leading-[1.5] xl:text-2xl">
               We help businesses grow, automate, and thrive in the digital world through powerful technology, smart strategies, and creative solutions that deliver real results.
             </p>
 
-            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+            <div className="mx-auto mt-7 flex w-full max-w-[360px] flex-col justify-center gap-3 sm:max-w-none sm:flex-row md:mt-10 md:gap-4">
               <button
                 onClick={() => scrollToSection("services")}
-                className="du-action-primary inline-flex h-[60px] items-center justify-center gap-2 rounded-[14px] px-10 text-xl font-bold text-white"
+                className="du-action-primary inline-flex h-12 w-full items-center justify-center gap-2 rounded-[12px] px-5 text-base font-bold text-white sm:w-auto md:h-[60px] md:rounded-[14px] md:px-10 md:text-xl"
               >
                 Explore Services
                 <ArrowRight className="h-4 w-4" />
@@ -531,7 +500,7 @@ export default function HomeClient() {
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="du-action-secondary inline-flex h-[60px] items-center justify-center gap-2 rounded-[14px] px-10 text-xl font-bold text-white"
+                className="du-action-secondary inline-flex h-12 w-full items-center justify-center gap-2 rounded-[12px] px-5 text-base font-bold text-white sm:w-auto md:h-[60px] md:rounded-[14px] md:px-10 md:text-xl"
               >
                 Get Started Now
                 <MessageCircle className="h-4 w-4" />
@@ -617,9 +586,13 @@ export default function HomeClient() {
                   Global Reach & Trusted Partnerships
                 </div>
                 <div className="relative mt-3.5 h-24 overflow-hidden rounded-[16px]">
-                  <Image src="/map.png" alt="Global reach map" fill className="object-contain" sizes="(max-width: 1024px) 100vw, 33vw" />
-                  <span className="du-label-blur absolute bottom-6 left-[56%] rounded-md px-1.5 py-0.5 text-[10px] font-bold text-white">UAE</span>
-                  <span className="du-label-blur absolute right-3 top-12 rounded-md px-1.5 py-0.5 text-[10px] font-bold text-white">Bangladesh</span>
+                 <Image
+  src="/map2.png"
+  alt="Global reach map"
+  fill
+  className="object-contain scale-x-150 scale-y-125"
+  sizes="(max-width: 1024px) 100vw, 33vw"
+/>
                 </div>
                 <div className="mt-2.5 grid grid-cols-2 gap-2 text-center">
                   <div className="rounded-[14px] bg-white/[0.04] px-2 py-1.5 text-[11px] font-bold leading-tight text-white">From Startups to Enterprises</div>
@@ -678,12 +651,14 @@ export default function HomeClient() {
               {activeServices.map((service) => (
                 <article
                   key={service.name}
-                  className="du-service-card rounded-[22px] border border-white/10 p-6"
+                  className="du-service-card rounded-[28px] border border-white/10 p-6"
                 >
+                  <span className="du-top-neon-sweep" aria-hidden="true" />
+                  <span className="du-card-reflection" aria-hidden="true" />
                   <div className="du-icon-orb rounded-[18px] border border-white/15">
                     <service.icon className="h-8 w-8 text-[#d7f4ff]" />
                   </div>
-                  <h3 className="mt-5 text-xl font-black text-white">{service.name}</h3>
+                  <h3 className="du-card-title mt-5 text-xl font-black text-white">{service.name}</h3>
                   <p className="mt-3 text-sm leading-7 text-neutral-400">{service.description}</p>
                 </article>
               ))}
@@ -710,14 +685,16 @@ export default function HomeClient() {
               {processSteps.map((step) => (
                 <article
                   key={step.title}
-                  className="du-reveal du-flow-card du-premium-card relative rounded-[22px] border border-[#8bbef0]/30 p-6"
+                  className="du-reveal du-flow-card du-premium-card relative rounded-[28px] border border-[#8bbef0]/30 p-6"
                 >
+                  <span className="du-top-neon-sweep" aria-hidden="true" />
+                  <span className="du-card-reflection" aria-hidden="true" />
                   <div className="relative mb-7 flex justify-center">
                     <div className="du-flow-icon du-icon-orb relative grid h-[76px] w-[76px] place-items-center rounded-[22px] border border-[#8bbef0]/50 bg-white/[0.08] text-base font-black text-white">
                       <step.icon className="h-9 w-9 text-[#8bbef0]" />
                     </div>
                   </div>
-                  <h3 className="text-center text-xl font-black text-white">{step.title}</h3>
+                  <h3 className="du-card-title text-center text-xl font-black text-white">{step.title}</h3>
                   <p className="mx-auto mt-3 max-w-[15rem] text-center text-sm leading-7 text-[#b8c8d8]">{step.text}</p>
                 </article>
               ))}
@@ -727,7 +704,8 @@ export default function HomeClient() {
 
         <section id="payment" className="du-blur-band relative flex min-h-[100svh] items-center border-y border-white/10 px-4 py-12 md:py-14">
           <div className="mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-stretch">
-            <div className="du-premium-card flex flex-col justify-between rounded-[24px] border border-white/10 p-6 md:p-8">
+            <div className="du-premium-card du-top-line-card flex flex-col justify-between rounded-[24px] border border-white/10 p-6 md:p-8">
+              <span className="du-top-neon-sweep" aria-hidden="true" />
               <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">
                 <CreditCard className="h-4 w-4" />
@@ -751,7 +729,8 @@ export default function HomeClient() {
                 ))}
               </div>
             </div>
-            <div className="du-premium-card rounded-[24px] border border-white/10 p-2 md:p-4">
+            <div className="du-premium-card du-top-line-card rounded-[24px] border border-white/10 p-2 md:p-4">
+              <span className="du-top-neon-sweep" aria-hidden="true" />
               <Payment />
             </div>
           </div>
@@ -847,7 +826,8 @@ export default function HomeClient() {
 
         <section id="contact" className="relative flex min-h-[100svh] items-center overflow-hidden px-4 py-12 md:py-14">
           <div className="mx-auto grid w-full max-w-6xl gap-5 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="du-reveal du-premium-card rounded-[26px] border border-white/10 p-6 md:p-10">
+            <div className="du-reveal du-premium-card du-top-line-card rounded-[26px] border border-white/10 p-6 md:p-10">
+              <span className="du-top-neon-sweep" aria-hidden="true" />
               <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">
                 <MessageCircle className="h-4 w-4" />
                 Start Your Project
@@ -881,7 +861,8 @@ export default function HomeClient() {
                 { icon: Mail, label: "Email", value: "hello@digitaluniverse.agency" },
                 { icon: MapPin, label: "Location", value: "Dubai, UAE" },
               ].map((item) => (
-                <div key={item.label} className="du-premium-card rounded-[22px] border border-white/10 p-5">
+                <div key={item.label} className="du-premium-card du-top-line-card rounded-[22px] border border-white/10 p-5">
+                  <span className="du-top-neon-sweep" aria-hidden="true" />
                   <div className="flex items-center gap-4">
                     <span className="grid h-12 w-12 place-items-center rounded-[16px] border border-white/10 bg-white/[0.05]">
                       <item.icon className="h-5 w-5 text-[#8bbef0]" />

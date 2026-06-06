@@ -318,22 +318,316 @@ section {
 }
 
 .du-service-card {
-  transition: border-color 220ms ease, box-shadow 220ms ease;
+  border-radius: 28px;
+  isolation: isolate;
+  transform: translateY(0) scale(1);
+  transition:
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
 .du-service-card:hover {
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: none !important;
-  transform: none;
+  border-color: rgba(77, 163, 255, 0.42) !important;
+  box-shadow:
+    0 0 0 1px rgba(77, 163, 255, 0.18),
+    0 18px 46px rgba(0, 0, 0, 0.36),
+    0 0 34px rgba(77, 163, 255, 0.16),
+    0 0 74px rgba(77, 210, 255, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-6px) scale(1.02);
 }
 
 .du-service-card:hover::before {
-  opacity: 0.58;
-  transform: none;
+  opacity: 0.88;
+  transform: translate3d(0, -4px, 0);
+}
+
+.du-service-card::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: -1px;
+  z-index: 4;
+  width: 42%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(77, 163, 255, 0.12) 18%,
+    rgba(77, 163, 255, 0.68) 52%,
+    #4DA3FF 72%,
+    rgba(150, 226, 255, 0.94) 88%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 6px rgba(77, 163, 255, 0.76),
+    0 0 16px rgba(77, 210, 255, 0.42),
+    0 0 28px rgba(77, 210, 255, 0.22);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-110%);
 }
 
 .du-service-card:hover::after {
   opacity: 0;
+}
+
+.du-flow-card {
+  border-radius: 28px;
+  isolation: isolate;
+  transform: translateY(0) scale(1);
+  transition:
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.du-flow-card:hover {
+  border-color: rgba(77, 163, 255, 0.46) !important;
+  box-shadow:
+    0 0 0 1px rgba(77, 163, 255, 0.2),
+    0 18px 50px rgba(0, 0, 0, 0.36),
+    0 0 36px rgba(77, 163, 255, 0.17),
+    0 0 78px rgba(77, 210, 255, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-6px) scale(1.02);
+}
+
+.du-flow-card:hover::before {
+  opacity: 0.88;
+  transform: translate3d(0, -4px, 0);
+}
+
+.du-flow-card::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: -1px;
+  z-index: 4;
+  width: 42%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(77, 163, 255, 0.12) 18%,
+    rgba(77, 163, 255, 0.68) 52%,
+    #4DA3FF 72%,
+    rgba(150, 226, 255, 0.94) 88%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 6px rgba(77, 163, 255, 0.76),
+    0 0 16px rgba(77, 210, 255, 0.42),
+    0 0 28px rgba(77, 210, 255, 0.22);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-110%);
+}
+
+.du-flow-card:hover::after {
+  opacity: 0;
+}
+
+.du-top-line-card {
+  border-radius: 28px;
+  isolation: isolate;
+  transform: translateY(0) scale(1);
+  transition:
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.du-top-line-card:hover {
+  border-color: rgba(77, 163, 255, 0.42) !important;
+  box-shadow:
+    0 0 0 1px rgba(77, 163, 255, 0.14),
+    0 16px 44px rgba(0, 0, 0, 0.34),
+    0 0 28px rgba(77, 163, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-6px) scale(1.01);
+}
+
+.du-top-line-card:hover::before {
+  opacity: 0.88;
+  transform: translate3d(0, -4px, 0);
+}
+
+.du-service-card .du-top-neon-sweep,
+.du-flow-card .du-top-neon-sweep,
+.du-top-line-card .du-top-neon-sweep {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 8;
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  pointer-events: none;
+}
+
+.du-service-card .du-top-neon-sweep::before,
+.du-flow-card .du-top-neon-sweep::before,
+.du-top-line-card .du-top-neon-sweep::before {
+  content: "";
+  position: absolute;
+  left: 4%;
+  top: 0;
+  width: 92%;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(77, 163, 255, 0.22) 5%,
+    rgba(77, 163, 255, 0.72) 18%,
+    #4DA3FF 50%,
+    rgba(77, 163, 255, 0.76) 82%,
+    rgba(182, 237, 255, 0.36) 95%,
+    transparent 100%
+  );
+  box-shadow: none;
+  opacity: 0;
+  transition: opacity 280ms ease;
+}
+
+.du-service-card .du-top-neon-sweep::after,
+.du-flow-card .du-top-neon-sweep::after,
+.du-top-line-card .du-top-neon-sweep::after {
+  display: none;
+}
+
+.du-service-card:hover .du-top-neon-sweep::before,
+.du-flow-card:hover .du-top-neon-sweep::before,
+.du-top-line-card:hover .du-top-neon-sweep::before {
+  opacity: 1;
+}
+
+.du-service-card:hover .du-top-neon-sweep::after,
+.du-flow-card:hover .du-top-neon-sweep::after,
+.du-top-line-card:hover .du-top-neon-sweep::after {
+  opacity: 0;
+}
+
+.du-card-reflection {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.du-card-reflection::before {
+  content: "";
+  position: absolute;
+  inset: -24% auto -24% -58%;
+  width: 46%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.012) 28%,
+    rgba(111, 196, 255, 0.09) 48%,
+    rgba(255, 255, 255, 0.045) 58%,
+    transparent 78%
+  );
+  opacity: 0;
+  transform: translateX(0) skewX(-16deg);
+  filter: blur(0.3px);
+}
+
+.du-service-card:hover .du-card-reflection::before,
+.du-flow-card:hover .du-card-reflection::before {
+  animation: du-card-surface-sheen 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.du-card-title {
+  transition:
+    color 280ms ease,
+    text-shadow 280ms ease,
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.du-service-card:hover .du-card-title,
+.du-flow-card:hover .du-card-title {
+  color: #f7fbff;
+  text-shadow: 0 0 18px rgba(77, 163, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+@keyframes du-card-top-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-110%);
+  }
+  10% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(240%);
+  }
+}
+
+@keyframes du-card-surface-sheen {
+  0% {
+    opacity: 0;
+    transform: translateX(0) skewX(-16deg);
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(360%) skewX(-16deg);
+  }
+}
+
+@keyframes du-visible-top-neon-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-112%);
+  }
+  10% {
+    opacity: 1;
+  }
+  78% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(218%);
+  }
+}
+
+@keyframes du-visible-top-neon-trail {
+  0% {
+    opacity: 0;
+    transform: translateX(-130%);
+  }
+  18% {
+    opacity: 0.78;
+  }
+  74% {
+    opacity: 0.34;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(250%);
+  }
 }
 
 .du-services-section::before,
@@ -352,12 +646,78 @@ section {
 
 .du-service-card .du-icon-orb,
 .du-flow-card .du-icon-orb {
+  position: relative;
+  overflow: hidden;
   background: rgba(255, 255, 255, 0.075);
   box-shadow: none;
   filter: none;
   animation: none;
+  transform: rotate(0deg) translateY(0);
+  transition:
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 320ms ease;
   -webkit-backdrop-filter: blur(16px) saturate(135%);
   backdrop-filter: blur(16px) saturate(135%);
+}
+
+.du-service-card .du-icon-orb::before,
+.du-flow-card .du-icon-orb::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  z-index: 1;
+  width: 58%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(77, 163, 255, 0.58), #4DA3FF, rgba(170, 232, 255, 0.9), transparent);
+  box-shadow:
+    0 0 5px rgba(77, 163, 255, 0.8),
+    0 0 14px rgba(77, 210, 255, 0.38);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-120%);
+}
+
+.du-service-card .du-icon-orb > *,
+.du-flow-card .du-icon-orb > * {
+  position: relative;
+  z-index: 2;
+}
+
+.du-service-card:hover .du-icon-orb,
+.du-flow-card:hover .du-icon-orb {
+  border-color: rgba(77, 163, 255, 0.62);
+  background: rgba(77, 163, 255, 0.1);
+  box-shadow:
+    0 0 0 1px rgba(77, 163, 255, 0.18),
+    0 12px 28px rgba(0, 0, 0, 0.25),
+    0 0 24px rgba(77, 163, 255, 0.18);
+  transform: rotate(-5deg) translateY(-3px);
+}
+
+.du-service-card:hover .du-icon-orb::before,
+.du-flow-card:hover .du-icon-orb::before {
+  animation: du-icon-top-sweep 0.92s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes du-icon-top-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%);
+  }
+  12% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(190%);
+  }
 }
 
 .du-label-blur {
@@ -513,7 +873,7 @@ section {
   box-shadow:
     0 0 0 5px rgba(139, 190, 240, 0.1),
     0 0 22px rgba(56, 189, 248, 0.72);
-  animation: du-node-pulse 2.8s ease-in-out infinite;
+  animation: none;
 }
 
 .du-mission-chip {
@@ -547,7 +907,7 @@ section {
     repeating-linear-gradient(116deg, transparent 0 54px, rgba(55, 208, 174, 0.06) 55px, transparent 57px);
   filter: drop-shadow(0 0 24px rgba(56, 189, 248, 0.12));
   opacity: 0.7;
-  animation: du-web-drift 18s linear infinite;
+  animation: none;
 }
 
 .du-neural-web-one {
@@ -579,7 +939,7 @@ section {
   box-shadow:
     0 0 12px rgba(139, 190, 240, 0.78),
     0 0 24px rgba(56, 189, 248, 0.42);
-  animation: du-node-pulse 3.8s ease-in-out infinite, du-node-float 8s ease-in-out infinite;
+  animation: none;
 }
 
 .du-neural-node:nth-child(3n) {
@@ -1220,6 +1580,109 @@ section {
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* ── Neon Sweep Card ── */
+.du-neon-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid rgba(77, 163, 255, 0.14);
+  background: rgba(255, 255, 255, 0.055);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transform: translateY(0) scale(1);
+  transition:
+    transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 400ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 400ms ease;
+  will-change: transform;
+}
+
+/* Neon sweep line — travels along the top edge */
+.du-neon-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(77, 163, 255, 0.6) 30%,
+    #4DA3FF 55%,
+    rgba(100, 210, 255, 0.9) 70%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 6px 1px rgba(77, 163, 255, 0.7),
+    0 0 18px 2px rgba(77, 163, 255, 0.35);
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: none;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Light reflection sweep across card surface */
+.du-neon-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(77, 163, 255, 0.055) 45%,
+    rgba(120, 220, 255, 0.04) 55%,
+    transparent 75%
+  );
+  opacity: 0;
+  transform: translateX(-60%) skewX(-12deg);
+  transition:
+    opacity 400ms ease,
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.du-neon-card:hover {
+  border-color: rgba(77, 163, 255, 0.38);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow:
+    0 0 0 1px rgba(77, 163, 255, 0.22),
+    0 12px 40px rgba(0, 0, 0, 0.38),
+    0 0 32px rgba(77, 163, 255, 0.14),
+    0 0 64px rgba(77, 163, 255, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+.du-neon-card:hover::before {
+  opacity: 1;
+  animation: du-neon-sweep 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.du-neon-card:hover::after {
+  opacity: 1;
+  transform: translateX(60%) skewX(-12deg);
+}
+
+.du-neon-card > * {
+  position: relative;
+  z-index: 3;
+}
+
+@keyframes du-neon-sweep {
+  0%   { transform: translateX(-100%); opacity: 0.2; }
+  15%  { opacity: 1; }
+  80%  { opacity: 0.85; }
+  90%  { transform: translateX(200%); opacity: 0.3; }
+  100% { transform: translateX(210%); opacity: 0; }
 }
 
 /* ── Blue accent line ── */

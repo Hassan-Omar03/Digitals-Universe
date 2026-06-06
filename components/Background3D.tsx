@@ -21,7 +21,6 @@ precision highp float;
 uniform sampler2D uImage;
 uniform vec2 uResolution;
 uniform vec2 uImageSize;
-uniform vec2 uMouse;
 uniform float uTime;
 uniform float uDpr;
 uniform float uReducedMotion;
@@ -88,16 +87,14 @@ float brightBlue(vec3 c) {
 
 void main() {
   float motion = 1.0 - uReducedMotion;
-  vec2 mouse = (uMouse - 0.5) * motion;
   vec2 uv = coverUv(vUv);
   vec2 p = vec2(uv.x, 1.0 - uv.y);
-  float t = uTime * motion;
 
   vec2 globeCenter = vec2(0.78, 0.33);
   vec2 globeRadius = vec2(0.285, 0.315);
   vec2 globeSpace = (p - globeCenter) / globeRadius;
   float globe = ellipseMask(p, globeCenter, globeRadius, 0.13);
-  float globeEdge = smoothstep(0.86, 0.73, abs(length(globeSpace) - 0.88));
+  float globeSoft = ellipseMask(p, globeCenter, globeRadius, 0.13);
 
   float city =
     smoothstep(0.96, 0.60, p.y) *
@@ -124,59 +121,47 @@ void main() {
     (1.0 - smoothstep(0.10, 0.84, stream)) *
     (1.0 - smoothstep(0.08, 0.70, globe));
 
-  vec2 bgUv = uv + mouse * vec2(-0.0045, 0.0030);
-  vec2 cityUv = uv + mouse * vec2(-0.018, 0.010) * city;
-  vec2 streamUv = uv + mouse * vec2(-0.034, 0.018) * stream;
-  vec2 panelUv = uv + mouse * vec2(-0.024, 0.014) * panels;
+  vec2 bgUv = uv;
+  vec2 cityUv = uv;
+  vec2 streamUv = uv;
+  vec2 panelUv = uv;
 
-  vec2 globeUv = uv + mouse * vec2(-0.010, 0.006) * globe;
+  vec2 globeUv = uv;
 
   vec3 base = sampleImage(bgUv);
   vec3 citySample = sampleImage(cityUv);
-  vec2 streamDrift = normalize(vec2(0.45, -0.32)) * (sin(streamTravel * 15.0 - t * 1.9) * 0.0045);
+  vec2 streamDrift = normalize(vec2(0.45, -0.32)) * (sin(streamTravel * 15.0) * 0.0012);
   vec3 streamSample = sampleImage(streamUv + streamDrift * stream);
   vec3 globeSample = sampleImage(globeUv);
-  vec3 panelSample = sampleImage(panelUv + vec2(0.0, sin(t * 0.65 + p.x * 7.0) * 0.0030) * panels);
+  vec3 panelSample = sampleImage(panelUv);
 
-  vec3 color = base;
-  color = mix(color, citySample, city * 0.22);
-  color = mix(color, streamSample, stream * 0.38);
-  color = mix(color, globeSample, globe * 0.34);
-  color = mix(color, panelSample, panels * 0.28);
+  float outsideGlobe = 1.0 - globeSoft * 0.96;
+  vec3 color = mix(base, globeSample, globe);
+  color = mix(color, citySample, city * 0.18 * outsideGlobe);
+  color = mix(color, streamSample, stream * 0.26 * outsideGlobe);
+  color = mix(color, panelSample, panels * 0.18 * outsideGlobe);
 
-  float cityEnergy = brightBlue(citySample) * city;
+  float cityEnergy = brightBlue(citySample) * city * outsideGlobe;
   float cityGrid = hash21(floor(p * vec2(145.0, 95.0)));
-  float cityFlicker = 0.74 + 0.26 * sin(t * (0.8 + cityGrid * 1.4) + cityGrid * 12.0);
-  color += citySample * cityEnergy * cityFlicker * 0.18;
-  float skylineSweep = smoothstep(0.040, 0.0, abs(p.x - (0.18 + fract(t * 0.035) * 0.42))) * smoothstep(0.72, 0.42, p.y) * cityEnergy;
-  color += citySample * skylineSweep * 0.16;
+  float cityFlicker = 0.80 + cityGrid * 0.08;
+  color += citySample * cityEnergy * cityFlicker * 0.08;
 
-  float streamEnergy = brightBlue(streamSample) * stream;
-  float flow = smoothstep(0.74, 1.0, sin(streamTravel * 24.0 - t * 3.2) * 0.5 + 0.5);
-  float fineFlow = smoothstep(0.55, 1.0, sin(streamTravel * 82.0 - t * 8.4 + p.y * 9.0) * 0.5 + 0.5);
-  color += streamSample * streamEnergy * (flow * 0.52 + fineFlow * 0.22) * 0.70;
-  color += vec3(0.0, 0.38, 1.10) * streamEnergy * flow * 0.20;
-  float dataPulseA = smoothstep(0.024, 0.0, abs(fract(streamTravel * 3.2 - t * 0.42) - 0.5));
-  float dataPulseB = smoothstep(0.018, 0.0, abs(fract(streamTravel * 5.4 - t * 0.62 + 0.31) - 0.5));
-  color += vec3(0.0, 0.52, 1.35) * streamEnergy * (dataPulseA * 0.18 + dataPulseB * 0.12);
+  float streamEnergy = brightBlue(streamSample) * stream * outsideGlobe;
+  float flow = smoothstep(0.70, 1.0, sin(streamTravel * 20.0) * 0.5 + 0.5);
+  float fineFlow = smoothstep(0.68, 1.0, sin(streamTravel * 58.0 + p.y * 6.0) * 0.5 + 0.5);
+  color += streamSample * streamEnergy * (flow * 0.16 + fineFlow * 0.05) * 0.36;
+  color += vec3(0.0, 0.28, 0.82) * streamEnergy * flow * 0.045;
 
   float globeEnergy = brightBlue(globeSample) * globe;
   color += vec3(0.0, 0.34, 1.0) * globeEnergy * 0.08;
 
-  float panelEnergy = brightBlue(panelSample) * panels;
-  float panelPulse = 0.76 + 0.24 * sin(t * 0.72 + p.x * 6.0 + p.y * 5.0);
-  color += panelSample * panelEnergy * panelPulse * 0.26;
-  float panelScan = smoothstep(0.030, 0.0, abs(fract((p.y + p.x * 0.22) * 3.0 - t * 0.18) - 0.5)) * panels;
-  color += panelSample * panelEnergy * panelScan * 0.12;
+  float panelEnergy = brightBlue(panelSample) * panels * outsideGlobe;
+  color += panelSample * panelEnergy * 0.10;
 
   vec3 center = sampleImage(uv);
   float luma = dot(center, vec3(0.2126, 0.7152, 0.0722));
   float blueStar = brightBlue(center);
-  float sparkleSeed = hash21(floor(p * vec2(180.0, 110.0)));
-  float twinkle = smoothstep(0.36, 1.0, sin(t * (0.55 + sparkleSeed * 1.15) + sparkleSeed * 19.0) * 0.5 + 0.5);
-  color += center * blueStar * starZone * twinkle * 0.30;
-  float slowNebula = 0.5 + 0.5 * sin((p.x * 3.1 + p.y * 2.4) + t * 0.18);
-  color += center * blueStar * starZone * slowNebula * 0.08;
+  color += center * blueStar * starZone * 0.025;
 
   vec2 pixel = 1.0 / uResolution * uDpr * 2.0;
   vec3 blur = vec3(0.0);
@@ -188,11 +173,9 @@ void main() {
   blur += sampleImage(uv - pixel * vec2(7.0, 5.0));
   blur *= 0.1667;
   float bloomMask = brightBlue(blur);
-  float glowMask = saturate(stream * 0.95 + globe * 0.72 + city * 0.22 + panels * 0.22);
-  color += blur * bloomMask * glowMask * 0.44;
-  color += vec3(0.0, 0.28, 0.86) * bloomMask * glowMask * 0.10;
-  float cinematicSweep = smoothstep(0.20, 0.0, abs((p.x - p.y * 0.32) - (fract(t * 0.025) * 1.28 - 0.20)));
-  color += blur * bloomMask * cinematicSweep * 0.10;
+  float glowMask = saturate(stream * 0.52 * outsideGlobe + globe * 0.56 + city * 0.12 * outsideGlobe + panels * 0.12 * outsideGlobe);
+  color += blur * bloomMask * glowMask * 0.22;
+  color += vec3(0.0, 0.20, 0.66) * bloomMask * glowMask * 0.04;
 
   float vignette = smoothstep(0.95, 0.22, length(vUv - 0.5));
   color *= 0.62 + vignette * 0.46;
@@ -231,7 +214,6 @@ export default function Background3D() {
       uImage: { value: texture },
       uResolution: { value: new THREE.Vector2(1, 1) },
       uImageSize: { value: IMAGE_SIZE },
-      uMouse: { value: new THREE.Vector2(0.5, 0.5) },
       uTime: { value: 0 },
       uDpr: { value: 1 },
       uReducedMotion: {
@@ -251,8 +233,6 @@ export default function Background3D() {
     scene.add(mesh)
 
     let frame = 0
-    const targetMouse = new THREE.Vector2(0.5, 0.5)
-    const smoothMouse = new THREE.Vector2(0.5, 0.5)
 
     const resize = () => {
       const width = window.innerWidth
@@ -271,13 +251,7 @@ export default function Background3D() {
       uniforms.uDpr.value = dpr
     }
 
-    const onPointerMove = (event: PointerEvent) => {
-      targetMouse.set(event.clientX / window.innerWidth, 1 - event.clientY / window.innerHeight)
-    }
-
     const render = (time: number) => {
-      smoothMouse.lerp(targetMouse, 0.035)
-      uniforms.uMouse.value.copy(smoothMouse)
       uniforms.uTime.value = time * 0.001
       renderer.render(scene, camera)
       frame = window.requestAnimationFrame(render)
@@ -285,13 +259,11 @@ export default function Background3D() {
 
     resize()
     window.addEventListener("resize", resize, { passive: true })
-    window.addEventListener("pointermove", onPointerMove, { passive: true })
     frame = window.requestAnimationFrame(render)
 
     return () => {
       window.cancelAnimationFrame(frame)
       window.removeEventListener("resize", resize)
-      window.removeEventListener("pointermove", onPointerMove)
       mesh.geometry.dispose()
       material.dispose()
       texture.dispose()
@@ -303,7 +275,7 @@ export default function Background3D() {
   return (
     <div
       ref={mountRef}
-      className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#000308]"
+      className="du-live-background fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#000308]"
       aria-hidden="true"
     />
   )
