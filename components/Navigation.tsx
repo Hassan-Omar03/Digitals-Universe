@@ -9,6 +9,7 @@ const phoneNumber = "+971522740909"
 const greetingMessage =
   "Hi! I'm interested in your digital services. Could you please provide more information?"
 const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(greetingMessage)}`
+const logoSrc = "/logo-transparent.png"
 
 const navItems = [
   { label: "Home", id: "hero" },
@@ -117,10 +118,10 @@ export default function Navigation() {
           aria-label="Go to Digital Universe home"
         >
           <Image
-            src="/logo-cropped.png"
+            src={logoSrc}
             alt="Digital Universe"
-            width={499}
-            height={139}
+            width={1680}
+            height={945}
             priority
             className="du-nav-logo-mark h-12 w-auto max-w-[13rem] shrink-0 object-contain transition-transform duration-300 group-hover:scale-105 lg:h-[54px] lg:max-w-[14rem]"
           />

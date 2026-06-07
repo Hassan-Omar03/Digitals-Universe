@@ -39,7 +39,7 @@ vec2 coverUv(vec2 uv) {
     : vec2(screenRatio / imageRatio, 1.0);
   float portrait = 1.0 - smoothstep(0.76, 0.92, screenRatio);
   scale.x = mix(scale.x, max(scale.x, 0.64), portrait);
-  vec2 center = mix(vec2(0.5), vec2(0.72, 0.5), portrait);
+  vec2 center = mix(vec2(0.5), vec2(0.62, 0.58), portrait);
 
   return (uv - 0.5) * scale + center;
 }

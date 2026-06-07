@@ -33,10 +33,10 @@ export default function Footer() {
         <div className="flex flex-col gap-6 border-b border-white/10 pb-7 md:flex-row md:items-center md:justify-between">
           <Link href="/#hero" className="inline-flex items-center gap-3">
             <Image
-              src="/logo-cropped.png"
+              src="/logo-transparent.png"
               alt="Digital Universe"
-              width={499}
-              height={139}
+              width={1680}
+              height={945}
               className="h-14 w-auto max-w-[12rem] shrink-0 object-contain"
             />
           </Link>

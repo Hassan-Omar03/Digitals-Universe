@@ -398,7 +398,7 @@ export default function HomeClient() {
     serviceCategories.find((category) => category.category === activeCategory)?.services ?? []
 
   useEffect(() => {
-    const items = Array.from(document.querySelectorAll<HTMLElement>(".du-reveal"))
+    const items = Array.from(document.querySelectorAll<HTMLElement>(".du-reveal, .du-motion-box"))
     if (!items.length) return
 
     const observer = new IntersectionObserver(
@@ -406,6 +406,7 @@ export default function HomeClient() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("du-reveal-visible")
+            entry.target.classList.add("du-motion-visible")
             observer.unobserve(entry.target)
           }
         })
@@ -706,7 +707,7 @@ export default function HomeClient() {
 
         <section id="payment" className="du-blur-band relative flex min-h-[100svh] items-center border-y border-white/10 px-4 py-12 md:py-14">
           <div className="mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-stretch">
-            <div className="du-premium-card du-top-line-card flex flex-col justify-between rounded-[24px] border border-white/10 p-6 md:p-8">
+            <div className="du-motion-box du-reveal du-flicker-left du-premium-card du-top-line-card flex flex-col justify-between rounded-[24px] border border-white/10 p-6 md:p-8">
               <span className="du-top-neon-sweep" aria-hidden="true" />
               <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">
@@ -731,7 +732,7 @@ export default function HomeClient() {
                 ))}
               </div>
             </div>
-            <div className="du-premium-card du-top-line-card rounded-[24px] border border-white/10 p-2 md:p-4">
+            <div className="du-motion-box du-reveal du-flicker-right du-premium-card du-top-line-card rounded-[24px] border border-white/10 p-2 md:p-4">
               <span className="du-top-neon-sweep" aria-hidden="true" />
               <Payment />
             </div>
@@ -828,7 +829,7 @@ export default function HomeClient() {
 
         <section id="contact" className="relative flex min-h-[100svh] items-center overflow-hidden px-4 py-12 md:py-14">
           <div className="mx-auto grid w-full max-w-6xl gap-5 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="du-reveal du-premium-card du-top-line-card rounded-[26px] border border-white/10 p-6 md:p-10">
+            <div className="du-motion-box du-reveal du-flicker-left du-premium-card du-top-line-card rounded-[26px] border border-white/10 p-6 md:p-10">
               <span className="du-top-neon-sweep" aria-hidden="true" />
               <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">
                 <MessageCircle className="h-4 w-4" />
@@ -862,8 +863,12 @@ export default function HomeClient() {
                 { icon: PhoneCall, label: "Phone", value: "+971 52 274 0909" },
                 { icon: Mail, label: "Email", value: "hello@digitaluniverse.agency" },
                 { icon: MapPin, label: "Location", value: "Dubai, UAE" },
-              ].map((item) => (
-                <div key={item.label} className="du-premium-card du-top-line-card rounded-[22px] border border-white/10 p-5">
+              ].map((item, index) => (
+                <div
+                  key={item.label}
+                  className="du-motion-box du-reveal du-flicker-right du-premium-card du-top-line-card rounded-[22px] border border-white/10 p-5"
+                  style={{ animationDelay: `${index * 90}ms` }}
+                >
                   <span className="du-top-neon-sweep" aria-hidden="true" />
                   <div className="flex items-center gap-4">
                     <span className="grid h-12 w-12 place-items-center rounded-[16px] border border-white/10 bg-white/[0.05]">
