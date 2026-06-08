@@ -462,10 +462,7 @@ export default function HomeClient() {
       <div className="du-sections relative z-10 flex w-full flex-col">
         <section id="hero" className="du-mobile-hero relative flex min-h-screen items-center justify-center overflow-hidden px-4 pb-14 pt-10 md:min-h-[100svh] md:pb-32 md:pt-24">
           <div className="du-reveal relative z-10 mx-auto w-full max-w-[1100px] text-center md:-translate-y-8 lg:-translate-y-10">
-            <div className="du-label-blur mb-4 inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#8bbef0] md:mb-8 md:text-[11px] md:tracking-[0.16em]">
-              <Cpu className="h-4 w-4" />
-              Premium digital agency
-            </div>
+            
             <h1 className="du-split-heading mx-auto max-w-[1100px] text-[clamp(29px,8.25vw,38px)] font-extrabold leading-[0.95] tracking-[-1px] text-white md:text-[clamp(48px,7vw,56px)] md:leading-[0.98] md:tracking-[-2px] lg:text-[clamp(60px,5vw,68px)] 2xl:text-[clamp(64px,5vw,88px)]">
               <span className="whitespace-nowrap">WE TRANSFORM YOUR</span>
               <br />
