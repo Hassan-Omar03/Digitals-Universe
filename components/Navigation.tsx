@@ -123,7 +123,7 @@ export default function Navigation() {
             width={1680}
             height={945}
             priority
-            className="du-nav-logo-mark h-12 w-auto max-w-[13rem] shrink-0 object-contain transition-transform duration-300 group-hover:scale-105 lg:h-[54px] lg:max-w-[14rem]"
+            className="du-nav-logo-mark h-[52px] w-auto max-w-[200px] shrink-0 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-[60px] sm:max-w-[220px] lg:h-[68px] lg:max-w-[260px]"
           />
         </button>
 

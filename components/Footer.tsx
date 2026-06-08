@@ -37,7 +37,7 @@ export default function Footer() {
               alt="Digital Universe"
               width={1680}
               height={945}
-              className="h-14 w-auto max-w-[12rem] shrink-0 object-contain"
+              className="h-[64px] w-auto max-w-[220px] shrink-0 object-contain sm:h-[72px] sm:max-w-[240px]"
             />
           </Link>
 
