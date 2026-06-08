@@ -1,12 +1,23 @@
 "use client"
 
+import { useEffect, useRef } from "react"
+
 export default function Background3D() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    v.play().catch(() => {})
+  }, [])
+
   return (
     <div
       className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#000308]"
       aria-hidden="true"
     >
       <video
+        ref={videoRef}
         src="/video.mp4"
         autoPlay
         muted

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useRef, useState } from "react"
 import dynamic from "next/dynamic"
@@ -49,29 +49,13 @@ const Chatbot = dynamic(() => import("./Chatbot"), { ssr: false })
 
 const Background3D = dynamic(() => import("./Background3D"), {
   ssr: false,
-  loading: () => <StaticBackground />,
+  loading: () => <div className="fixed inset-0 z-0 bg-[#000308]" aria-hidden="true" />,
 })
 
 const phoneNumber = "+971522740909"
 const greetingMessage =
   "Hi! I'm interested in your digital services. Could you please provide more information?"
 const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(greetingMessage)}`
-
-function StaticBackground() {
-  return (
-    <div
-      className="du-static-background fixed inset-0 z-0 pointer-events-none bg-[#000308]"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle at 66% 32%, rgba(6, 80, 215, 0.22), transparent 34%), linear-gradient(rgba(0, 3, 8, 0.48), rgba(0, 3, 8, 0.64)), url('/digital-universe-living-bg.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center center",
-        backgroundRepeat: "no-repeat",
-        filter: "brightness(0.72) saturate(1.05) contrast(1.08)",
-      }}
-    />
-  )
-}
 
 const stats = [
   { value: "20+", label: "Projects Completed" },
