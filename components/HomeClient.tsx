@@ -460,22 +460,22 @@ export default function HomeClient() {
       {hasOpenedChat ? <Chatbot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} /> : null}
 
       <div className="du-sections relative z-10 flex w-full flex-col">
-        <section id="hero" className="du-mobile-hero relative flex min-h-screen items-center justify-center overflow-hidden px-4 pb-14 pt-10 md:min-h-[100svh] md:pb-32 md:pt-24">
-          <div className="du-reveal relative z-10 mx-auto w-full max-w-[1100px] text-center md:-translate-y-8 lg:-translate-y-10">
+        <section id="hero" className="du-mobile-hero relative flex min-h-screen items-center overflow-hidden px-4 pb-28 pt-20 md:justify-center md:min-h-[100svh] md:pb-32 md:pt-24">
+          {/* desktop: original centered layout */}
+          <div className="du-reveal relative z-10 mx-auto hidden w-full max-w-[1100px] -translate-y-6 text-center md:block md:-translate-y-8 lg:-translate-y-10">
             
-            <h1 className="du-split-heading mx-auto max-w-[1100px] text-[clamp(29px,8.25vw,38px)] font-extrabold leading-[0.95] tracking-[-1px] text-white md:text-[clamp(48px,7vw,56px)] md:leading-[0.98] md:tracking-[-2px] lg:text-[clamp(60px,5vw,68px)] 2xl:text-[clamp(64px,5vw,88px)]">
-              <span className="whitespace-nowrap">WE TRANSFORM YOUR</span>
+            <h1 className="mx-auto max-w-[1100px] text-[clamp(48px,7vw,56px)] font-extrabold leading-[0.98] tracking-[-2px] text-white lg:text-[clamp(60px,5vw,68px)] 2xl:text-[clamp(64px,5vw,88px)]">
+              WE TRANSFORM YOUR
               <br />
-              <span className="whitespace-nowrap">BUSINESS DIGITAL</span>
+              BUSINESS DIGITAL
             </h1>
-            <p className="mx-auto mt-5 w-full max-w-[min(850px,calc(100vw-2rem))] text-[17px] font-normal leading-[1.45] text-[#d7e6f4] md:mt-8 md:text-[22px] md:leading-[1.5] xl:text-2xl">
+            <p className="mx-auto mt-8 max-w-[850px] text-[19px] font-normal leading-[1.5] text-[#d7e6f4] md:text-[22px] xl:text-2xl">
               We help businesses grow, automate, and thrive in the digital world through powerful technology, smart strategies, and creative solutions that deliver real results.
             </p>
-
-            <div className="mx-auto mt-7 flex w-full max-w-[360px] flex-col justify-center gap-3 sm:max-w-none sm:flex-row md:mt-10 md:gap-4">
+            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
               <button
                 onClick={() => scrollToSection("services")}
-                className="du-action-primary inline-flex h-12 w-full items-center justify-center gap-2 rounded-[12px] px-5 text-base font-bold text-white sm:w-auto md:h-[60px] md:rounded-[14px] md:px-10 md:text-xl"
+                className="du-action-primary inline-flex h-[60px] items-center justify-center gap-2 rounded-[14px] px-10 text-xl font-bold text-white"
               >
                 Explore Services
                 <ArrowRight className="h-4 w-4" />
@@ -484,10 +484,40 @@ export default function HomeClient() {
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="du-action-secondary inline-flex h-12 w-full items-center justify-center gap-2 rounded-[12px] px-5 text-base font-bold text-white sm:w-auto md:h-[60px] md:rounded-[14px] md:px-10 md:text-xl"
+                className="du-action-secondary inline-flex h-[60px] items-center justify-center gap-2 rounded-[14px] px-10 text-xl font-bold text-white"
               >
                 Get Started Now
                 <MessageCircle className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+
+          {/* mobile: left-aligned compact layout */}
+          <div className="du-reveal relative z-10 w-full max-w-[62vw] text-left md:hidden">
+            <h1 className="text-[clamp(26px,7.5vw,34px)] font-extrabold leading-[1.05] tracking-[-0.5px] text-white">
+              WE TRANSFORM YOUR<br />
+              BUSINESS<br />
+              DIGITAL
+            </h1>
+            <p className="mt-3 max-w-[55vw] text-[12.5px] font-normal leading-[1.5] text-[#d7e6f4]">
+              We help businesses grow, automate, and thrive in the digital world through powerful technology and creative solutions.
+            </p>
+            <div className="mt-4 flex flex-col gap-2">
+              <button
+                onClick={() => scrollToSection("services")}
+                className="du-action-primary inline-flex h-9 w-fit items-center gap-2 rounded-[10px] px-4 text-[12px] font-bold text-white"
+              >
+                Explore Services
+                <ArrowRight className="h-3 w-3" />
+              </button>
+              <a
+                href={whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="du-action-secondary inline-flex h-9 w-fit items-center gap-2 rounded-[10px] px-4 text-[12px] font-bold text-white"
+              >
+                Get Started Now
+                <MessageCircle className="h-3 w-3" />
               </a>
             </div>
           </div>

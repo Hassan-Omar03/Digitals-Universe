@@ -1,4 +1,4 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -110,7 +110,7 @@ section {
 
 .du-nav-shell {
   position: relative;
-  min-height: 4.25rem;
+  min-height: unset;
   border: 0 !important;
   background: rgba(255, 255, 255, 0.075);
   box-shadow: none;
@@ -145,7 +145,7 @@ section {
 
 .du-nav-logo-mark {
   border-radius: 0;
-  filter: drop-shadow(0 0 14px rgba(90, 157, 224, 0.28));
+  filter: drop-shadow(0 0 18px rgba(90, 157, 224, 0.45)) brightness(1.12);
 }
 
 .du-brand-word {
@@ -1780,6 +1780,18 @@ header .du-icon-action {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* ── Mobile hero left-column layout ── */
+@media (max-width: 767px) {
+  .du-mobile-hero {
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 1.25rem;
+    padding-right: 0;
+    padding-top: 5rem;
+    padding-bottom: 3rem;
   }
 }
 

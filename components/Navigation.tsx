@@ -107,7 +107,7 @@ export default function Navigation() {
   return (
     <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3 sm:px-6">
       <div
-        className={`du-nav-shell mx-auto grid w-full max-w-5xl grid-cols-[1fr_auto] items-center gap-4 rounded-[1.25rem] px-4 py-2 transition-all duration-300 lg:grid-cols-[auto_1fr_auto] lg:px-5 ${
+        className={`du-nav-shell mx-auto grid w-full max-w-5xl grid-cols-[1fr_auto] items-center gap-4 rounded-[1.25rem] px-4 py-3 transition-all duration-300 lg:grid-cols-[auto_1fr_auto] lg:px-5 lg:py-4 ${
           isScrolled ? "du-nav-shell-scrolled" : ""
         }`}
       >
@@ -123,7 +123,7 @@ export default function Navigation() {
             width={1680}
             height={945}
             priority
-            className="du-nav-logo-mark h-[52px] w-auto max-w-[200px] shrink-0 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-[60px] sm:max-w-[220px] lg:h-[68px] lg:max-w-[260px]"
+            className="du-nav-logo-mark h-[100px] w-auto max-w-[300px] shrink-0 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-[120px] sm:max-w-[360px] lg:h-[140px] lg:max-w-[420px]"
           />
         </button>
 

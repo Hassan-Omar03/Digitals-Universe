@@ -1,14 +1,34 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export default function Background3D() {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [src, setSrc] = useState("/desktopvideo.mp4")
+
+  useEffect(() => {
+    // pick source based on viewport — runs only on client
+    const update = () => {
+      setSrc(window.innerWidth < 768 ? "/mobvideo.mp4" : "/desktopvideo.mp4")
+    }
+    update()
+  }, [])
 
   useEffect(() => {
     const v = videoRef.current
     if (!v) return
+    v.load()
     v.play().catch(() => {})
+  }, [src])
+
+  // resume after tab switch
+  useEffect(() => {
+    const onVis = () => {
+      const v = videoRef.current
+      if (!document.hidden && v && v.paused) v.play().catch(() => {})
+    }
+    document.addEventListener("visibilitychange", onVis)
+    return () => document.removeEventListener("visibilitychange", onVis)
   }, [])
 
   return (
@@ -18,7 +38,8 @@ export default function Background3D() {
     >
       <video
         ref={videoRef}
-        src="/video.mp4"
+        key={src}
+        src={src}
         autoPlay
         muted
         loop
