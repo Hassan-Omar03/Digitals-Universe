@@ -1,31 +1,24 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
+
+const VIDEO_SRC = "/background-seamless.mp4?v=source-loop-v2"
+const OPACITY = 0.9
 
 export default function Background3D() {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [src, setSrc] = useState("/desktopvideo.mp4")
 
   useEffect(() => {
-    // pick source based on viewport — runs only on client
-    const update = () => {
-      setSrc(window.innerWidth < 768 ? "/mobvideo.mp4" : "/desktopvideo.mp4")
-    }
-    update()
+    const video = videoRef.current
+    if (!video) return
+    video.load()
+    video.play().catch(() => {})
   }, [])
 
   useEffect(() => {
-    const v = videoRef.current
-    if (!v) return
-    v.load()
-    v.play().catch(() => {})
-  }, [src])
-
-  // resume after tab switch
-  useEffect(() => {
     const onVis = () => {
-      const v = videoRef.current
-      if (!document.hidden && v && v.paused) v.play().catch(() => {})
+      if (document.hidden) return
+      if (videoRef.current?.paused) videoRef.current.play().catch(() => {})
     }
     document.addEventListener("visibilitychange", onVis)
     return () => document.removeEventListener("visibilitychange", onVis)
@@ -38,15 +31,14 @@ export default function Background3D() {
     >
       <video
         ref={videoRef}
-        key={src}
-        src={src}
+        src={VIDEO_SRC}
         autoPlay
-        muted
         loop
+        muted
         playsInline
         preload="auto"
         className="absolute inset-0 h-full w-full object-cover"
-        style={{ opacity: 0.90 }}
+        style={{ opacity: OPACITY }}
       />
       <div
         className="absolute inset-0"

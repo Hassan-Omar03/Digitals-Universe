@@ -1,0 +1,11 @@
+Input: public/background.mp4
+Frames sampled: 192
+Output strategy: source-only rotated loop with quiet loop boundary, long baked transition, and restored duration
+Crossfade overlap: 2.50s
+Loop boundary cut frame: 103
+Base loop duration before stretch: 5.500s
+Final loop duration: 8.000s
+Timing stretch factor: 1.455
+Original last-to-first frame MSE: 525.441
+New loop-boundary adjacent-frame MSE: 2.102
+End/start overlap MSE blended inside file: 420.090
