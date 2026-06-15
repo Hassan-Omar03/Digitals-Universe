@@ -306,9 +306,9 @@ header .du-icon-action {
 }
 
 .du-blur-band {
-  background: rgba(255, 255, 255, 0.038);
-  -webkit-backdrop-filter: blur(24px) saturate(135%);
-  backdrop-filter: blur(24px) saturate(135%);
+  background: rgba(255, 255, 255, 0.015);
+  -webkit-backdrop-filter: blur(120px) saturate(160%);
+  backdrop-filter: blur(120px) saturate(160%);
 }
 
 .du-blur-band::before {
@@ -317,7 +317,7 @@ header .du-icon-action {
   inset: 0;
   z-index: 0;
   border-block: 1px solid rgba(255, 255, 255, 0.10);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 48%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 48%);
   pointer-events: none;
 }
 
@@ -2293,12 +2293,6 @@ header .du-icon-action {
     max-width: calc(100vw - 1rem);
   }
 
-  .du-nav-logo-mark {
-    width: auto;
-    max-width: 12rem;
-    height: 2.65rem;
-  }
-
   .du-nav-cta {
     display: none;
   }
@@ -2543,18 +2537,7 @@ header .du-icon-action {
   pointer-events: none;
 }
 
-/* ── nav / footer logo override — force pixel size ── */
-.du-nav-logo-mark {
-  height: 52px !important;
-  width: auto !important;
-  max-width: 200px !important;
-}
-@media (min-width: 480px) {
-  .du-nav-logo-mark { height: 60px !important; max-width: 220px !important; }
-}
-@media (min-width: 1024px) {
-  .du-nav-logo-mark { height: 68px !important; max-width: 260px !important; }
-}
+/* ── nav logo — sizes set via Tailwind classes on component ── */
 
 /* ═══ keyframes ═══════════════════════════════════════════════════════════ */
 @keyframes du-mob-pulse {

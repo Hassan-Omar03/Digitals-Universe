@@ -460,18 +460,19 @@ export default function HomeClient() {
       {hasOpenedChat ? <Chatbot isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} /> : null}
 
       <div className="du-sections relative z-10 flex w-full flex-col">
-        <section id="hero" className="du-mobile-hero relative flex min-h-screen items-center overflow-hidden px-4 pb-28 pt-20 md:justify-center md:min-h-[100svh] md:pb-32 md:pt-24">
+        <section id="hero" className="du-mobile-hero relative flex min-h-screen items-center overflow-hidden px-4 pb-28 pt-20 md:justify-center md:min-h-[100svh] md:pb-32 md:pt-24 lg:pt-[120px]">
           {/* desktop: original centered layout */}
           <div className="du-reveal relative z-10 mx-auto hidden w-full max-w-[1100px] -translate-y-6 text-center md:block md:-translate-y-8 lg:-translate-y-10">
             
-            <h1 className="mx-auto max-w-[1100px] text-[clamp(48px,7vw,56px)] font-extrabold leading-[0.98] tracking-[-2px] text-white lg:text-[clamp(60px,5vw,68px)] 2xl:text-[clamp(64px,5vw,88px)]">
-              WE TRANSFORM YOUR
-              <br />
-              BUSINESS DIGITAL
-            </h1>
-            <p className="mx-auto mt-8 max-w-[850px] text-[19px] font-normal leading-[1.5] text-[#d7e6f4] md:text-[22px] xl:text-2xl">
-              We help businesses grow, automate, and thrive in the digital world through powerful technology, smart strategies, and creative solutions that deliver real results.
-            </p>
+          <h1 className="du-split-heading mx-auto max-w-[1100px] text-[clamp(42px,6vw,52px)] font-black leading-[1] tracking-[-1.5px] text-white lg:text-[clamp(52px,4.5vw,60px)] 2xl:text-[clamp(58px,4.5vw,72px)]">
+  WE TRANSFORM YOUR
+  <br />
+  BUSINESS DIGITAL
+</h1>
+
+<p className="mx-auto mt-6 max-w-[850px] text-[18px] font-normal leading-[1.5] text-[#d7e6f4] md:text-[20px] xl:text-[22px]">
+  We help businesses grow, automate, and thrive in the digital world through powerful technology, smart strategies, and creative solutions that deliver real results.
+</p>
             <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
               <button
                 onClick={() => scrollToSection("services")}
@@ -494,7 +495,7 @@ export default function HomeClient() {
 
           {/* mobile: left-aligned compact layout */}
           <div className="du-reveal relative z-10 w-full max-w-[62vw] text-left md:hidden">
-            <h1 className="text-[clamp(26px,7.5vw,34px)] font-extrabold leading-[1.05] tracking-[-0.5px] text-white">
+            <h1 className="du-split-heading text-[clamp(26px,7.5vw,34px)] font-extrabold leading-[1.05] tracking-[-0.5px]">
               WE TRANSFORM YOUR<br />
               BUSINESS<br />
               DIGITAL

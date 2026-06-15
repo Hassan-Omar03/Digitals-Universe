@@ -32,13 +32,13 @@ export default function Footer() {
       <div className="mx-auto w-full max-w-6xl py-10">
         <div className="flex flex-col gap-6 border-b border-white/10 pb-7 md:flex-row md:items-center md:justify-between">
           <Link href="/#hero" className="inline-flex items-center gap-3">
-            <Image
-              src="/logo-transparent.png"
-              alt="Digital Universe"
-              width={1680}
-              height={945}
-              className="h-[64px] w-auto max-w-[220px] shrink-0 object-contain sm:h-[72px] sm:max-w-[240px]"
-            />
+           <Image
+  src="/logo-transparent.png"
+  alt="Digital Universe"
+  width={1680}
+  height={945}
+  className="h-[90px] w-auto max-w-[280px] shrink-0 object-contain sm:h-[100px] sm:max-w-[320px] lg:h-[70px] lg:max-w-[220px]"
+/>
           </Link>
 
           <a

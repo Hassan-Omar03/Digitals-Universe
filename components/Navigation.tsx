@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { Menu, MessageCircle, X } from "lucide-react"
 
-const NAV_OFFSET = 104
+const NAV_OFFSET = 114
 const phoneNumber = "+971522740909"
 const greetingMessage =
   "Hi! I'm interested in your digital services. Could you please provide more information?"
@@ -117,14 +117,13 @@ export default function Navigation() {
           className="group flex min-w-0 items-center gap-3 text-left"
           aria-label="Go to Digital Universe home"
         >
-          <Image
-            src={logoSrc}
-            alt="Digital Universe"
-            width={1680}
-            height={945}
-            priority
-            className="du-nav-logo-mark h-[100px] w-auto max-w-[300px] shrink-0 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-[120px] sm:max-w-[360px] lg:h-[140px] lg:max-w-[420px]"
-          />
+           <Image
+  src="/logo-transparent.png"
+  alt="Digital Universe"
+  width={500}
+  height={281}
+  className="h-[90px] w-auto max-w-[280px] shrink-0 object-contain sm:h-[100px] sm:max-w-[320px] lg:h-[70px] lg:max-w-[220px]"
+/>
         </button>
 
         <nav className="du-nav-menu hidden min-w-0 items-center justify-center gap-5 xl:gap-7 lg:flex" aria-label="Primary navigation">

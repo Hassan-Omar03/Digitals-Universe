@@ -1,19 +1,28 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const VIDEO_SRC = "/background-seamless.mp4?v=source-loop-v2"
+const MOBILE_VIDEO_SRC = "/mobvideo.mp4?v=source-loop-v2"
 const OPACITY = 0.9
 
 export default function Background3D() {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+    const onResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener("resize", onResize)
+    return () => window.removeEventListener("resize", onResize)
+  }, [])
 
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
     video.load()
     video.play().catch(() => {})
-  }, [])
+  }, [isMobile])
 
   useEffect(() => {
     const onVis = () => {
@@ -31,7 +40,8 @@ export default function Background3D() {
     >
       <video
         ref={videoRef}
-        src={VIDEO_SRC}
+        src={isMobile ? MOBILE_VIDEO_SRC : VIDEO_SRC}
+        key={isMobile ? "mobile" : "desktop"}
         autoPlay
         loop
         muted
