@@ -122,7 +122,9 @@ export default function Navigation() {
   alt="Digital Universe"
   width={500}
   height={281}
-  className="h-[90px] w-auto max-w-[280px] shrink-0 object-contain sm:h-[100px] sm:max-w-[320px] lg:h-[70px] lg:max-w-[220px]"
+  priority
+  className="w-auto shrink-0 object-contain lg:h-[70px] lg:max-w-[220px]"
+  style={{ height: '110px', maxWidth: '340px', marginTop: '-10px', marginBottom: '-10px' }}
 />
         </button>
 
