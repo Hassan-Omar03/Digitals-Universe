@@ -2190,11 +2190,10 @@ header .du-icon-action {
     padding-bottom: 4rem;
   }
 
-  .du-nav-shell {
-    border-radius: 0.65rem;
-    padding: 0.55rem 0.65rem;
-  }
-
+.du-nav-shell {
+  border-radius: 0.2rem;
+  padding: 0.02rem 0.1rem;
+}
   .du-nav-mobile {
     max-height: calc(100svh - 5.5rem);
     overflow-y: auto;
