@@ -52,16 +52,16 @@ const Background3D = dynamic(() => import("./Background3D"), {
   loading: () => <div className="fixed inset-0 z-0 bg-[#000308]" aria-hidden="true" />,
 })
 
-const phoneNumber = "+971522740909"
+const phoneNumber = "+971524341819"
 const greetingMessage =
   "Hi! I'm interested in your digital services. Could you please provide more information?"
 const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(greetingMessage)}`
 
 const stats = [
-  { value: "20+", label: "Projects Completed" },
-  { value: "100+", label: "Happy Clients" },
-  { value: "3+", label: "Years Experience" },
-  { value: "98%", label: "Success Rate" },
+  { value: "60+", label: "Projects Delivered", sub: "across UAE & globally" },
+  { value: "50+", label: "Happy Clients", sub: "startups to enterprises" },
+  { value: "4+", label: "Years Experience", sub: "in digital growth" },
+  { value: "98%", label: "Success Rate", sub: "client satisfaction" },
 ]
 
 const philosophyCards = [
@@ -536,14 +536,16 @@ export default function HomeClient() {
               </h2>
             </div>
 
-            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {stats.map((stat) => (
                 <article
                   key={stat.label}
-                  className="du-reveal du-premium-card rounded-lg border border-white/10 px-5 py-8 text-center"
+                  className="du-reveal du-premium-card relative overflow-hidden rounded-2xl border border-white/10 px-5 py-5 text-center"
                 >
-                  <div className="text-4xl font-black leading-none text-white md:text-5xl">{stat.value}</div>
-                  <div className="mt-4 text-xs font-black uppercase tracking-[0.16em] text-[#8bbef0]">{stat.label}</div>
+                  <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#5a9de0]/60 to-transparent" />
+                  <div className="text-[2.6rem] font-black leading-none tracking-tight text-white">{stat.value}</div>
+                  <div className="mt-2 text-[11px] font-black uppercase tracking-[0.18em] text-[#8bbef0]">{stat.label}</div>
+                  <div className="mt-1 text-[10px] font-semibold text-white/30">{stat.sub}</div>
                 </article>
               ))}
             </div>
@@ -717,6 +719,7 @@ export default function HomeClient() {
           </div>
         </section>
 
+        {/* Payment section temporarily disabled
         <section id="payment" className="du-blur-band relative flex min-h-[100svh] items-center border-y border-white/10 px-4 py-12 md:py-14">
           <div className="mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-stretch">
             <div className="du-motion-box du-reveal du-flicker-left du-premium-card du-top-line-card flex flex-col justify-between rounded-[24px] border border-white/10 p-6 md:p-8">
@@ -750,6 +753,7 @@ export default function HomeClient() {
             </div>
           </div>
         </section>
+        */}
 
         <section id="portfolio" className="relative flex min-h-[100svh] items-center overflow-hidden px-4 py-12 md:py-14">
           <div className="mx-auto w-full max-w-6xl">
@@ -872,7 +876,7 @@ export default function HomeClient() {
             </div>
             <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
               {[
-                { icon: PhoneCall, label: "Phone", value: "+971 52 274 0909" },
+                { icon: PhoneCall, label: "Phone", value: "+971 52 434 1819" },
                 { icon: Mail, label: "Email", value: "hello@digitaluniverse.agency" },
                 { icon: MapPin, label: "Location", value: "Dubai, UAE" },
               ].map((item, index) => (

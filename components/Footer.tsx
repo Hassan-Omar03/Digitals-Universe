@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Mail, MapPin, MessageCircle, PhoneCall } from "lucide-react"
 
-const phoneNumber = "+971522740909"
+const phoneNumber = "+971524341819"
 const greetingMessage =
   "Hi! I'm interested in your digital services. Could you please provide more information?"
 const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(greetingMessage)}`
@@ -11,7 +11,6 @@ const footerLinks = [
   { label: "Home", href: "/#hero" },
   { label: "About", href: "/#about" },
   { label: "Services", href: "/#services" },
-  { label: "Checkout", href: "/#payment" },
   { label: "Portfolio", href: "/#portfolio" },
   { label: "Reviews", href: "/#testimonials" },
   { label: "Contact", href: "/#contact" },
@@ -89,7 +88,7 @@ export default function Footer() {
             <div className="mt-4 space-y-3">
               <a href={`tel:${phoneNumber}`} className="flex items-center gap-3 text-sm font-bold text-neutral-400 transition-colors hover:text-[#8bbef0]">
                 <PhoneCall className="h-4 w-4 text-[#5a9de0]" />
-                +971 52 274 0909
+                +971 52 434 1819
               </a>
               <a href="mailto:hello@digitaluniverse.agency" className="flex items-center gap-3 text-sm font-bold text-neutral-400 transition-colors hover:text-[#8bbef0]">
                 <Mail className="h-4 w-4 text-[#5a9de0]" />

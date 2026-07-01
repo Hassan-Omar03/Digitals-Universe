@@ -5,7 +5,7 @@ import Image from "next/image"
 import { Menu, MessageCircle, X } from "lucide-react"
 
 const NAV_OFFSET = 114
-const phoneNumber = "+971522740909"
+const phoneNumber = "+971524341819"
 const greetingMessage =
   "Hi! I'm interested in your digital services. Could you please provide more information?"
 const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(greetingMessage)}`
@@ -15,7 +15,6 @@ const navItems = [
   { label: "About",      id: "about"        },
   { label: "Services",   id: "services"     },
   { label: "Projects",   id: "portfolio"    },
-  { label: "Payment",    id: "payment"      },
   { label: "Reviews",    id: "testimonials" },
   { label: "Contact",    id: "contact"      },
 ]

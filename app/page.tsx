@@ -6,25 +6,55 @@ const SITE_URL = "https://digitaluniverse.agency"
 const OG_IMAGE = "/og-image.jpg"
 
 export const metadata: Metadata = {
-  title: `${SITE_NAME} | Web Development, SEO & Digital Marketing Agency`,
+  title: "Digital Universe | #1 Web Design & Digital Marketing Agency in Dubai UAE",
   description:
-    "Transform your business with premium web development, custom software, branding, UI/UX design, SEO services, and digital marketing solutions. Trusted by startups to enterprises worldwide. Get a free consultation today!",
+    "Dubai's top-rated digital agency for web design, SEO, social media marketing, logo design, and e-commerce development. Serving UAE businesses with proven results. Get a free consultation — call +971524341819 today!",
 
   keywords: [
-    "best digital agency 2026",
-    "top web development company",
-    "custom software development services",
-    "professional branding agency",
-    "expert seo services",
-    "digital marketing agency worldwide",
-    "affordable web design",
-    "e-commerce development",
-    "mobile app development",
-    "UI UX design services",
-    "conversion optimization",
-    "social media marketing",
-    "hire web developers",
-    "premium digital solutions",
+    // High-intent Dubai & UAE location keywords
+    "web design company Dubai",
+    "digital marketing agency Dubai",
+    "SEO agency Dubai",
+    "web development company UAE",
+    "best digital agency Dubai 2026",
+    "website design Dubai affordable",
+    "digital marketing company UAE",
+    "top web design agency Dubai",
+    "professional website development Dubai",
+    "SEO services Dubai",
+    // Service-specific high-value keywords
+    "e-commerce website development Dubai",
+    "logo design Dubai",
+    "social media marketing Dubai",
+    "Google Ads agency Dubai",
+    "Facebook Ads agency UAE",
+    "UI UX design agency Dubai",
+    "mobile app development Dubai",
+    "Shopify store setup Dubai",
+    "video editing services Dubai",
+    "branding agency Dubai",
+    // Long-tail high-converting keywords
+    "hire web developer in Dubai",
+    "affordable SEO services UAE",
+    "best SEO company in Dubai",
+    "digital marketing for small business Dubai",
+    "custom website design Dubai",
+    "web design agency near me Dubai",
+    "WordPress website development Dubai",
+    "e-commerce SEO Dubai",
+    "Instagram marketing agency Dubai",
+    "TikTok ads agency UAE",
+    // Trust & conversion keywords
+    "award winning web agency Dubai",
+    "website redesign Dubai",
+    "digital transformation Dubai",
+    "online business setup UAE",
+    "lead generation Dubai",
+    "conversion rate optimization UAE",
+    "Google Business Profile setup Dubai",
+    "WhatsApp marketing UAE",
+    "content marketing Dubai",
+    "email marketing agency UAE",
   ],
 
   alternates: {
@@ -35,15 +65,15 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} | Award-Winning Web Development & Digital Marketing`,
+    title: "Digital Universe | Dubai's #1 Web Design & Digital Marketing Agency",
     description:
-      "Your trusted partner for web development, branding, SEO, and digital marketing. We help businesses grow online with custom solutions, proven results, and exceptional service. 500+ satisfied clients worldwide.",
+      "Trusted by 100+ businesses across the UAE. We deliver custom websites, SEO, social media marketing, logo design, and e-commerce solutions that drive real growth. Free consultation — +971524341819.",
     images: [
       {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} - Premium Digital Solutions for Your Business`,
+        alt: "Digital Universe Agency Dubai — Premium Web Design & Digital Marketing",
       },
     ],
     locale: "en_US",
@@ -51,9 +81,9 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} | Professional Web Development & Digital Marketing`,
+    title: "Digital Universe | Dubai's Best Web Design & Digital Marketing Agency",
     description:
-      "Award-winning digital agency offering web development, branding, SEO, and marketing services. Transform your online presence with our expert team.",
+      "Dubai's top-rated digital agency. Custom websites, SEO, social media ads, branding & e-commerce — all built to grow your business in the UAE and beyond.",
     images: [OG_IMAGE],
     creator: "@digitaluniverse",
     site: "@digitaluniverse",
@@ -74,6 +104,10 @@ export const metadata: Metadata = {
   other: {
     "theme-color": "#070e1a",
     "color-scheme": "dark",
+    "geo.region": "AE-DU",
+    "geo.placename": "Dubai",
+    "geo.position": "25.2048;55.2708",
+    "ICBM": "25.2048, 55.2708",
   },
 }
 

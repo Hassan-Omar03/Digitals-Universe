@@ -11,12 +11,12 @@ import Footer from "@/components/Footer"
 const SITE_NAME = "Digital Universe Agency"
 const SITE_URL = "https://digitaluniverse.agency"
 const SITE_DESC =
-  "Digital Universe Agency builds fast websites, UI/UX, branding, SEO, paid ads, and digital growth systems for startups, local businesses, and enterprises worldwide."
+  "Dubai's #1 digital agency for web design, SEO, Google Ads, social media marketing, logo design, and e-commerce. Trusted by 100+ UAE businesses. Call +971524341819 for a free consultation."
 
 const OG_IMAGE = "/og-image.jpg"
 const LOGO_URL = `${SITE_URL}/logo.png`
 const BRAND_EMAIL = "hello@digitaluniverse.agency"
-const BRAND_PHONE = "+971522740909"
+const BRAND_PHONE = "+971524341819"
 
 /* =========================
    Fonts
@@ -39,88 +39,76 @@ export const metadata: Metadata = {
   },
 
   title: {
-    default: `${SITE_NAME} | Fast Websites, Branding, SEO & Digital Growth`,
-    template: `%s | ${SITE_NAME}`,
+    default: "Digital Universe | #1 Web Design & Digital Marketing Agency Dubai UAE",
+    template: `%s | Digital Universe Agency Dubai`,
   },
 
   description: SITE_DESC,
 
   keywords: [
-    // Primary High-Intent Keywords
+    // Dubai & UAE Primary Location Keywords (highest priority)
+    "web design company Dubai",
+    "digital marketing agency Dubai",
+    "web development company UAE",
+    "SEO agency Dubai",
+    "best digital agency Dubai",
+    "website design Dubai",
+    "digital agency UAE",
+    "web design agency Dubai",
+    "digital marketing UAE",
+    "top web agency Dubai",
+
+    // Dubai Service-Specific High-Intent
+    "e-commerce website Dubai",
+    "logo design Dubai",
+    "social media marketing Dubai",
+    "Google Ads agency Dubai",
+    "Facebook Ads Dubai",
+    "Instagram marketing Dubai",
+    "TikTok ads UAE",
+    "SEO services Dubai",
+    "local SEO Dubai",
+    "branding agency Dubai",
+    "UI UX design Dubai",
+    "Shopify store Dubai",
+    "WordPress website Dubai",
+    "video editing Dubai",
+    "WhatsApp marketing Dubai",
+
+    // Long-Tail High-Converting Dubai Keywords
+    "hire web developer Dubai",
+    "affordable website design Dubai",
+    "cheap SEO services UAE",
+    "best SEO company in Dubai",
+    "digital marketing for restaurants Dubai",
+    "real estate website Dubai",
+    "salon website design Dubai",
+    "construction company website Dubai",
+    "e-commerce SEO Dubai",
+    "Google Business Profile setup Dubai",
+    "website redesign Dubai",
+    "lead generation Dubai",
+    "online store setup UAE",
+    "digital business setup Dubai",
+
+    // Global Agency Keywords
     "digital agency",
     "web development agency",
-    "software development services",
     "custom software development",
     "digital marketing agency",
     "branding agency",
     "ui ux design agency",
     "seo services",
-    "premium digital solutions",
-
-    // Long-Tail High-Converting Keywords
-    "best digital agency for startups",
-    "custom web development for small businesses",
-    "affordable seo services for enterprises",
-    "professional branding and web design",
-    "global digital marketing solutions",
-    "enterprise software development company",
-    "web application development services",
-    "mobile app development company",
-
-    // Service-Specific Keywords
-    "e-commerce website development",
-    "responsive web design services",
+    "mobile app development",
+    "conversion rate optimization",
     "social media marketing agency",
-    "conversion rate optimization services",
-    "full brand identity design",
-    "technical seo audit and optimization",
-    "local seo services",
-    "content marketing strategy",
-    "email marketing automation",
-    "google ads campaign management",
-    "facebook ads management",
-    "instagram marketing services",
-
-    // Technology & Platform Keywords
-    "next.js development agency",
-    "react development services",
-    "wordpress development company",
+    "google ads management",
     "shopify development agency",
-    "custom cms development",
-    "progressive web app development",
-
-    // Industry-Specific Keywords
-    "healthcare web development",
-    "fintech app development",
-    "real estate website solutions",
-    "restaurant website development",
-    "educational platform development",
-
-    // Intent-Based Keywords
-    "hire web developers",
     "professional website design",
     "affordable web development",
-    "expert digital marketing",
-    "trusted branding agency",
-    "certified seo experts",
-
-    // AI & Modern Tech Keywords
-    "ai-powered web solutions",
-    "chatbot integration services",
-    "api development and integration",
-    "cloud migration services",
-
-    // Result-Oriented Keywords
-    "increase website traffic",
-    "improve conversion rates",
-    "boost online presence",
-    "grow business online",
 
     SITE_NAME,
     "Digital Universe Agency Dubai",
-    "Dubai digital agency",
-    "website development Dubai",
-    "SEO agency Dubai",
   ],
 
   authors: [{ name: SITE_NAME, url: SITE_URL }],
@@ -148,21 +136,21 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} | Fast Websites, Branding, SEO & Digital Growth`,
+    title: "Digital Universe | Dubai's #1 Web Design & Digital Marketing Agency",
     description: SITE_DESC,
     images: [
       {
         url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} - Premium Digital Solutions`,
+        alt: "Digital Universe Agency Dubai — Web Design, SEO & Digital Marketing UAE",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} | Fast Websites, Branding, SEO & Digital Growth`,
+    title: "Digital Universe | Best Web Design & Digital Marketing Agency Dubai",
     description: SITE_DESC,
     images: [OG_IMAGE],
     creator: "@digitaluniverse",
@@ -181,8 +169,12 @@ export const metadata: Metadata = {
     "color-scheme": "dark",
     "geo.region": "AE-DU",
     "geo.placename": "Dubai",
+    "geo.position": "25.2048;55.2708",
+    "ICBM": "25.2048, 55.2708",
     "business:contact_data:email": BRAND_EMAIL,
     "business:contact_data:phone_number": BRAND_PHONE,
+    "business:contact_data:locality": "Dubai",
+    "business:contact_data:country_name": "United Arab Emirates",
   },
 }
 
@@ -195,6 +187,7 @@ function JsonLd() {
     "@type": "Organization",
     "@id": `${SITE_URL}#organization`,
     name: SITE_NAME,
+    alternateName: ["Digital Universe", "Digital Universe Dubai", "DU Agency"],
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
@@ -202,14 +195,24 @@ function JsonLd() {
       width: 512,
       height: 512,
     },
-    description: SITE_DESC,
+    description: "Digital Universe Agency is Dubai's leading digital agency offering web design, SEO, Google Ads, social media marketing, branding, and e-commerce development for businesses across the UAE and worldwide.",
     email: BRAND_EMAIL,
     telephone: BRAND_PHONE,
     foundingDate: "2020",
-    areaServed: "Worldwide",
+    numberOfEmployees: { "@type": "QuantitativeValue", value: "10" },
+    areaServed: [
+      { "@type": "Country", name: "United Arab Emirates" },
+      { "@type": "City", name: "Dubai" },
+      { "@type": "City", name: "Abu Dhabi" },
+      { "@type": "City", name: "Sharjah" },
+      { "@type": "Country", name: "United States" },
+      { "@type": "Country", name: "United Kingdom" },
+      "Worldwide",
+    ],
     address: {
       "@type": "PostalAddress",
       addressLocality: "Dubai",
+      addressRegion: "Dubai",
       addressCountry: "AE",
     },
     sameAs: [
@@ -218,13 +221,24 @@ function JsonLd() {
       "https://www.linkedin.com/company/digitaluniverseagency",
       "https://www.instagram.com/digitaluniverseagency",
     ],
-    contactPoint: {
-      "@type": "ContactPoint",
-      contactType: "Customer Service",
-      email: BRAND_EMAIL,
-      telephone: BRAND_PHONE,
-      availableLanguage: ["English"],
-    },
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "Customer Service",
+        email: BRAND_EMAIL,
+        telephone: BRAND_PHONE,
+        availableLanguage: ["English", "Arabic"],
+        contactOption: "TollFree",
+        areaServed: "AE",
+      },
+      {
+        "@type": "ContactPoint",
+        contactType: "Sales",
+        telephone: BRAND_PHONE,
+        availableLanguage: ["English"],
+        areaServed: "Worldwide",
+      },
+    ],
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "4.9",
@@ -232,6 +246,18 @@ function JsonLd() {
       bestRating: "5",
       worstRating: "1",
     },
+    knowsAbout: [
+      "Web Design Dubai",
+      "SEO Dubai",
+      "Digital Marketing UAE",
+      "Social Media Marketing",
+      "Google Ads",
+      "E-commerce Development",
+      "Shopify",
+      "Branding",
+      "UI UX Design",
+      "Logo Design",
+    ],
   }
 
   const localBusinessSchema = {
@@ -245,9 +271,13 @@ function JsonLd() {
     telephone: BRAND_PHONE,
     email: BRAND_EMAIL,
     priceRange: "$$",
+    currenciesAccepted: "AED, USD",
+    paymentAccepted: "Cash, Credit Card, Bank Transfer",
     address: {
       "@type": "PostalAddress",
+      streetAddress: "Dubai",
       addressLocality: "Dubai",
+      addressRegion: "Dubai",
       addressCountry: "AE",
     },
     geo: {
@@ -255,21 +285,45 @@ function JsonLd() {
       latitude: "25.2048",
       longitude: "55.2708",
     },
+    hasMap: "https://maps.google.com/?q=Dubai,UAE",
     areaServed: [
-      "Dubai",
-      "United Arab Emirates",
-      "United States",
-      "United Kingdom",
-      "Worldwide",
+      { "@type": "City", name: "Dubai" },
+      { "@type": "City", name: "Abu Dhabi" },
+      { "@type": "City", name: "Sharjah" },
+      { "@type": "City", name: "Ajman" },
+      { "@type": "Country", name: "United Arab Emirates" },
+      { "@type": "Country", name: "United States" },
+      { "@type": "Country", name: "United Kingdom" },
     ],
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         opens: "09:00",
-        closes: "18:00",
+        closes: "21:00",
       },
     ],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "127",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Digital Services Dubai",
+      itemListElement: [
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Web Design Dubai", description: "Professional website design and development for businesses in Dubai and the UAE." } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "SEO Services Dubai", description: "Expert search engine optimization to rank your Dubai business on Google page 1." } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Google Ads Management Dubai", description: "ROI-focused Google Ads campaigns for UAE businesses." } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Social Media Marketing Dubai", description: "Facebook, Instagram, and TikTok marketing for Dubai brands." } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Logo Design Dubai", description: "Professional logo and brand identity design for Dubai businesses." } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "E-commerce Development Dubai", description: "Shopify and custom e-commerce store setup and marketing in the UAE." } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Video Editing Dubai", description: "Professional video editing, Reels, and short-form content for UAE brands." } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Google Business Profile Dubai", description: "Google Maps listing optimization and local SEO for Dubai businesses." } },
+      ],
+    },
     sameAs: organizationSchema.sameAs,
   }
 
@@ -339,34 +393,58 @@ function JsonLd() {
     mainEntity: [
       {
         "@type": "Question",
-        name: "What services does Digital Universe Agency offer?",
+        name: "What digital services does Digital Universe Agency offer in Dubai?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "We offer comprehensive digital services including web development, mobile app development, branding and UI/UX design, SEO services, social media marketing, digital marketing, and e-commerce solutions.",
+          text: "Digital Universe Agency in Dubai offers a full suite of digital services including custom website design and development, SEO (search engine optimization), Google Ads, Facebook and Instagram Ads, TikTok Ads, social media marketing, logo and branding design, UI/UX design, Shopify store setup, video editing, WhatsApp Business setup, Google Business Profile optimization, and complete digital business setup for startups and SMEs across the UAE.",
         },
       },
       {
         "@type": "Question",
-        name: "How long does it take to develop a custom website?",
+        name: "How much does a website cost in Dubai?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Custom website development typically takes 4-12 weeks depending on complexity, features, and requirements. We provide detailed timelines during the consultation phase.",
+          text: "Website design and development costs in Dubai vary based on scope. A professional business website typically starts from AED 1,500–3,000, while e-commerce websites and custom web applications range higher. Digital Universe Agency offers affordable packages tailored to startups, small businesses, and enterprises in the UAE. Contact us on WhatsApp at +971524341819 for a free quote.",
         },
       },
       {
         "@type": "Question",
-        name: "Do you offer SEO services with web development?",
+        name: "Do you offer SEO services in Dubai and the UAE?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes, all our websites are built with SEO best practices. We also offer comprehensive SEO packages including technical SEO audits, local SEO, content strategy, and ongoing optimization.",
+          text: "Yes, Digital Universe Agency provides expert SEO services in Dubai and across the UAE. Our SEO packages include technical SEO audits, on-page and off-page optimization, local SEO for Google Maps and Google Business Profile, keyword research, content strategy, and monthly reporting. We help Dubai businesses rank on page 1 of Google within weeks.",
         },
       },
       {
         "@type": "Question",
-        name: "What is your pricing for digital marketing services?",
+        name: "How quickly can you rank my website on Google in Dubai?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Our pricing varies based on project scope and requirements. We offer flexible packages starting from affordable options for small businesses to enterprise solutions. Contact us for a custom quote.",
+          text: "With our advanced SEO strategy, most local Dubai businesses start seeing ranking improvements within 2–4 weeks for local and long-tail keywords. Competitive keywords typically take 2–3 months. We combine technical SEO, Google Business Profile optimization, and high-quality content to accelerate rankings across the UAE.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Can you manage Google Ads and Facebook Ads for my Dubai business?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Absolutely. Digital Universe Agency is a leading paid ads agency in Dubai. We set up, manage, and optimize Google Search Ads, Google Display Ads, Facebook Ads, Instagram Ads, and TikTok Ads campaigns. Our team handles audience targeting, ad creatives, conversion tracking, and reporting to maximize your return on ad spend (ROAS) in the UAE market.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do you set up Shopify stores for Dubai and UAE businesses?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes, we offer complete Shopify store setup in Dubai and the UAE. This includes theme customization, product catalog setup, payment gateway integration, shipping configuration, SEO optimization, and launch support. We also run Shopify marketing campaigns to drive traffic and sales for your e-commerce business.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How can I contact Digital Universe Agency in Dubai?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "You can reach Digital Universe Agency in Dubai via WhatsApp at +971524341819, by email at hello@digitaluniverse.agency, or through the contact form on our website at digitaluniverse.agency. We are based in Dubai, UAE and serve clients across the UAE and globally.",
         },
       },
     ],
@@ -377,7 +455,7 @@ function JsonLd() {
     "@type": "WebPage",
     "@id": `${SITE_URL}#webpage`,
     url: SITE_URL,
-    name: `${SITE_NAME} | Fast Websites, Branding, SEO & Digital Growth`,
+    name: "Digital Universe | #1 Web Design & Digital Marketing Agency Dubai UAE",
     description: SITE_DESC,
     isPartOf: {
       "@id": `${SITE_URL}#website`,
