@@ -58,8 +58,8 @@ const greetingMessage =
 const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(greetingMessage)}`
 
 const stats = [
-  { value: "60+", label: "Projects Delivered", sub: "across UAE & globally" },
-  { value: "50+", label: "Happy Clients", sub: "startups to enterprises" },
+  { value: "15+", label: "Projects Delivered", sub: "across UAE & globally" },
+  { value: "20+", label: "Happy Clients", sub: "projects + retainer clients" },
   { value: "4+", label: "Years Experience", sub: "in digital growth" },
   { value: "98%", label: "Success Rate", sub: "client satisfaction" },
 ]
@@ -284,46 +284,76 @@ const processSteps = [
 
 const portfolio = [
   {
-    title: "AB SMD Construction",
-    category: "Construction Website",
-    image: "/absmd.png",
-    url: "https://absmd.us",
-    description: "A polished construction website with clear services and trust signals.",
-  },
-  {
-    title: "BIM Africa Quotation",
-    category: "Business Web App",
-    image: "/quotation.png",
-    url: "https://quotation.bim.africa",
-    description: "A quotation workflow for faster requests and smoother handling.",
-  },
-  {
-    title: "BIM Africa Website",
-    category: "Engineering Website",
-    image: "/bim.png",
-    url: "https://bim.africa",
-    description: "A structured engineering site focused on services and credibility.",
+    title: "DKing Car Rental",
+    category: "Luxury Automotive",
+    image: "/dking.jpg",
+    url: "https://dkingcar.com",
+    description: "A premium car rental platform built for luxury vehicles, fast bookings, and high-converting leads.",
+    featured: true,
   },
   {
     title: "Hawar Homes",
     category: "Real Estate",
     image: "/homes.png",
     url: "https://hawarhomes.com",
-    description: "A premium property website for vacation homes and rental leads.",
+    description: "A premium property website for vacation homes and rental leads in the Maldives.",
+    featured: true,
+  },
+  {
+    title: "Mauritius Travel & Tour",
+    category: "Travel & Tourism",
+    image: "/tour.jpg",
+    url: "https://mauritiustraveltour.com",
+    description: "A full-service travel website for Mauritius tour packages, island experiences, and online bookings.",
+    featured: false,
+  },
+  {
+    title: "BIM Africa",
+    category: "Engineering",
+    image: "/bim.png",
+    url: "https://bim.africa",
+    description: "A structured engineering firm site focused on services, global reach, and professional credibility.",
+    featured: false,
+  },
+  {
+    title: "Chemfix",
+    category: "Industrial & Chemical",
+    image: "/chemfix.jpg",
+    url: "https://chemfix.org",
+    description: "A professional B2B website for a chemical solutions provider built for trust and qualified leads.",
+    featured: false,
+  },
+  {
+    title: "Al Karam",
+    category: "Retail & Fashion",
+    image: "/alkaram.jpg",
+    url: "https://alkaram-tau.vercel.app",
+    description: "A clean retail website showcasing collections, brand identity, and a smooth shopping experience.",
+    featured: false,
+  },
+  {
+    title: "AB SMD Construction",
+    category: "Construction",
+    image: "/absmd.png",
+    url: "https://absmd.us",
+    description: "A US-based construction website with clear service listings, project highlights, and trust signals.",
+    featured: false,
+  },
+  {
+    title: "Construction Co.",
+    category: "Construction",
+    image: "/construction.png",
+    url: "https://construction-mu-sandy.vercel.app",
+    description: "A modern construction company website with project showcases, service offerings, and contact flow.",
+    featured: false,
   },
   {
     title: "Hoda Shine Services",
-    category: "Cleaning Services",
+    category: "Home Services",
     image: "/cleaning.png",
     url: "https://hodashineservices.com",
-    description: "A service website shaped around trust, clarity, and leads.",
-  },
-  {
-    title: "Asrar Salon & Spa",
-    category: "Beauty Website",
-    image: "/salon.png",
-    url: "https://asrarsalon.com",
-    description: "A polished salon website with mobile-friendly service browsing.",
+    description: "A service website shaped around trust, clarity, and generating qualified cleaning leads.",
+    featured: false,
   },
 ]
 
@@ -755,45 +785,92 @@ export default function HomeClient() {
         </section>
         */}
 
-        <section id="portfolio" className="relative flex min-h-[100svh] items-center overflow-hidden px-4 py-12 md:py-14">
+        <section id="portfolio" className="relative overflow-hidden px-4 py-16 md:py-20">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_60%_0%,rgba(61,126,199,0.10),transparent_55%)]" />
           <div className="mx-auto w-full max-w-6xl">
-            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
-              <div className="max-w-3xl">
-                <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">
-                  <Layers className="h-4 w-4" />
-                  Featured Work
-                </div>
-                <h2 className="du-split-heading text-2xl font-black text-white md:text-[2.45rem]">Real projects, shown all at once.</h2>
+            <div className="mb-10 text-center">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8bbef0]">
+                <Layers className="h-4 w-4" />
+                Featured Work
               </div>
+              <h2 className="du-split-heading text-2xl font-black text-white md:text-[2.45rem]">
+                Projects that speak for themselves.
+              </h2>
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-[#b8c8d8]">
+                From luxury automotive to real estate and engineering — built to convert and built to last.
+              </p>
             </div>
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {portfolio.map((project) => (
-                <article key={project.title} className="du-premium-card overflow-hidden rounded-lg border border-white/10">
-                  <div className="relative aspect-[4/3] overflow-hidden bg-black">
+
+            {/* Featured row — top 2 projects larger */}
+            <div className="mb-4 grid gap-4 sm:grid-cols-2">
+              {portfolio.filter(p => p.featured).map((project) => (
+                <Link
+                  key={project.title}
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="du-reveal group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]"
+                >
+                  <div className="relative aspect-video w-full overflow-hidden">
                     <Image
                       src={project.image}
                       alt={project.title}
                       fill
-                      className="object-cover opacity-90"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
-                    <div className="absolute left-3 top-3 rounded-md bg-[#3d7ec7]/90 px-3 py-1 text-xs font-bold text-white">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#070e1a]/90 via-[#070e1a]/20 to-transparent" />
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <span className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-2.5 text-sm font-bold text-white backdrop-blur-sm ring-1 ring-white/20">
+                        View Live <ArrowRight className="h-4 w-4" />
+                      </span>
+                    </div>
+                    <div className="absolute left-3 top-3 rounded-full bg-[#3d7ec7]/90 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-white backdrop-blur-sm">
                       {project.category}
                     </div>
                   </div>
                   <div className="p-5">
-                    <h3 className="text-xl font-black text-white">{project.title}</h3>
-                    <p className="mt-3 text-sm leading-7 text-neutral-400">{project.description}</p>
-                    <Link
-                      href={project.url}
-                      target="_blank"
-                      className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#8bbef0] transition-colors hover:text-white"
-                    >
-                      View Project
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
+                    <h3 className="text-lg font-black text-white">{project.title}</h3>
+                    <p className="mt-1.5 text-sm leading-6 text-neutral-400">{project.description}</p>
                   </div>
-                </article>
+                </Link>
+              ))}
+            </div>
+
+            {/* Regular grid — remaining projects */}
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {portfolio.filter(p => !p.featured).map((project) => (
+                <Link
+                  key={project.title}
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="du-reveal group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]"
+                >
+                  <div className="relative aspect-video w-full overflow-hidden">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#070e1a]/80 via-transparent to-transparent" />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <span className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-bold text-white backdrop-blur-sm ring-1 ring-white/20">
+                        View Live <ArrowRight className="h-3.5 w-3.5" />
+                      </span>
+                    </div>
+                    <div className="absolute left-3 top-3 rounded-full bg-[#3d7ec7]/90 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-white backdrop-blur-sm">
+                      {project.category}
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-base font-black text-white">{project.title}</h3>
+                    <p className="mt-1 text-xs leading-5 text-neutral-400">{project.description}</p>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>
